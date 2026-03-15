@@ -1,0 +1,31 @@
+id: systematic-debugging
+name: Systematic Debugging
+description: >
+  Guides the agent through a structured root-cause process rather than
+  trial-and-error fixes. Prevents "fix" attempts that mask symptoms
+  without resolving underlying causes.
+schema_version: "0.1.0"
+modes:
+  - reasoning
+  - generating-code
+tags:
+  - engineering
+  - debugging
+  - root-cause
+  - systematic
+personas:
+  - engineer
+pairs_with:
+  - test-driven-development
+  - decision-records
+provenance:
+  source_repo: obra/superpowers
+  source_file: skills/systematic-debugging/SKILL.md
+  source_url: https://github.com/obra/superpowers/blob/main/skills/systematic-debugging/SKILL.md
+  adapted_date: "2026-03-13"
+  adaptation_notes: >
+    Restructured to match constraint-kit SKILL.md format.
+    Four-phase structure preserved. Anti-patterns and transition
+    blocks added per constraint-kit conventions.
+version: "0.1.0"
+author: constraint-kit

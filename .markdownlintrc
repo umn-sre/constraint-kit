@@ -1,0 +1,28 @@
+{
+  "_comment": "mdcompliance strict default configuration. Mirrors markdownlint rule IDs.",
+  "max_line_length": 100,
+  "allow_long_urls": true,
+  "require_h1": true,
+  "require_heading_progression": true,
+  "heading_style": "atx",
+  "blanks_around_headings": 1,
+  "blanks_around_fences": 1,
+  "blanks_around_blockquotes": 1,
+  "list_indent": 2,
+  "wrap_list_continuations": true,
+  "no_trailing_spaces": true,
+  "no_trailing_punctuation_in_headings": true,
+  "heading_no_trailing_chars": ".,;:!?",
+  "max_consecutive_blanks": 1,
+  "no_hr": true,
+  "final_newline": true,
+  "no_bare_urls": false,
+  "ordered_list_style": "ordered",
+  "unordered_list_marker": "consistent",
+  "no_emphasis_as_heading": true,
+  "fenced_code_language": false,
+  "disable": [
+    "MD036"
+  ],
+  "tables": false
+}

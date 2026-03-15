@@ -1,0 +1,70 @@
+# constraint-kit role
+# ─────────────────────────────────────────────────────────────
+id: writer
+name: Writer
+schema_version: "0.1.0"
+persona: writer
+
+description: >
+  For anyone producing written work where communication quality,
+  audience fit, and structure are the primary concerns. Covers
+  technical documentation, product content, guides, narratives,
+  and any writing where the goal is clarity over analysis.
+  Distinct from researcher (which centers inquiry) and engineer
+  (which centers code).
+
+onboarding_note: >
+  You are working on a writing project. The agent will ask about
+  your audience, purpose, and constraints before proposing any
+  structure. It will outline before drafting, and draft section
+  by section rather than all at once. It will flag jargon and
+  readability issues and will not declare a document done without
+  a plain-language review.
+
+skills:
+  all_modes:
+    required:
+      - plain-language
+    recommended: []
+
+  collaborating:
+    required:
+      - brainstorming
+      - document-structure
+    recommended:
+      - requirements-gathering
+
+  reasoning:
+    required: []
+    recommended:
+      - argument-construction
+
+  generating-doc:
+    required:
+      - document-structure
+      - plain-language
+    recommended:
+      - argument-construction
+
+  generating-structured:
+    required:
+      - document-structure
+      - requirements-gathering
+    recommended:
+      - plain-language
+
+  generating-code:
+    required: []
+    recommended: []
+
+typical_bundles:
+  - document-drafting
+
+tags:
+  - writing
+  - communication
+  - documentation
+  - content
+
+version: "0.1.0"
+author: constraint-kit

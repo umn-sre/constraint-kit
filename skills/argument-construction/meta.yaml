@@ -1,0 +1,27 @@
+id: argument-construction
+name: Argument Construction
+description: >
+  Ensures written claims are supported by evidence, counterarguments are
+  acknowledged, and conclusions follow logically from what precedes them.
+  Applies to academic, research, persuasive, and analytical writing.
+schema_version: "0.1.0"
+modes:
+  - generating-doc
+  - reasoning
+tags:
+  - writing
+  - reasoning
+  - academic
+  - research
+  - analysis
+doc_type: academic
+personas:
+  - researcher
+  - writer
+  - any
+pairs_with:
+  - document-structure
+  - plain-language
+  - research-brief
+version: "0.1.0"
+author: constraint-kit

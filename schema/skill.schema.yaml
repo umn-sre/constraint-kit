@@ -1,0 +1,84 @@
+# constraint-kit: Skill Schema
+# Version: 0.1.0
+#
+# A skill is a single-concern constraint document.
+# It defines HOW an agent should behave in a specific situation.
+# Skills are the atomic unit of the constraint-kit library.
+#
+# Validation: all required fields must be present.
+# Optional fields may be omitted.
+#
+# ─────────────────────────────────────────────────────────────
+
+# REQUIRED FIELDS
+# ───────────────
+
+# Unique identifier for this skill. kebab-case. Must match directory name.
+# Example: "document-structure"
+id: <string>
+
+# Human-readable name. Title case.
+# Example: "Document Structure"
+name: <string>
+
+# One sentence describing what this skill constrains.
+# Shown in registry listings and skill index displays.
+# Example: "Ensures any document begins with audience, purpose, and outline before drafting."
+description: <string>
+
+# Schema version this skill targets.
+# Must match a published constraint-kit schema version.
+schema_version: "0.1.0"
+
+# Which modes this skill is active in.
+# At least one required.
+# Valid values: reasoning | collaborating | generating-code | generating-doc | generating-structured
+modes:
+  - <enum>
+
+# Tags for discovery. lowercase kebab-case. At least two required.
+# Used by bootstrap to match skills to projects and roles.
+# Example tags: writing, research, engineering, debugging, planning,
+#               academic, agile, code-quality, documents, structured
+tags:
+  - <string>
+
+
+# OPTIONAL FIELDS
+# ───────────────
+
+# Document sub-mode. Required if modes includes generating-doc.
+# Valid values: technical | academic | literary | structured | product
+doc_type: <enum>  # optional
+
+# Other skill ids this skill depends on or pairs well with.
+# These are informational — not automatically loaded.
+# Example: ["argument-construction", "plain-language"]
+pairs_with:
+  - <string>  # optional
+
+# Skills this skill supersedes or replaces.
+# Used to flag deprecation paths.
+replaces:
+  - <string>  # optional
+
+# Provenance: required only for skills adapted from external sources.
+# If skill is original, omit this block entirely.
+provenance:
+  source_repo: <string>     # e.g. "obra/superpowers"
+  source_file: <string>     # e.g. "skills/test-driven-development/SKILL.md"
+  source_url: <string>      # canonical URL to original file
+  adapted_date: <YYYY-MM-DD>
+  adaptation_notes: <string> # what changed from the original
+
+# Persona filter. Which top-level personas this skill is relevant for.
+# Used to hide irrelevant skills from non-technical users.
+# Valid values: engineer | researcher | writer | product-owner | any
+personas:
+  - <enum>  # optional, defaults to "any" if omitted
+
+# Version of this skill file. Semantic versioning.
+version: "0.1.0"  # optional, defaults to 0.1.0
+
+# Author or contributor handle. Not an email or org.
+author: <string>  # optional

@@ -1,0 +1,26 @@
+# constraint-kit skill metadata
+# ─────────────────────────────
+id: brainstorming
+name: Brainstorming
+description: >
+  Guides the agent to explore a problem space thoroughly before proposing
+  solutions. Surfaces assumptions, alternatives, and scope boundaries
+  through structured inquiry rather than jumping to answers.
+schema_version: "0.1.0"
+modes:
+  - collaborating
+  - reasoning
+tags:
+  - thinking
+  - design
+  - exploration
+  - planning
+  - universal
+personas:
+  - any
+pairs_with:
+  - requirements-gathering
+  - document-structure
+  - decision-records
+version: "0.1.0"
+author: constraint-kit

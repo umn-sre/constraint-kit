@@ -1,0 +1,30 @@
+id: test-driven-development
+name: Test-Driven Development
+description: >
+  Enforces RED-GREEN-REFACTOR discipline: write a failing test first,
+  confirm it fails, write minimal code to pass it, then refactor.
+  Code written before a test is deleted and restarted.
+schema_version: "0.1.0"
+modes:
+  - generating-code
+tags:
+  - engineering
+  - testing
+  - code-quality
+  - discipline
+personas:
+  - engineer
+pairs_with:
+  - systematic-debugging
+  - decision-records
+provenance:
+  source_repo: obra/superpowers
+  source_file: skills/test-driven-development/SKILL.md
+  source_url: https://github.com/obra/superpowers/blob/main/skills/test-driven-development/SKILL.md
+  adapted_date: "2026-03-13"
+  adaptation_notes: >
+    Restructured to match constraint-kit SKILL.md format and schema.
+    Anti-patterns section expanded. Transition block added.
+    Core RED-GREEN-REFACTOR methodology preserved verbatim in intent.
+version: "0.1.0"
+author: constraint-kit

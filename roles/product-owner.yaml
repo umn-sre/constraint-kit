@@ -1,0 +1,71 @@
+# constraint-kit role
+# ─────────────────────────────────────────────────────────────
+id: product-owner
+name: Product Owner
+schema_version: "0.1.0"
+persona: product-owner
+
+description: >
+  For anyone defining product work: features, user stories, acceptance
+  criteria, roadmap items, and the decisions that shape them. Bridges
+  technical and non-technical stakeholders. Not tied to any specific
+  methodology, though it supports agile and SAFe-style structured output.
+
+onboarding_note: >
+  You are defining product work. The agent will help you clarify the
+  problem before writing any story or feature. It will ask about the
+  user, the goal, and the constraints before drafting acceptance
+  criteria. It will surface assumptions and flag scope creep. Structured
+  output (stories, features, decision records) will follow a consistent
+  template rather than free-form prose.
+
+skills:
+  all_modes:
+    required:
+      - requirements-gathering
+    recommended: []
+
+  collaborating:
+    required:
+      - brainstorming
+      - requirements-gathering
+    recommended:
+      - decision-records
+
+  reasoning:
+    required:
+      - requirements-gathering
+    recommended:
+      - decision-records
+      - argument-construction
+
+  generating-structured:
+    required:
+      - requirements-gathering
+      - decision-records
+    recommended: []
+
+  generating-doc:
+    required:
+      - document-structure
+      - plain-language
+    recommended:
+      - argument-construction
+
+  generating-code:
+    required: []
+    recommended: []
+
+typical_bundles:
+  - new-feature-design
+  - structured-output
+
+tags:
+  - product
+  - agile
+  - requirements
+  - stories
+  - planning
+
+version: "0.1.0"
+author: constraint-kit

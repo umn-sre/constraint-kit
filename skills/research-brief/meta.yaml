@@ -1,0 +1,26 @@
+id: research-brief
+name: Research Brief
+description: >
+  Guides the agent to scope and structure a focused research inquiry with
+  a defined question, boundary conditions, and deliverable before any
+  research or writing begins.
+schema_version: "0.1.0"
+modes:
+  - collaborating
+  - generating-doc
+tags:
+  - research
+  - academic
+  - planning
+  - scoping
+  - writing
+doc_type: academic
+personas:
+  - researcher
+  - writer
+pairs_with:
+  - brainstorming
+  - document-structure
+  - argument-construction
+version: "0.1.0"
+author: constraint-kit

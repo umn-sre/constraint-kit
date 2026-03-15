@@ -1,0 +1,25 @@
+id: python-compliance
+name: Python Compliance
+description: >
+  Ensures Python files meet code quality standards enforced by
+  pycompliance.py, ruff, black, and isort. Covers import hygiene,
+  formatting, docstrings, encoding, exception handling, and common
+  anti-patterns — automating roughly 85% of mechanical lint issues.
+schema_version: "0.1.0"
+modes:
+  - generating-code
+doc_type: technical
+tags:
+  - python
+  - compliance
+  - code-quality
+  - engineering
+  - linting
+personas:
+  - engineer
+pairs_with:
+  - test-driven-development
+  - systematic-debugging
+  - sre-conventions
+version: "0.1.0"
+author: constraint-kit

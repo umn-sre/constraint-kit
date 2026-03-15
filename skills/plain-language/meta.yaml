@@ -1,0 +1,22 @@
+id: plain-language
+name: Plain Language
+description: >
+  Ensures written output is readable by its intended audience. Targets
+  clarity, appropriate vocabulary, and sentence-level readability without
+  sacrificing accuracy or technical precision where required.
+schema_version: "0.1.0"
+modes:
+  - generating-doc
+tags:
+  - writing
+  - readability
+  - communication
+  - universal
+doc_type: technical
+personas:
+  - any
+pairs_with:
+  - document-structure
+  - argument-construction
+version: "0.1.0"
+author: constraint-kit

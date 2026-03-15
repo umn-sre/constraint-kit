@@ -1,0 +1,89 @@
+# constraint-kit: Project Schema (Repo Path)
+# Version: 0.1.0
+#
+# This file lives at .constraint-kit/agent.yaml in a project repository.
+# It defines the project's constraint-kit configuration: role, active task,
+# skills, and target rendering format.
+#
+# The bootstrap command reads this file and renders the appropriate
+# session starter or config file for the target AI surface.
+#
+# One agent.yaml per project. Multiple projects = multiple repos,
+# each with their own .constraint-kit/agent.yaml.
+#
+# ─────────────────────────────────────────────────────────────
+
+# REQUIRED FIELDS
+# ───────────────
+
+# Schema version.
+schema_version: "0.1.0"
+
+# Short project identifier. kebab-case. No spaces.
+# Example: "runbook-automation"
+project: <string>
+
+# Role id from the constraint-kit roles library or a local extension.
+# Determines baseline skill set.
+# Example: "engineer"
+role: <role-id>
+
+# Current task description. Plain English. One or two sentences.
+# Updated when the task changes. This is the "what am I doing today" field.
+# Example: "Refactoring the token rotation workflow to use reusable Actions."
+task: <string>
+
+# Current active mode.
+# Valid values: reasoning | collaborating | generating-code | generating-doc | generating-structured
+mode: <enum>
+
+# Target rendering format for session output.
+# Valid values:
+#   session-prompt          → pasteable block for Gemini / Claude browser
+#   copilot-instructions    → .github/copilot-instructions.md
+#   skill-md                → SKILL.md for Claude Code / superpowers
+#   active-task-md          → portable Drive-style task file
+target: <enum>
+
+
+# OPTIONAL FIELDS
+# ───────────────
+
+# Additional skills to load beyond the role baseline.
+# Useful for task-specific skills not in the role's default set.
+# These are additive — they do not remove role baseline skills.
+task_skills:
+  - <skill-id>  # optional
+
+# Bundles to activate for this project.
+# Skills within the bundle are merged with role baseline and task_skills.
+bundles:
+  - <bundle-id>  # optional
+
+# Skills to suppress from the role baseline for this project.
+# Use sparingly. Document why in a comment.
+suppress_skills:
+  - <skill-id>  # optional
+
+# Doc sub-type. Required if mode is generating-doc.
+# Valid values: technical | academic | literary | structured | product
+doc_type: <enum>  # optional
+
+# Free-form project context. Plain English.
+# Included verbatim in the rendered session starter.
+# 3-8 sentences about the project that the agent needs to know.
+context: |
+  <string>  # optional
+
+# Path to a local extension repo's constraint-kit manifest.
+# Allows project to pull in org-specific or domain-specific skills
+# that are not in the public constraint-kit library.
+# Example: "../my-private-skills/constraint-kit.yaml"
+extension: <path>  # optional
+
+# Notes on decisions made in previous sessions.
+# Human-maintained. Included in rendered output as prior context.
+# Updated manually after significant sessions.
+session_history:
+  - date: <YYYY-MM-DD>
+    note: <string>  # optional block, repeatable

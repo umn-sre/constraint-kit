@@ -1,0 +1,25 @@
+id: document-structure
+name: Document Structure
+description: >
+  Ensures any document begins by establishing audience, purpose, and
+  outline before any drafting occurs. Prevents structural rework by
+  getting the shape right before filling in content.
+schema_version: "0.1.0"
+modes:
+  - generating-doc
+  - collaborating
+tags:
+  - writing
+  - documents
+  - structure
+  - planning
+  - universal
+doc_type: technical
+personas:
+  - any
+pairs_with:
+  - argument-construction
+  - plain-language
+  - brainstorming
+version: "0.1.0"
+author: constraint-kit

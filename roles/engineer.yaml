@@ -1,0 +1,71 @@
+# constraint-kit role
+# ─────────────────────────────────────────────────────────────
+id: engineer
+name: Engineer
+schema_version: "0.1.0"
+persona: engineer
+
+description: >
+  For anyone building, maintaining, or automating software and
+  infrastructure. Covers code, configuration, tooling, and the
+  decisions and documentation that surround them. Not tied to any
+  specific language, platform, or organization.
+
+onboarding_note: >
+  You are working with a technical collaborator. Before writing any
+  code, the agent will ask what you are trying to accomplish and
+  confirm requirements. It will write tests before implementation,
+  flag assumptions, and document significant decisions. It will not
+  proceed past a checkpoint without your explicit confirmation.
+
+skills:
+  all_modes:
+    required:
+      - decision-records
+    recommended: []
+
+  reasoning:
+    required:
+      - systematic-debugging
+    recommended:
+      - requirements-gathering
+
+  collaborating:
+    required:
+      - brainstorming
+      - requirements-gathering
+    recommended:
+      - decision-records
+
+  generating-code:
+    required:
+      - test-driven-development
+      - systematic-debugging
+    recommended:
+      - decision-records
+
+  generating-doc:
+    required:
+      - document-structure
+      - plain-language
+    recommended:
+      - decision-records
+
+  generating-structured:
+    required:
+      - requirements-gathering
+      - decision-records
+    recommended: []
+
+typical_bundles:
+  - new-feature-design
+  - engineering-decision
+
+tags:
+  - engineering
+  - software
+  - infrastructure
+  - automation
+
+version: "0.1.0"
+author: constraint-kit

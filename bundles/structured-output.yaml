@@ -1,0 +1,48 @@
+# constraint-kit bundle
+# ─────────────────────────────────────────────────────────────
+id: structured-output
+name: Structured Output
+schema_version: "0.1.0"
+
+description: >
+  Skills for producing structured work products: user stories, features,
+  acceptance criteria, policy documents, decision records, and any output
+  that must follow a defined template or format. Use when the output
+  format is known and the goal is to produce it well with confirmed
+  requirements.
+
+skills:
+  - requirements-gathering
+  - document-structure
+  - plain-language
+
+activation: all-required
+
+personas:
+  - product-owner
+  - engineer
+  - any
+
+primary_modes:
+  - generating-structured
+  - collaborating
+
+commonly_used_with_roles:
+  - product-owner
+  - engineer
+
+tags:
+  - structured
+  - templates
+  - stories
+  - agile
+  - output
+
+usage_note: >
+  Use this when you know what structured artifact you need to produce
+  and want constraints that ensure it is complete and readable.
+  If you are still defining what needs to be built, use
+  new-feature-design first.
+
+version: "0.1.0"
+author: constraint-kit

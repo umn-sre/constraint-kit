@@ -1,0 +1,27 @@
+id: decision-records
+name: Decision Records
+description: >
+  Guides the agent to document significant decisions with context, options
+  considered, the decision made, and consequences. Prevents decisions from
+  being invisible or undiscoverable in future sessions or by other contributors.
+schema_version: "0.1.0"
+modes:
+  - generating-doc
+  - generating-structured
+  - reasoning
+doc_type: technical
+tags:
+  - decisions
+  - documentation
+  - engineering
+  - research
+  - planning
+personas:
+  - engineer
+  - researcher
+  - product-owner
+pairs_with:
+  - requirements-gathering
+  - tradeoff-analysis
+version: "0.1.0"
+author: constraint-kit

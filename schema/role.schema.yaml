@@ -1,0 +1,106 @@
+# constraint-kit: Role Schema
+# Version: 0.1.0
+#
+# A role defines WHO the agent is and WHAT its baseline constraints are.
+# Roles compose skills into a coherent working identity for the agent.
+# Roles are higher-level than skills — they answer "what kind of work
+# are we doing" rather than "how do we do one specific thing".
+#
+# Roles do NOT inherit from other roles. Composition is via skills only.
+# A role may declare skills as required (always loaded) or recommended
+# (loaded when the matching mode or task context is active).
+#
+# ─────────────────────────────────────────────────────────────
+
+# REQUIRED FIELDS
+# ───────────────
+
+# Unique identifier. kebab-case. Must match filename (without .yaml).
+# Example: "researcher"
+id: <string>
+
+# Human-readable name. Title case.
+# Example: "Researcher"
+name: <string>
+
+# One or two sentences describing who this role is for.
+# Shown in persona selection during bootstrap.
+# Example: "For anyone conducting structured inquiry and writing up findings.
+#           Covers academic papers, literature reviews, and research briefs."
+description: <string>
+
+# Schema version this role targets.
+schema_version: "0.1.0"
+
+# Top-level persona this role belongs to.
+# Used to filter roles shown during bootstrap by persona type.
+# Valid values: engineer | researcher | writer | product-owner | any
+persona: <enum>
+
+# Skill assignments by mode.
+# required: loaded automatically for every session using this role.
+# recommended: surfaced as suggestions; loaded when task context matches.
+# At least one skill required across all_modes or any mode-specific list.
+skills:
+  all_modes:
+    required:
+      - <skill-id>    # loaded regardless of active mode
+    recommended:
+      - <skill-id>    # suggested; user confirms
+
+  reasoning:
+    required:
+      - <skill-id>
+    recommended:
+      - <skill-id>
+
+  collaborating:
+    required:
+      - <skill-id>
+    recommended:
+      - <skill-id>
+
+  generating-code:
+    required:
+      - <skill-id>
+    recommended:
+      - <skill-id>
+
+  generating-doc:
+    required:
+      - <skill-id>
+    recommended:
+      - <skill-id>
+
+  generating-structured:
+    required:
+      - <skill-id>
+    recommended:
+      - <skill-id>
+
+
+# OPTIONAL FIELDS
+# ───────────────
+
+# Bundles this role typically uses. Informational — not auto-loaded.
+# Example: ["new-feature-design", "document-drafting"]
+typical_bundles:
+  - <bundle-id>  # optional
+
+# Tags inherited by all projects using this role.
+# Merged with project-level tags during skill resolution.
+tags:
+  - <string>  # optional
+
+# Short onboarding note shown to users who select this role during bootstrap.
+# Plain English. No jargon. 2-4 sentences.
+# Example: "You'll be writing and researching. The agent will ask clarifying
+#           questions before drafting anything. It will flag assumptions and
+#           ask for sources rather than inventing them."
+onboarding_note: <string>  # optional
+
+# Version of this role file.
+version: "0.1.0"  # optional
+
+# Author or contributor handle.
+author: <string>  # optional

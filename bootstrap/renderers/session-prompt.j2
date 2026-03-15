@@ -1,0 +1,106 @@
+{#
+  constraint-kit renderer: session-prompt.j2
+  ──────────────────────────────────────────
+  Renders a pasteable session starter for browser-based AI sessions
+  (Gemini, Claude, Copilot Chat, ChatGPT, etc.)
+
+  Input context variables (provided by render.py):
+    project       — project id string
+    role          — role object (from roles/<id>.yaml)
+    task          — task description string
+    mode          — active mode string
+    skills        — list of resolved skill objects (required for this mode)
+    recommended   — list of recommended skill objects
+    context       — optional project context string
+    session_history — list of {date, note} objects
+    doc_type      — optional doc sub-type string
+    render_date   — ISO date string of render time
+#}
+# ═══════════════════════════════════════════════════════════════
+# CONSTRAINT-KIT SESSION STARTER
+# Project:  {{ project }}
+# Role:     {{ role.name }}
+# Rendered: {{ render_date }}
+# ═══════════════════════════════════════════════════════════════
+# Paste this entire block as your FIRST message in a new session.
+# Re-paste it any time you start a new session on this project,
+# or when you notice the AI drifting from these constraints.
+# ═══════════════════════════════════════════════════════════════
+
+## Your Role
+{{ role.onboarding_note }}
+
+## Current Task
+{{ task }}
+
+## Active Mode
+{{ mode }}{% if doc_type %} / {{ doc_type }}{% endif %}
+
+## Constraints Active for This Session
+The following constraint skills are loaded. You MUST apply them.
+Before generating any output, state which skills apply to the
+current request. If you are uncertain, ask rather than assume.
+
+{%- for skill in skills %}
+
+### {{ skill.name }}
+{{ skill.description }}
+Full constraints: read {{ skill.file }}
+{%- endfor %}
+
+{%- if recommended %}
+
+## Recommended Skills Available
+These skills are relevant but not required. Load them if the task warrants it.
+Ask the user to confirm before applying a recommended skill.
+{%- for skill in recommended %}
+- **{{ skill.name }}**: {{ skill.description }}
+{%- endfor %}
+{%- endif %}
+
+{%- if context %}
+
+## Project Context
+{{ context }}
+{%- endif %}
+
+{%- if session_history %}
+
+## Prior Session Notes
+{%- for entry in session_history %}
+- {{ entry.date }}: {{ entry.note }}
+{%- endfor %}
+{%- endif %}
+
+## Mandatory Behavior
+1. Do NOT proceed past a checkpoint without explicit confirmation.
+2. Do NOT infer conventions — ask if uncertain.
+3. Do NOT skip the Transition step of any active skill.
+4. If context drift occurs (you notice you have stopped applying
+   constraints), stop and ask the user to re-paste this block.
+
+## Mode Switch Snippets
+When you change modes mid-session, paste the relevant block below.
+
+--- SWITCH TO: reasoning ---
+Mode: reasoning
+Active skills: {{ skills | selectattr('modes', 'containing', 'reasoning') | map(attribute='name') | join(', ') }}
+Apply systematic thinking. Surface assumptions. Flag uncertainty.
+Do not recommend a course of action until options have been explored.
+
+--- SWITCH TO: collaborating ---
+Mode: collaborating
+Active skills: {{ skills | selectattr('modes', 'containing', 'collaborating') | map(attribute='name') | join(', ') }}
+Ask one question at a time. Summarize understanding before proceeding.
+Do not generate output until the goal is confirmed.
+
+--- SWITCH TO: generating ---
+Mode: generating-{{ 'code' if role.persona == 'engineer' else 'doc' }}
+Active skills: {{ skills | selectattr('modes', 'defined') | map(attribute='name') | join(', ') }}
+Apply all active skill constraints before producing output.
+Produce output section by section, not all at once.
+Confirm each section before proceeding to the next.
+
+# ═══════════════════════════════════════════════════════════════
+# END SESSION STARTER — begin your task after this line
+# ═══════════════════════════════════════════════════════════════

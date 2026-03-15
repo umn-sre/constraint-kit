@@ -1,0 +1,72 @@
+# constraint-kit: New Project Bootstrap (Repo Path)
+# ─────────────────────────────────────────────────────────────
+# Copy this file to .constraint-kit/agent.yaml in your project repo.
+# Fill in every field marked with [ ].
+# Delete these instructions before committing.
+#
+# Run the renderer after filling this in:
+#   python bootstrap/render.py .constraint-kit/agent.yaml
+#
+# This produces a session starter you can paste into Gemini, Claude,
+# or Copilot, or a copilot-instructions.md for your repo.
+# ─────────────────────────────────────────────────────────────
+
+schema_version: "0.1.0"
+
+# Short project name. kebab-case. No spaces.
+# Example: token-rotation-pipeline
+project: [ ]
+
+# Role id. Choose one from registry.yaml roles section.
+# Options: engineer | researcher | writer | product-owner
+role: [ ]
+
+# What you are working on right now. Plain English. 1-2 sentences.
+# Update this each time your task changes.
+# Example: "Refactoring the deploy workflow to use reusable Actions."
+task: [ ]
+
+# Current mode. Choose one.
+# Options: reasoning | collaborating | generating-code | generating-doc | generating-structured
+mode: [ ]
+
+# Output format for the rendered session starter. Choose one.
+# Options:
+#   session-prompt          → paste into Gemini, Claude, or any browser chat
+#   copilot-instructions    → .github/copilot-instructions.md
+#   skill-md                → SKILL.md for Claude Code or superpowers
+#   active-task-md          → portable Drive-style task file
+target: session-prompt
+
+# ─── OPTIONAL ────────────────────────────────────────────────
+
+# Additional skills beyond what your role provides.
+# Find skill ids in registry.yaml.
+# task_skills:
+#   - decision-records
+
+# Bundles to activate. Find bundle ids in registry.yaml.
+# bundles:
+#   - new-feature-design
+
+# Skills to suppress from the role baseline. Use sparingly.
+# suppress_skills:
+#   - systematic-debugging
+
+# Doc sub-type. Required only if mode is generating-doc.
+# Options: technical | academic | literary | structured | product
+# doc_type: technical
+
+# Background context for the AI. 3-8 sentences about this project.
+# Included verbatim in the rendered session starter.
+# context: |
+#   This project automates X. It uses Y and Z.
+#   The main constraint is A. The audience for output is B.
+
+# Path to a private extension repo manifest.
+# extension: ../my-private-skills/constraint-kit.yaml
+
+# Notes from previous sessions. Most recent first.
+# session_history:
+#   - date: "2026-03-13"
+#     note: "Confirmed requirements. Decided to use approach X over Y."

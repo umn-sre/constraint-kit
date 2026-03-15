@@ -1,0 +1,43 @@
+# pyproject.toml — [tool.mdcompliance] section
+#
+# Drop this into your project's pyproject.toml alongside [tool.ruff],
+# [tool.black], etc.  mdcompliance reads this section automatically when
+# no .markdownlintrc is found in the directory hierarchy.
+
+[tool.mdcompliance]
+max_line_length          = 100
+allow_long_urls          = true
+
+require_h1               = true
+require_heading_progression = true
+heading_style            = "atx"
+
+blanks_around_headings   = 1
+blanks_around_fences     = 1
+blanks_around_blockquotes = 1
+
+list_indent              = 2
+wrap_list_continuations  = true
+
+no_trailing_spaces       = true
+
+no_trailing_punctuation_in_headings = true
+heading_no_trailing_chars = ".,;:!?"
+
+max_consecutive_blanks   = 1
+
+no_hr                    = true
+
+final_newline            = true
+
+no_bare_urls             = false
+
+ordered_list_style       = "ordered"    # "ordered" | "one" | "any"
+unordered_list_marker    = "consistent" # "-" | "*" | "+" | "consistent"
+
+no_emphasis_as_heading   = true
+fenced_code_language     = false
+
+# Rule IDs to skip entirely (markdownlint-compatible):
+# disable = ["MD013"]
+disable                  = []

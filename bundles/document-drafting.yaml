@@ -1,0 +1,47 @@
+# constraint-kit bundle
+# ─────────────────────────────────────────────────────────────
+id: document-drafting
+name: Document Drafting
+schema_version: "0.1.0"
+
+description: >
+  Skills for producing a well-structured, readable document of any type.
+  Covers audience definition, outline approval, section-by-section
+  drafting, and a final readability pass. Use when the goal is a
+  written work product.
+
+skills:
+  - document-structure
+  - argument-construction
+  - plain-language
+
+activation: all-required
+
+personas:
+  - researcher
+  - writer
+  - any
+
+primary_modes:
+  - generating-doc
+  - collaborating
+
+commonly_used_with_roles:
+  - researcher
+  - writer
+  - product-owner
+
+tags:
+  - writing
+  - documents
+  - drafting
+  - structure
+
+usage_note: >
+  Use this bundle when you know what you are writing and need to
+  produce it well. If you are still figuring out what to write or
+  what question to answer, start with the research-inquiry bundle
+  or brainstorming skill first.
+
+version: "0.1.0"
+author: constraint-kit

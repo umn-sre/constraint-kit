@@ -1,0 +1,92 @@
+name: Schema Validation
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'skills/**'
+      - 'roles/**'
+      - 'bundles/**'
+      - 'registry.yaml'
+      - 'schema/**'
+      - 'bootstrap/**'
+      - '.markdownlintrc'
+      - '.github/workflows/validate.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'skills/**'
+      - 'roles/**'
+      - 'bundles/**'
+      - 'registry.yaml'
+      - 'schema/**'
+      - 'bootstrap/**'
+      - '.markdownlintrc'
+      - '.github/workflows/validate.yml'
+
+jobs:
+  validate:
+    name: Validate constraint-kit schema
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: 🔍 Checkout
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 📦 Install dependencies
+        run: pip install pyyaml jinja2 ruff black isort autoflake
+
+      - name: ✅ Schema validation
+        run: python bootstrap/validate.py
+
+      - name: 🐍 Python compliance check — ruff
+        run: ruff check bootstrap/*.py
+
+      - name: 🐍 Python compliance check — pycompliance (check mode)
+        run: |
+          for f in bootstrap/render.py bootstrap/render_drive.py \
+                   bootstrap/validate.py bootstrap/mdcompliance.py \
+                   bootstrap/pycompliance.py bootstrap/batch_comply.py; do
+            python bootstrap/pycompliance.py "$f" --dry-run
+          done
+
+      - name: 📝 Markdown compliance — skills (hard gate)
+        run: python bootstrap/mdcompliance.py skills/ --check
+
+      - name: 📝 Markdown compliance — docs and root (soft gate)
+        run: |
+          python bootstrap/mdcompliance.py docs/ --check
+          python bootstrap/mdcompliance.py README.md --check
+          python bootstrap/mdcompliance.py CONTRIBUTING.md --check
+          python bootstrap/mdcompliance.py CHANGELOG.md --check
+        continue-on-error: true
+
+      - name: 🚀 Smoke test renderer (engineer)
+        run: |
+          cat > /tmp/test-engineer.yaml << 'YAML'
+          schema_version: "0.1.0"
+          project: ci-smoke-test
+          role: engineer
+          task: "CI smoke test for engineer role."
+          mode: collaborating
+          target: session-prompt
+          YAML
+          python bootstrap/render.py /tmp/test-engineer.yaml
+
+      - name: 🚀 Smoke test renderer (researcher)
+        run: |
+          cat > /tmp/test-researcher.yaml << 'YAML'
+          schema_version: "0.1.0"
+          project: ci-smoke-test
+          role: researcher
+          task: "CI smoke test for researcher role."
+          mode: generating-doc
+          doc_type: academic
+          target: session-prompt
+          YAML
+          python bootstrap/render.py /tmp/test-researcher.yaml

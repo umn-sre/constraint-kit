@@ -1,0 +1,23 @@
+id: requirements-gathering
+name: Requirements Gathering
+description: >
+  Guides the agent to elicit and document what is actually needed before
+  any work product is created. Distinguishes functional needs from
+  constraints, and confirmed requirements from assumptions.
+schema_version: "0.1.0"
+modes:
+  - collaborating
+  - reasoning
+tags:
+  - planning
+  - requirements
+  - design
+  - universal
+personas:
+  - any
+pairs_with:
+  - brainstorming
+  - decision-records
+  - document-structure
+version: "0.1.0"
+author: constraint-kit

@@ -1,0 +1,25 @@
+id: markdown-compliance
+name: Markdown Compliance
+description: >
+  Ensures Markdown files — especially SKILL.md files — follow structural
+  and style conventions enforced by mdcompliance.py. Covers heading
+  progression, blank lines around headings and fences, trailing spaces,
+  list markers, and final newlines.
+schema_version: "0.1.0"
+modes:
+  - generating-doc
+doc_type: technical
+tags:
+  - markdown
+  - compliance
+  - code-quality
+  - skills
+  - documents
+personas:
+  - engineer
+  - any
+pairs_with:
+  - document-structure
+  - plain-language
+version: "0.1.0"
+author: constraint-kit

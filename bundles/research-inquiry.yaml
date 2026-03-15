@@ -1,0 +1,46 @@
+# constraint-kit bundle
+# ─────────────────────────────────────────────────────────────
+id: research-inquiry
+name: Research Inquiry
+schema_version: "0.1.0"
+
+description: >
+  Skills for scoping and executing a focused research task. Moves
+  from a broad topic or question through a defined research brief,
+  structured argument, and written output. Use when starting from
+  a question rather than a known deliverable.
+
+skills:
+  - research-brief
+  - brainstorming
+  - argument-construction
+  - document-structure
+
+activation: context-dependent
+
+personas:
+  - researcher
+  - writer
+
+primary_modes:
+  - collaborating
+  - reasoning
+  - generating-doc
+
+commonly_used_with_roles:
+  - researcher
+
+tags:
+  - research
+  - inquiry
+  - academic
+  - scoping
+
+usage_note: >
+  Use this when starting from a topic or question and needing to
+  define what the research is actually asking before writing anything.
+  If your research question is already defined, go directly to
+  document-drafting.
+
+version: "0.1.0"
+author: constraint-kit

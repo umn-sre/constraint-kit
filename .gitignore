@@ -1,0 +1,36 @@
+# constraint-kit .gitignore
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+
+# Rendered output — do not commit generated session starters
+# (they are project-local, not library content)
+session-starter.md
+active-task-rendered.md
+.github/copilot-instructions.md
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Project-local constraint-kit configs
+# (these live in the consuming project, not in the library)
+.constraint-kit/agent.yaml
+.constraint-kit/*-test.yaml
+-e 
+# Ruff cache
+.ruff_cache/

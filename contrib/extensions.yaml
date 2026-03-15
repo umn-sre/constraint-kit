@@ -1,0 +1,56 @@
+# constraint-kit: Extension Registry
+# ─────────────────────────────────────────────────────────────
+# This file lists community extension repositories that provide
+# domain-specific roles, skills, and bundles built on constraint-kit.
+#
+# Extensions are maintained by their authors — not by constraint-kit.
+# Listing here means the repo follows the constraint-kit schema.
+# It does not imply endorsement or quality review of content.
+#
+# To list your extension:
+#   1. Ensure your repo contains a constraint-kit.yaml manifest
+#   2. Ensure your skills/roles follow the schema in schema/
+#   3. Submit a PR adding an entry to this file
+#   See docs/HOW_TO_CONTRIBUTE.md for full instructions.
+# ─────────────────────────────────────────────────────────────
+
+schema_version: "0.1.0"
+
+extensions:
+  # ── Example entry (remove this when adding real entries) ──
+  # - id: example-extension
+  #   name: Example Domain Skills
+  #   repo: https://github.com/example/constraint-kit-example
+  #   manifest: constraint-kit.yaml
+  #   description: >
+  #     Skills for example domain work.
+  #   personas: [engineer]
+  #   tags: [example]
+  #   author: example-author
+  #   added: "2026-01-01"
+  #   verified: false   # set to true after schema validation passes
+
+  # ── Known external sources ────────────────────────────────
+  # These are not constraint-kit extensions (they don't follow the schema)
+  # but are notable skill libraries worth knowing about.
+  # Listed here for discoverability and attribution transparency.
+
+  - id: obra-superpowers
+    name: Superpowers (obra)
+    repo: https://github.com/obra/superpowers
+    manifest: null
+    description: >
+      Agentic skills framework for Claude Code. The original inspiration
+      for constraint-kit's skills-as-files pattern. Two constraint-kit
+      skills (test-driven-development, systematic-debugging) are adapted
+      from this library with full provenance tracked in their meta.yaml.
+      If you use Claude Code specifically, superpowers is worth evaluating
+      as a complement or alternative.
+    personas: [engineer]
+    tags: [engineering, tdd, debugging, claude-code]
+    author: obra
+    added: "2026-03-14"
+    verified: false
+    note: >
+      Not a constraint-kit extension — does not follow the constraint-kit
+      schema. Listed for attribution and discoverability only.

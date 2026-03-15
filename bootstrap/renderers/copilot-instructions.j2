@@ -1,0 +1,53 @@
+{#
+  constraint-kit renderer: copilot-instructions.j2
+  ─────────────────────────────────────────────────
+  Renders .github/copilot-instructions.md for GitHub Copilot Chat.
+  This file is auto-loaded by Copilot in VS Code for every session
+  in the repository.
+
+  Same input context variables as session-prompt.j2.
+#}
+<!-- constraint-kit generated — do not edit manually -->
+<!-- Re-generate with: python bootstrap/render.py .constraint-kit/agent.yaml -->
+<!-- Generated: {{ render_date }} | Project: {{ project }} | Role: {{ role.name }} -->
+
+# Copilot Instructions — {{ project }}
+
+## Role
+{{ role.onboarding_note }}
+
+## Current Task
+{{ task }}
+
+## Active Mode
+{{ mode }}
+
+## Constraints
+Apply the following constraints to every response in this repository.
+Before generating code or documentation, state which constraints apply.
+
+{%- for skill in skills %}
+
+### {{ skill.name }}
+{{ skill.description }}
+{%- endfor %}
+
+## Mandatory Behavior
+- Do not proceed past a decision point without confirmation.
+- Do not infer project conventions — ask or reference existing code.
+- Do not skip tests. Write tests before implementation.
+- When in doubt about a convention, ask rather than assume.
+
+## Skill Files
+Full constraint details are in `.constraint-kit/skills/` or in the
+constraint-kit library. Use `#file` references to load them explicitly:
+
+{%- for skill in skills %}
+`#file:{{ skill.file }}`
+{%- endfor %}
+
+{%- if context %}
+
+## Project Context
+{{ context }}
+{%- endif %}

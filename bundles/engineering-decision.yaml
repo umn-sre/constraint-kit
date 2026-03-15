@@ -1,0 +1,45 @@
+# constraint-kit bundle
+# ─────────────────────────────────────────────────────────────
+id: engineering-decision
+name: Engineering Decision
+schema_version: "0.1.0"
+
+description: >
+  Skills for working through and documenting a significant technical
+  decision. Moves from problem statement through options analysis to
+  a recorded decision with consequences documented. Use when facing
+  an architectural, tooling, or approach choice that others will
+  need to understand later.
+
+skills:
+  - brainstorming
+  - requirements-gathering
+  - decision-records
+
+activation: all-required
+
+personas:
+  - engineer
+
+primary_modes:
+  - reasoning
+  - collaborating
+  - generating-structured
+
+commonly_used_with_roles:
+  - engineer
+
+tags:
+  - engineering
+  - decisions
+  - architecture
+  - documentation
+
+usage_note: >
+  Use this when you need to make and record a consequential technical
+  decision, not just implement something already decided. For decisions
+  that are part of a larger feature, use new-feature-design instead,
+  which includes this bundle's skills.
+
+version: "0.1.0"
+author: constraint-kit

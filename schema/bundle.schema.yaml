@@ -1,0 +1,82 @@
+# constraint-kit: Bundle Schema
+# Version: 0.1.0
+#
+# A bundle is a named, reusable grouping of skills for a common workflow.
+# Bundles sit between skills (atomic) and roles (identity-level).
+# They answer "what skills do I need for THIS KIND OF WORK SESSION"
+# without requiring a full role definition.
+#
+# Bundles can be used in two ways:
+#   1. Referenced by a role as typical_bundles (discovery aid)
+#   2. Declared directly in a project's agent.yaml (explicit activation)
+#
+# Bundles do NOT define modes — skills within them carry their own mode tags.
+# Bundles do NOT replace roles — they augment them for specific task contexts.
+#
+# ─────────────────────────────────────────────────────────────
+
+# REQUIRED FIELDS
+# ───────────────
+
+# Unique identifier. kebab-case. Must match filename (without .yaml).
+# Example: "new-feature-design"
+id: <string>
+
+# Human-readable name. Title case.
+# Example: "New Feature Design"
+name: <string>
+
+# One sentence describing the workflow this bundle supports.
+# Example: "Skills for taking a rough idea through design, requirements, and a plan."
+description: <string>
+
+# Schema version this bundle targets.
+schema_version: "0.1.0"
+
+# Ordered list of skill ids this bundle activates.
+# Order matters: skills are presented to the agent in this sequence.
+# First skill sets context; subsequent skills build on it.
+skills:
+  - <skill-id>
+
+
+# OPTIONAL FIELDS
+# ───────────────
+
+# Which personas this bundle is most relevant for.
+# Used to filter bundle suggestions during bootstrap.
+# Valid values: engineer | researcher | writer | product-owner | any
+personas:
+  - <enum>  # optional, defaults to "any"
+
+# Which modes this bundle primarily operates in.
+# Informational — used for discovery and display.
+# Valid values: reasoning | collaborating | generating-code | generating-doc | generating-structured
+primary_modes:
+  - <enum>  # optional
+
+# Tags for discovery.
+tags:
+  - <string>  # optional
+
+# Roles this bundle is commonly used with.
+# Informational — helps users discover relevant bundles.
+commonly_used_with_roles:
+  - <role-id>  # optional
+
+# Whether all skills in this bundle are required, or if individual
+# skills may be skipped based on task context.
+# Valid values: all-required | context-dependent
+# Defaults to context-dependent if omitted.
+activation: context-dependent  # optional
+
+# Short note explaining when to use this bundle vs alternatives.
+# Example: "Use this when starting from a rough idea. If you already
+#           have clear requirements, use the document-drafting bundle instead."
+usage_note: <string>  # optional
+
+# Version of this bundle file.
+version: "0.1.0"  # optional
+
+# Author or contributor handle.
+author: <string>  # optional

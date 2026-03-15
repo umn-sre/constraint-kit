@@ -1,0 +1,44 @@
+# constraint-kit bundle
+# ─────────────────────────────────────────────────────────────
+id: new-feature-design
+name: New Feature Design
+schema_version: "0.1.0"
+
+description: >
+  Skills for taking a rough idea through exploration, requirements,
+  and a confirmed plan before any implementation begins. Use this
+  when starting from an idea or problem statement, not yet a
+  defined solution.
+
+skills:
+  - brainstorming
+  - requirements-gathering
+  - decision-records
+
+activation: all-required
+
+personas:
+  - engineer
+  - product-owner
+
+primary_modes:
+  - collaborating
+  - reasoning
+
+commonly_used_with_roles:
+  - engineer
+  - product-owner
+
+tags:
+  - planning
+  - design
+  - requirements
+  - starting-point
+
+usage_note: >
+  Use this bundle at the start of any new feature or significant change.
+  If you already have confirmed requirements and just need to produce
+  output, use the document-drafting or structured-output bundle instead.
+
+version: "0.1.0"
+author: constraint-kit

@@ -1,0 +1,73 @@
+# constraint-kit role
+# ─────────────────────────────────────────────────────────────
+id: researcher
+name: Researcher
+schema_version: "0.1.0"
+persona: researcher
+
+description: >
+  For anyone conducting structured inquiry and writing up findings.
+  Covers academic papers, literature reviews, research briefs, and
+  analytical documents across any subject domain. Not tied to any
+  field, institution, or discipline.
+
+onboarding_note: >
+  You are working on a research or writing project. Before drafting
+  anything, the agent will help you define your research question,
+  scope, and audience. It will propose an outline before writing
+  content, flag unsupported claims, and ask for sources rather than
+  inventing them. It will not proceed to drafting without your
+  approval of the structure.
+
+skills:
+  all_modes:
+    required:
+      - plain-language
+    recommended: []
+
+  reasoning:
+    required:
+      - argument-construction
+    recommended:
+      - research-brief
+
+  collaborating:
+    required:
+      - brainstorming
+      - research-brief
+    recommended:
+      - requirements-gathering
+
+  generating-doc:
+    required:
+      - document-structure
+      - argument-construction
+      - plain-language
+    recommended:
+      - research-brief
+
+  generating-structured:
+    required:
+      - document-structure
+      - requirements-gathering
+    recommended:
+      - argument-construction
+
+  # researchers do not typically use these modes
+  generating-code:
+    required: []
+    recommended: []
+
+typical_bundles:
+  - document-drafting
+  - research-inquiry
+
+tags:
+  - research
+  - academic
+  - writing
+  - analysis
+  - inquiry
+
+version: "0.1.0"
+author: constraint-kit
