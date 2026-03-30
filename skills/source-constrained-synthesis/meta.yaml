@@ -11,6 +11,7 @@ schema_version: "0.1.0"
 modes:
   - collaborating
   - generating-doc
+doc_type: academic
 personas:
   - researcher
   - writer

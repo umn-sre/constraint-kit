@@ -1,3 +1,4 @@
+schema_version: "0.1.0"
 id: constrained-code-generation
 name: Constrained Code Generation
 description: >

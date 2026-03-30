@@ -1,3 +1,4 @@
+schema_version: "0.1.0"
 id: constrained-synthesis
 name: Constrained Synthesis
 description: >
