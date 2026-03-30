@@ -33,16 +33,18 @@ log = logging.getLogger(__name__)
 # Configuration
 # ---------------------------------------------------------------------------
 
-_TOML_AVAILABLE = False
-try:
-    import tomllib  # stdlib since Python 3.11
-    _TOML_AVAILABLE = True
-except ImportError:
-    try:
-        import tomli as tomllib  # type: ignore[no-redef]  # noqa: F811
-        _TOML_AVAILABLE = True
-    except ImportError:
-        pass
+# _TOML_AVAILABLE = False
+# try:
+#     import tomllib  # stdlib since Python 3.11
+#     _TOML_AVAILABLE = True
+# except ImportError:
+#     try:
+#         import tomli as tomllib  # type: ignore[no-redef]  # noqa: F811
+#         _TOML_AVAILABLE = True
+#     except ImportError:
+#         pass
+import tomllib  # stdlib since Python 3.11
+_TOML_AVAILABLE = True
 
 _YAML_AVAILABLE = False
 try:
