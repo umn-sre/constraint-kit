@@ -1,0 +1,29 @@
+id: source-constrained-synthesis
+name: Source-Constrained Synthesis
+description: >
+  Constrains AI synthesis to only provided notes and sources.
+  Enforces epistemic closure: the AI produces an explicit inventory
+  of confirmed facts and available sources, flags every gap, and
+  asks before writing. Never fills unknowns from training knowledge.
+  Use for research papers, policy briefs, and any output where
+  citation traceability is required.
+schema_version: "0.1.0"
+modes:
+  - collaborating
+  - generating-doc
+personas:
+  - researcher
+  - writer
+tags:
+  - research
+  - synthesis
+  - epistemic
+  - citations
+  - constrained
+pairs_with:
+  - research-brief
+  - document-structure
+  - plain-language
+  - argument-construction
+provenance: null
+version: 0.1.0
