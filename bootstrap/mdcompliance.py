@@ -16,12 +16,10 @@ import json
 import logging
 import re
 import sys
-import tomllib  # Python 3.11+
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
-import tomli as tomllib  # type: ignore[no-redef]  # noqa: F811
 import yaml  # type: ignore[import]
 
 # ---------------------------------------------------------------------------
@@ -37,18 +35,18 @@ log = logging.getLogger(__name__)
 
 _TOML_AVAILABLE = False
 try:
-
+    import tomllib  # stdlib since Python 3.11
     _TOML_AVAILABLE = True
 except ImportError:
     try:
-
+        import tomli as tomllib  # type: ignore[no-redef]  # noqa: F811
         _TOML_AVAILABLE = True
     except ImportError:
         pass
 
 _YAML_AVAILABLE = False
 try:
-
+    import yaml  # type: ignore[import]  # noqa: F811
     _YAML_AVAILABLE = True
 except ImportError:
     pass
