@@ -23,6 +23,8 @@ from typing import Dict, List, Optional, Tuple
 
 import yaml  # type: ignore[import]
 
+_TOML_AVAILABLE = True
+_YAML_AVAILABLE = True
 # ---------------------------------------------------------------------------
 # Logging
 # ---------------------------------------------------------------------------
