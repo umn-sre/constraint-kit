@@ -1,0 +1,25 @@
+schema_version: "0.1.0"
+id: constrained-code-generation
+name: Constrained Code Generation
+description: >
+  Generates code that complies with project standards from the
+  first draft. Prevents workslop by requiring pattern reading,
+  dependency approval, and test design before code is written.
+  Covers greenfield, brownfield, and debugging sessions.
+personas:
+  - engineer
+primary_modes:
+  - generating-code
+  - collaborating
+skills:
+  - python-compliance
+  - systematic-debugging
+  - test-driven-development
+  - vibe-coding-discipline
+tags:
+  - engineering
+  - code-quality
+  - compliance
+  - testing
+  - patterns
+version: 0.1.0

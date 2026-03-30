@@ -1,0 +1,28 @@
+schema_version: "0.1.0"
+id: constrained-synthesis
+name: Constrained Synthesis
+description: >
+  Produces a paper, brief, or report derived exclusively from
+  provided notes and sources. Enforces epistemic closure: the AI
+  flags gaps and asks before writing, never filling unknowns from
+  training knowledge. Use for research synthesis, policy papers,
+  and any output where citation traceability is required.
+personas:
+  - researcher
+  - writer
+primary_modes:
+  - collaborating
+  - generating-doc
+skills:
+  - research-brief
+  - document-structure
+  - plain-language
+  - argument-construction
+  - source-constrained-synthesis
+tags:
+  - research
+  - synthesis
+  - epistemic
+  - citations
+  - constrained
+version: 0.1.0

@@ -1,0 +1,29 @@
+id: incident-causal-synthesis
+name: Incident Causal Synthesis
+description: >
+  Constrains post-mortem synthesis to provided incident evidence.
+  The AI constructs the causal chain only from the supplied timeline,
+  logs, and observations — never from general IT knowledge. Flags
+  every unsupported causal link before writing. Derives the on-call
+  playbook strictly from confirmed report findings. Use for incident
+  reports, post-mortems, and derived on-call playbooks.
+schema_version: "0.1.0"
+modes:
+  - collaborating
+  - generating-doc
+personas:
+  - engineer
+  - researcher
+tags:
+  - incident
+  - post-mortem
+  - root-cause
+  - synthesis
+  - constrained
+pairs_with:
+  - systematic-debugging
+  - document-structure
+  - plain-language
+  - decision-records
+provenance: null
+version: 0.1.0

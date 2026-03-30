@@ -1,5 +1,5 @@
 schema_version: 0.1.0
-last_updated: '2026-03-13'
+last_updated: '2026-03-30'
 personas:
 - id: engineer
   label: Engineer
@@ -59,6 +59,10 @@ roles:
   file: roles/researcher.yaml
   persona: researcher
   description: 'For anyone conducting structured inquiry and writing up findings.
+    Add source-constrained-synthesis to task_skills when the output must
+    be derived exclusively from provided notes and sources. Add
+    incident-causal-synthesis when the output is a post-mortem report
+    or derived on-call playbook.
 
     '
   tags:
@@ -216,6 +220,61 @@ bundles:
   - stories
   - agile
   - output
+  version: 0.1.0
+- id: constrained-synthesis
+  name: Constrained Synthesis
+  file: bundles/constrained-synthesis.yaml
+  personas:
+  - researcher
+  - writer
+  primary_modes:
+  - collaborating
+  - generating-doc
+  skills:
+  - research-brief
+  - document-structure
+  - plain-language
+  - argument-construction
+  - source-constrained-synthesis
+  description: 'Produces a paper, brief, or report derived exclusively from provided
+    notes and sources. Enforces epistemic closure: the AI flags gaps and
+    asks before writing, never filling unknowns from training knowledge.
+    Use for research synthesis, policy papers, and any output where
+    citation traceability is required.
+
+    '
+  tags:
+  - research
+  - synthesis
+  - epistemic
+  - citations
+  - constrained
+  version: 0.1.0
+- id: constrained-code-generation
+  name: Constrained Code Generation
+  file: bundles/constrained-code-generation.yaml
+  personas:
+  - engineer
+  primary_modes:
+  - generating-code
+  - collaborating
+  skills:
+  - python-compliance
+  - systematic-debugging
+  - test-driven-development
+  - vibe-coding-discipline
+  description: 'Generates code that complies with project standards from the first
+    draft. Prevents workslop by requiring pattern reading, dependency
+    approval, and test design before code is written. Covers greenfield,
+    brownfield, and debugging sessions.
+
+    '
+  tags:
+  - engineering
+  - code-quality
+  - compliance
+  - testing
+  - patterns
   version: 0.1.0
 skills:
 - id: brainstorming
@@ -458,6 +517,96 @@ skills:
     ruff, black, and isort. Covers import hygiene, formatting, docstrings, encoding,
     exception handling, and common anti-patterns — automating roughly 85% of mechanical
     lint issues.
+
+    '
+  version: 0.1.0
+- id: source-constrained-synthesis
+  name: Source-Constrained Synthesis
+  file: skills/source-constrained-synthesis/SKILL.md
+  meta: skills/source-constrained-synthesis/meta.yaml
+  modes:
+  - collaborating
+  - generating-doc
+  personas:
+  - researcher
+  - writer
+  tags:
+  - research
+  - synthesis
+  - epistemic
+  - citations
+  - constrained
+  pairs_with:
+  - research-brief
+  - document-structure
+  - plain-language
+  - argument-construction
+  provenance: null
+  description: 'Constrains AI synthesis to only provided notes and sources. Enforces
+    epistemic closure: the AI produces an explicit inventory of confirmed
+    facts and available sources, flags every gap, and asks before writing.
+    Never fills unknowns from training knowledge. Use for research papers,
+    policy briefs, and any output where citation traceability is required.
+
+    '
+  version: 0.1.0
+- id: incident-causal-synthesis
+  name: Incident Causal Synthesis
+  file: skills/incident-causal-synthesis/SKILL.md
+  meta: skills/incident-causal-synthesis/meta.yaml
+  modes:
+  - collaborating
+  - generating-doc
+  personas:
+  - engineer
+  - researcher
+  tags:
+  - incident
+  - post-mortem
+  - root-cause
+  - synthesis
+  - constrained
+  pairs_with:
+  - systematic-debugging
+  - document-structure
+  - plain-language
+  - decision-records
+  provenance: null
+  description: 'Constrains post-mortem synthesis to provided incident evidence. The
+    AI constructs the causal chain only from the supplied timeline, logs,
+    and observations — never from general IT knowledge. Flags every
+    unsupported causal link before writing. Derives the on-call playbook
+    strictly from confirmed report findings. Use for incident reports,
+    post-mortems, and derived on-call playbooks.
+
+    '
+  version: 0.1.0
+- id: vibe-coding-discipline
+  name: Vibe-Coding Discipline
+  file: skills/vibe-coding-discipline/SKILL.md
+  meta: skills/vibe-coding-discipline/meta.yaml
+  modes:
+  - generating-code
+  - collaborating
+  personas:
+  - engineer
+  tags:
+  - engineering
+  - code-quality
+  - patterns
+  - compliance
+  - anti-workslop
+  pairs_with:
+  - python-compliance
+  - systematic-debugging
+  - test-driven-development
+  provenance: null
+  description: 'Prevents workslop: code that looks correct but violates project
+    standards, ignores established patterns, or cannot be verified. Requires
+    the AI to read existing modules before writing new ones, state the test
+    before writing the function, confirm API shapes before using them, and
+    get explicit approval before adding any dependency. Covers greenfield,
+    brownfield, and debugging sessions.
 
     '
   version: 0.1.0

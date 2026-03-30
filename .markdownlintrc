@@ -22,7 +22,9 @@
   "no_emphasis_as_heading": true,
   "fenced_code_language": false,
   "disable": [
-    "MD036"
+    "MD036",
+    "MD013",
+
   ],
   "tables": false
 }
