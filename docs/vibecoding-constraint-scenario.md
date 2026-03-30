@@ -12,8 +12,6 @@ The same prompt. The same AI. The difference is whether the project's
 standards, patterns, approved dependencies, and testing requirements
 were encoded upfront.
 
----
-
 ## The codebase context
 
 A generic IT automation repo used as the shared reference across all
@@ -23,6 +21,7 @@ patterns any team would recognize.
 ### Repo structure
 
 ```
+
 it-automation/
 ├── .constraint-kit/
 │   └── agent.yaml
@@ -37,12 +36,15 @@ it-automation/
 │   └── rotate_api_key.py
 └── tests/
     └── test_check_cert_expiry.py
+
 ```
 
 ### Established patterns (what the codebase already does)
 
 ```python
+
 # lib/http_client.py — the approved HTTP wrapper
+
 import requests
 from lib.logger import get_logger
 
@@ -54,10 +56,13 @@ def get(url: str, timeout: int = 10) -> requests.Response:
     resp = requests.get(url, timeout=timeout)
     resp.raise_for_status()
     return resp
+
 ```
 
 ```python
+
 # scripts/check_cert_expiry.py — a complete existing script
+
 """Check SSL certificate expiry for a list of hostnames."""
 import sys
 from datetime import datetime, timezone
@@ -68,7 +73,6 @@ from lib.config import load_config
 
 log = get_logger(__name__)
 LINE_MAX = 120
-
 
 def check_expiry(hostname: str, port: int = 443) -> int:
     """Return days until certificate expiry for hostname."""
@@ -83,7 +87,6 @@ def check_expiry(hostname: str, port: int = 443) -> int:
     ).replace(tzinfo=timezone.utc)
     return (expiry - datetime.now(timezone.utc)).days
 
-
 def run(config: dict) -> None:
     """Check expiry for all hosts in config."""
     hosts = config.get("hosts", [])
@@ -94,19 +97,19 @@ def run(config: dict) -> None:
         else:
             log.info("Certificate OK: %s (%d days)", host, days)
 
-
 def main() -> None:
     config = load_config("cert_expiry")
     run(config)
 
-
 if __name__ == "__main__":
     main()
+
 ```
 
-### `pyproject.toml` constraints
+## `pyproject.toml` constraints
 
 ```toml
+
 [tool.ruff]
 line-length = 120
 
@@ -117,25 +120,30 @@ max-line-length = 120
 dependencies = [
     "requests>=2.31.0",
 ]
-# NOTE: httpx, aiohttp, urllib3 direct use — not approved.
-# Use lib/http_client.py wrapper for all HTTP calls.
-# No new top-level dependencies without team review.
+
+# NOTE: httpx, aiohttp, urllib3 direct use — not approved
+
+# Use lib/http_client.py wrapper for all HTTP calls
+
+# No new top-level dependencies without team review
+
 ```
 
-### `requirements.txt`
+## `requirements.txt`
 
 ```
+
 requests==2.31.0
 pyyaml==6.0.1
-```
 
----
+```
 
 ## The `agent.yaml` config
 
 This is what gets loaded at the start of every constrained session.
 
 ```yaml
+
 project: it-automation
 role: engineer
 mode: generating-code
@@ -166,9 +174,8 @@ constraints:
     say so and ask."
 session_history:
   - "Project initialized. Patterns established in check_cert_expiry.py."
-```
 
----
+```
 
 ## Session 1 — Greenfield
 
@@ -180,17 +187,14 @@ session_history:
 
 ### Unconstrained exchange
 
----
-
 **USER:** Write a script that queries our internal CMDB REST API to
 get a list of servers and checks whether each one has a valid SSH
 host key registered. Flag any server that is missing a key.
 
----
-
 **AI (unconstrained):**
 
 ```python
+
 import httpx
 import asyncio
 import paramiko
@@ -225,9 +229,8 @@ async def main():
             print(f"OK: {server['hostname']} - {fingerprint}")
 
 asyncio.run(main())
-```
 
----
+```
 
 **Failure modes present in this output:**
 
@@ -240,19 +243,13 @@ asyncio.run(main())
 
 The AI filled every unknown with plausible-looking assumptions. The script will not run without installing two unapproved packages, and the API call will fail because the response structure was invented.
 
----
-
 ### Constrained exchange
-
----
 
 **USER** *(pastes session starter from agent.yaml, then)*:
 
 > Write a script that queries our internal CMDB REST API to get a
 > list of servers and checks whether each one has a valid SSH host
 > key registered. Flag any server that is missing a key.
-
----
 
 **AI (constrained):**
 
@@ -284,8 +281,6 @@ The AI filled every unknown with plausible-looking assumptions. The script will 
 > I will propose the test alongside the function. Please confirm which
 > option before I write anything.
 
----
-
 **USER:**
 
 > Good questions.
@@ -298,11 +293,10 @@ The AI filled every unknown with plausible-looking assumptions. The script will 
 > 3. Confirmed on the HTTP wrapper.
 > 4. Confirmed on testability requirement.
 
----
-
 **AI (constrained) — writes the script:**
 
 ```python
+
 """Check SSH host key registration status via CMDB API."""
 import os
 import sys
@@ -313,7 +307,6 @@ from lib.config import load_config
 log = get_logger(__name__)
 LINE_MAX = 120
 CMDB_SERVERS_PATH = "/api/v1/servers"
-
 
 def fetch_servers(base_url: str, token: str) -> list[dict]:
     """Return server list from CMDB API.
@@ -330,7 +323,6 @@ def fetch_servers(base_url: str, token: str) -> list[dict]:
     resp = get(url, headers={"Authorization": f"Bearer {token}"})
     return resp.json()["servers"]
 
-
 def check_key_registration(servers: list[dict]) -> list[str]:
     """Return hostnames of servers missing SSH key registration.
 
@@ -345,7 +337,6 @@ def check_key_registration(servers: list[dict]) -> list[str]:
         for s in servers
         if not s.get("ssh_key_fingerprint")
     ]
-
 
 def run(config: dict) -> None:
     """Fetch server list and report missing SSH key registrations."""
@@ -364,14 +355,13 @@ def run(config: dict) -> None:
     if not missing:
         log.info("All %d servers have SSH keys registered", len(servers))
 
-
 def main() -> None:
     config = load_config("cmdb_ssh_check")
     run(config)
 
-
 if __name__ == "__main__":
     main()
+
 ```
 
 > **Test I will write alongside this:**
@@ -403,8 +393,6 @@ if __name__ == "__main__":
 > `requests_mock` or similar for integration tests — shall I add
 > those as well?
 
----
-
 **What the constraints prevented:**
 
 | FM | Constraint that fired | What the AI did instead |
@@ -413,8 +401,6 @@ if __name__ == "__main__":
 | FM-2 Unapproved dependency | `approved_http`, `dependencies` | Flagged `httpx`/`paramiko` before writing. Used `lib/http_client.py`. Asked for approval before adding anything. |
 | FM-3 Style violations | `python-compliance`, `approved_logging` | Module docstring present, `get_logger` used, `LINE_MAX` declared, no `print()`, no hardcoded credentials. |
 | FM-4 Untestable | `testing` | Designed `check_key_registration()` to be pure and testable. Proposed tests alongside the function before writing. |
-
----
 
 ## Session 2 — Brownfield
 
@@ -425,11 +411,10 @@ if __name__ == "__main__":
 
 ### Unconstrained exchange
 
----
-
 **AI (unconstrained):**
 
 ```python
+
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -447,9 +432,8 @@ def send_alert_email(hostname: str, days: int, recipient: str):
     server.login("alerts@company.com", "password123")
     server.sendmail(sender, recipient, msg.as_string())
     server.quit()
-```
 
----
+```
 
 **Failure modes present:**
 
@@ -461,11 +445,7 @@ def send_alert_email(hostname: str, days: int, recipient: str):
 
 The function would be pasted into the existing module and immediately clash with its style, making the module harder to maintain and the diff harder to review.
 
----
-
 ### Constrained exchange
-
----
 
 **AI (constrained):**
 
@@ -496,18 +476,15 @@ The function would be pasted into the existing module and immediately clash with
 > `send_fn` parameter that defaults to the real SMTP call, so tests
 > can pass a mock. Confirming this approach is acceptable.
 
----
-
 **USER:**
 
 > Use stdlib smtplib. Read all SMTP config from load_config.
 > Testability via send_fn injection is fine.
 
----
-
 **AI (constrained) — adds the function:**
 
 ```python
+
 def send_expiry_alert(
     hostname: str,
     days: int,
@@ -534,7 +511,6 @@ def send_expiry_alert(
     log.info("Sending expiry alert for %s", hostname)
     send_fn(subject, body, config)
 
-
 def _smtp_send(subject: str, body: str, config: dict) -> None:
     """Send email via SMTP using config values.
 
@@ -553,6 +529,7 @@ def _smtp_send(subject: str, body: str, config: dict) -> None:
         server.sendmail(
             config["smtp_from"], [config["smtp_to"]], msg.as_string()
         )
+
 ```
 
 > Updated `run()` to call `send_expiry_alert` when threshold is hit:
@@ -591,8 +568,6 @@ def _smtp_send(subject: str, body: str, config: dict) -> None:
 >     assert "14 days" in calls[0][0]
 > ```
 
----
-
 **What the constraints prevented:**
 
 | FM | Constraint that fired | What the AI did instead |
@@ -600,8 +575,6 @@ def _smtp_send(subject: str, body: str, config: dict) -> None:
 | FM-3 Style violations | `python-compliance` | Full docstrings, type hints, `log` calls, config-driven values, 120-char limit respected. |
 | FM-5 Ignores patterns | `patterns` | Read existing module first. Matched `run(config)` structure, used `get_logger`, config-driven SMTP settings. |
 | FM-4 Untestable | `testing` | Injected `send_fn` parameter. `_smtp_send` isolated as private function. Test proposed before function finalized. |
-
----
 
 ## Session 3 — Debugging
 
@@ -613,12 +586,12 @@ def _smtp_send(subject: str, body: str, config: dict) -> None:
 
 ### Unconstrained exchange
 
----
-
 **AI (unconstrained):**
 
 ```python
+
 # Just catch the exception and skip it
+
 def check_expiry(hostname: str, port: int = 443) -> int:
     try:
         ctx = ssl.create_default_context()
@@ -633,9 +606,8 @@ def check_expiry(hostname: str, port: int = 443) -> int:
         return (expiry - datetime.now(timezone.utc)).days
     except Exception:
         return -1  # Return -1 if anything goes wrong
-```
 
----
+```
 
 **Failure modes present:**
 
@@ -647,11 +619,7 @@ def check_expiry(hostname: str, port: int = 443) -> int:
 
 The function now returns `-1` for any failure — connection timeout, DNS failure, certificate format issue — and the caller cannot distinguish between them. `run()` will log a warning for all of them as if they are expiring certificates.
 
----
-
-### Constrained exchange
-
----
+## Constrained exchange
 
 **AI (constrained):**
 
@@ -745,8 +713,6 @@ The function now returns `-1` for any failure — connection timeout, DNS failur
 > Shall I also add a parametrized test covering both formats in one
 > pass?
 
----
-
 **What the constraints prevented:**
 
 | FM | Constraint that fired | What the AI did instead |
@@ -755,38 +721,40 @@ The function now returns `-1` for any failure — connection timeout, DNS failur
 | FM-4 Untestable | `testing` | Extracted `_parse_cert_date()` as a pure function testable without network. Three tests proposed before the fix was finalized. |
 | FM-5 Ignores patterns | `patterns`, `systematic-debugging` | Diagnosed the actual cause before writing any code. Did not introduce silent swallowing — a pattern with no precedent in this codebase. |
 
----
-
 ## The `agent.yaml` config — adding the vibe-coding skills
 
 Add these two skills to the `task_skills` list for any code-generation
 session, alongside the existing `python-compliance` skill:
 
 ```yaml
+
 task_skills:
   - python-compliance
   - systematic-debugging
   - test-driven-development
-```
 
----
+```
 
 ## New skills for `registry.yaml`
 
 ### `vibe-coding-discipline`
 
 ```markdown
+
 # Skill: vibe-coding-discipline
 
 ## Purpose
+
 Prevent workslop: code that looks correct but violates project
 standards, ignores established patterns, or cannot be verified.
 
 ## When this skill is active
+
 Any code generation session where the project has established
 patterns, approved dependencies, or testing requirements.
 
 ## Agent behavior
+
 - Read existing modules before writing new ones.
 - Match function signatures, docstring style, and module structure
   to what already exists in the repo.
@@ -798,6 +766,7 @@ patterns, approved dependencies, or testing requirements.
 - Do not introduce a pattern that has no precedent in the codebase.
 
 ## Anti-patterns
+
 - Writing a function before reading the module it will live in.
 - Using a bare except to hide errors rather than fix them.
 - Hardcoding credentials, URLs, or configuration values.
@@ -806,16 +775,17 @@ patterns, approved dependencies, or testing requirements.
 - Using print() instead of the approved logger.
 
 ## Transition
+
 Do not generate code until the function's test has been stated.
 Do not use an external API until its response structure has been
 confirmed from provided documentation.
-```
 
----
+```
 
 ## New bundle for `registry.yaml`
 
 ```yaml
+
 id: constrained-code-generation
 name: Constrained code generation
 description: >
@@ -827,4 +797,5 @@ skills:
   - systematic-debugging
   - test-driven-development
   - vibe-coding-discipline
+
 ```

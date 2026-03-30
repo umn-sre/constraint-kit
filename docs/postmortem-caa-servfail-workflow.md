@@ -8,8 +8,6 @@ effective March 5–12, 2026.
 
 ![Phase diagram](postmortem-caa-servfail-flow.svg)
 
----
-
 ## Background: what changed and why this incident class emerged
 
 Starting March 5–12, 2026, Sectigo began enforcing DNSSEC validation
@@ -41,8 +39,6 @@ attacker tampering with records — so the CA must treat it as a
 blocking error, not as permission to proceed.
 [RFC 8659; Sectigo DNSSEC Reference]
 
----
-
 ## The incident scenario
 
 An enterprise requests a publicly-trusted SSL certificate from Sectigo
@@ -59,13 +55,12 @@ This is the root cause behind the reports circulating in the first
 week of March 2026: not a CAA record explicitly blocking Sectigo, but
 a SERVFAIL on a private name that Sectigo now treats as a hard stop.
 
----
-
 ## What you assemble before the session
 
 ### `incident-inputs.md`
 
 ```markdown
+
 # Incident inputs — INC-2026-0305-CAA
 
 ## Incident metadata
@@ -158,11 +153,13 @@ Certbot ACME log (where applicable):
 - Technical detail: SRE, DNS team, certificate pipeline owners.
   Need: full causal chain, RFC references, mitigation options with
   tradeoffs, action items with owners.
+
 ```
 
 ### `sources.yaml`
 
 ```yaml
+
 sources:
   - id: TICKET-INC-0305
     title: "Help desk ticket INC-2026-0305-CAA"
@@ -214,13 +211,13 @@ sources:
     date: "2026-03-07"
     notes: "DNS team checking — not confirmed at time of write-up"
     available: false
-```
 
----
+```
 
 ## The `agent.yaml` config
 
 ```yaml
+
 project: postmortem-INC-2026-0305-CAA
 role: researcher
 mode: collaborating
@@ -271,9 +268,8 @@ epistemic_constraint: >
   or PKI knowledge to fill causal gaps not supported by provided
   materials. When a causal link lacks evidence, say so and ask.
 output_format: markdown
-```
 
----
+```
 
 ## Annotated conversation
 
@@ -281,8 +277,6 @@ output_format: markdown
 
 > I have attached incident-inputs.md and sources.yaml. Please confirm
 > and begin Phase 1.
-
----
 
 **AI — Phase 1: Epistemic inventory**
 
@@ -321,8 +315,6 @@ output_format: markdown
 > Please resolve these before I proceed to Phase 2, or tell me
 > to scope them out and flag as post-incident investigation items.
 
----
-
 **USER — gap resolution:**
 
 > 1. Inventory: I pulled it. 14 certificates under *.internal.example.com.
@@ -333,8 +325,6 @@ output_format: markdown
 >    internal.example.com. The SERVFAIL is purely a reachability
 >    failure — the public resolver simply cannot reach the internal
 >    nameserver. Not a DNSSEC misconfiguration.
-
----
 
 **AI — Phase 2: Causal chain**
 
@@ -387,8 +377,6 @@ output_format: markdown
 >
 > Proceeding to Phase 3.
 
----
-
 **AI — Phase 3a: Executive summary**
 
 > ---
@@ -433,8 +421,6 @@ output_format: markdown
 >    via help desk tickets.
 >
 > ---
-
----
 
 **AI — Phase 3b: Technical detail**
 
@@ -531,8 +517,6 @@ output_format: markdown
 > | AI-4 | F-1 | Audit all other internal zone names used in Sectigo certificates | SRE | Full inventory with expiry dates; zones assessed for public reachability |
 >
 > ---
-
----
 
 **AI — Phase 4: On-call playbook**
 
@@ -655,23 +639,25 @@ output_format: markdown
 >
 > ---
 
----
-
 ## New skill for `registry.yaml`
 
 ```markdown
+
 # Skill: incident-causal-synthesis
 
 ## Purpose
+
 Constrain post-mortem synthesis to provided evidence. Eliminate
 inference from general IT knowledge. Make causal gaps explicit
 before the report is written.
 
 ## When this skill is active
+
 Any session producing a post-mortem report or derived playbook
 where the AI must not go beyond provided incident evidence.
 
 ## Agent behavior
+
 - Produce an explicit epistemic inventory before causal analysis.
 - Assert only what is supported by provided timeline and evidence.
 - Cite RFC and vendor documentation where marked available.
@@ -681,18 +667,19 @@ where the AI must not go beyond provided incident evidence.
 - Never fill gaps with general IT or domain knowledge.
 
 ## Anti-patterns
+
 - Asserting root cause not supported by provided evidence.
 - Using general DNS/PKI knowledge to bridge a gap in the causal chain.
 - Proceeding to Phase 3 with an unresolved causal link.
 - Writing playbook steps not traceable to a specific finding.
 
 ## Transition
+
 Phase 2 → Phase 3 only after the user has explicitly confirmed
 or scoped out every flagged causal gap.
 Phase 3 → Phase 4 only after both audience tiers are complete.
-```
 
----
+```
 
 ## Sources cited in this scenario
 

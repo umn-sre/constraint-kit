@@ -9,9 +9,7 @@ for each, and best practices for reliable multi-surface workflows.
 For the rationale behind this pattern and the failure modes it
 addresses, see `docs/Multiple_AI_Surfaces.md`.
 
----
-
-## 1. Why Use Multiple AI Surfaces?
+## 1. Why Use Multiple AI Surfaces
 
 Complex projects benefit from using the right AI for each phase:
 
@@ -29,15 +27,11 @@ records, and handles recovery when files are corrupted. The
 Splitting these roles, with clear session boundaries and a portable
 constraint document, reduces context drift and improves reliability.
 
----
-
 ## 2. Prerequisites
 
 - Python 3, `pyyaml`, `jinja2` installed
 - constraint-kit cloned or installed
 - Project repo initialized with `.constraint-kit/agent.yaml`
-
----
 
 ## 3. Example Use Cases
 
@@ -58,8 +52,6 @@ the available patterns:
 
 See `registry.yaml` for all available bundles and skills.
 
----
-
 ### Example A: Adding a Cross-Cutting Feature to Existing Modules
 
 **Scenario:** A new capability needs to be wired consistently across
@@ -71,7 +63,9 @@ code is written. The implementer wires one module per session.
 #### Supervisor session (Gemini) — design phase
 
 **`.constraint-kit/agent-supervisor.yaml`**
+
 ```yaml
+
 project: my-project
 role: engineer
 mode: reasoning
@@ -86,12 +80,16 @@ bundles:
 session_history:
   - "2026-03-10: Project initialized. Feature scope confirmed."
   - "2026-03-10: No design decisions recorded yet."
+
 ```
 
 ```bash
+
 python render.py .constraint-kit/agent-supervisor.yaml \
   --target session-prompt --write
+
 # Writes to: .constraint-kit/session-starter.md
+
 ```
 
 **Session notes:**
@@ -104,22 +102,27 @@ python render.py .constraint-kit/agent-supervisor.yaml \
   written, `session_history` updated.
 
 **Update `agent-supervisor.yaml` before closing:**
+
 ```yaml
+
 session_history:
   - "2026-03-10: Project initialized. Feature scope confirmed."
   - "2026-03-10: DR-001 approved. Interface defined in feature_dimensions.yaml."
+
 ```
 
-#### Handoff
+## Handoff
 
 Update `.constraint-kit/agent-implementer.yaml` with the approved
 task and the current session history. Re-render before opening
 Copilot.
 
-#### Implementer session (Copilot) — wiring phase
+### Implementer session (Copilot) — wiring phase
 
 **`.constraint-kit/agent-implementer.yaml`**
+
 ```yaml
+
 project: my-project
 role: engineer
 mode: generating-code
@@ -131,13 +134,18 @@ target: copilot-instructions
 session_history:
   - "2026-03-10: DR-001 approved. Interface defined in feature_dimensions.yaml."
   - "2026-03-10: module_a.py is the first wiring target."
+
 ```
 
 ```bash
+
 python render.py .constraint-kit/agent-implementer.yaml \
   --target copilot-instructions --write
+
 # Writes to: .github/copilot-instructions.md
-# Copilot auto-loads this file — no paste required.
+
+# Copilot auto-loads this file — no paste required
+
 ```
 
 **Session notes:**
@@ -150,9 +158,7 @@ python render.py .constraint-kit/agent-implementer.yaml \
 - Exit condition: `module_a.py` committed clean. Repeat this session
   for each remaining module, updating `task` each time.
 
----
-
-### Example B: Refactoring Shared Infrastructure Under Active Use
+## Example B: Refactoring Shared Infrastructure Under Active Use
 
 **Scenario:** A shared helper module (`helpers.py`) used by multiple
 callers needs its signatures updated — new patterns introduced, old
@@ -160,10 +166,12 @@ ones deprecated — without breaking existing callers. The supervisor
 inventories call sites and records the deprecation plan. The
 implementer updates one call site per session.
 
-#### Supervisor session (Gemini) — inventory and decision phase
+### Supervisor session (Gemini) — inventory and decision phase
 
 **`.constraint-kit/agent-supervisor.yaml`**
+
 ```yaml
+
 project: my-project
 role: engineer
 mode: collaborating
@@ -181,12 +189,16 @@ task_skills:
 session_history:
   - "2026-03-11: Refactor scope identified. helpers.py signature change approved."
   - "2026-03-11: Call site inventory not yet complete."
+
 ```
 
 ```bash
+
 python render.py .constraint-kit/agent-supervisor.yaml \
   --target session-prompt --write
+
 # Writes to: .constraint-kit/session-starter.md
+
 ```
 
 **Session notes:**
@@ -201,21 +213,26 @@ python render.py .constraint-kit/agent-supervisor.yaml \
   updated.
 
 **Update `agent-supervisor.yaml` before closing:**
+
 ```yaml
+
 session_history:
   - "2026-03-11: Refactor scope identified. helpers.py signature change approved."
   - "2026-03-11: DR-002 approved. 4 call sites identified, migration order recorded."
+
 ```
 
-#### Handoff
+## Handoff
 
 Update `.constraint-kit/agent-implementer.yaml` with the first
 call site as the task target. Re-render before opening Copilot.
 
-#### Implementer session (Copilot) — call site update phase
+### Implementer session (Copilot) — call site update phase
 
 **`.constraint-kit/agent-implementer.yaml`**
+
 ```yaml
+
 project: my-project
 role: engineer
 mode: generating-code
@@ -227,12 +244,16 @@ target: copilot-instructions
 session_history:
   - "2026-03-11: DR-002 approved. 4 call sites identified, migration order recorded."
   - "2026-03-11: service_a.py is call site 1 of 4."
+
 ```
 
 ```bash
+
 python render.py .constraint-kit/agent-implementer.yaml \
   --target copilot-instructions --write
+
 # Writes to: .github/copilot-instructions.md
+
 ```
 
 **Session notes:**
@@ -246,9 +267,7 @@ python render.py .constraint-kit/agent-implementer.yaml \
   `session_history` for the next call site and re-render before the
   next session.
 
----
-
-### Example C: Incident Response Runbook Authoring
+## Example C: Incident Response Runbook Authoring
 
 **Scenario:** A novel incident has occurred. A new runbook needs to
 be authored quickly against an established schema and validated
@@ -256,10 +275,12 @@ against the existing runbook corpus before use. The supervisor
 synthesizes the incident timeline into a runbook structure. The
 implementer generates the runbook against the schema.
 
-#### Supervisor session (Gemini) — synthesis phase
+### Supervisor session (Gemini) — synthesis phase
 
 **`.constraint-kit/agent-supervisor.yaml`**
+
 ```yaml
+
 project: my-project
 role: engineer
 mode: reasoning
@@ -276,12 +297,16 @@ task_skills:
 session_history:
   - "2026-03-12: Incident postmortem complete. Timeline committed."
   - "2026-03-12: Runbook outline not yet started."
+
 ```
 
 ```bash
+
 python render.py .constraint-kit/agent-supervisor.yaml \
   --target session-prompt --write
+
 # Writes to: .constraint-kit/session-starter.md
+
 ```
 
 **Session notes:**
@@ -297,22 +322,27 @@ python render.py .constraint-kit/agent-supervisor.yaml \
   `docs/runbook-outline-2026-03-12.md`, `session_history` updated.
 
 **Update `agent-supervisor.yaml` before closing:**
+
 ```yaml
+
 session_history:
   - "2026-03-12: Incident postmortem complete. Timeline committed."
   - "2026-03-12: Runbook outline approved. Committed as docs/runbook-outline-2026-03-12.md."
+
 ```
 
-#### Handoff
+## Handoff
 
 Update `.constraint-kit/agent-implementer.yaml` with the generation
 task and the outline as the authoritative input. Re-render before
 opening Copilot.
 
-#### Implementer session (Copilot) — generation phase
+### Implementer session (Copilot) — generation phase
 
 **`.constraint-kit/agent-implementer.yaml`**
+
 ```yaml
+
 project: my-project
 role: engineer
 mode: generating-code
@@ -326,12 +356,16 @@ target: copilot-instructions
 session_history:
   - "2026-03-12: Runbook outline approved. Committed as docs/runbook-outline-2026-03-12.md."
   - "2026-03-12: Generating runbook against schema."
+
 ```
 
 ```bash
+
 python render.py .constraint-kit/agent-implementer.yaml \
   --target copilot-instructions --write
+
 # Writes to: .github/copilot-instructions.md
+
 ```
 
 **Session notes:**
@@ -347,29 +381,35 @@ python render.py .constraint-kit/agent-implementer.yaml \
   Switch back to the supervisor session (Gemini) for consistency
   review against the existing runbook corpus.
 
----
-
 ## 4. Render Session Starters for Each Surface
 
 **For the supervisor (Gemini browser):**
+
 ```bash
+
 python render.py .constraint-kit/agent-supervisor.yaml \
   --target session-prompt --write
+
 # Writes to: .constraint-kit/session-starter.md
+
 ```
+
 Paste the contents of `.constraint-kit/session-starter.md` as your
 first message in the Gemini session.
 
 **For the implementer (Copilot Chat):**
+
 ```bash
+
 python render.py .constraint-kit/agent-implementer.yaml \
   --target copilot-instructions --write
+
 # Writes to: .github/copilot-instructions.md
+
 ```
+
 Copilot auto-loads `.github/copilot-instructions.md` for in-editor
 sessions. No paste required.
-
----
 
 ## 5. Running Sessions and Switching Surfaces
 
@@ -396,8 +436,6 @@ between phases.** The session history is the only mechanism that
 carries decisions across surfaces. If it is not updated, the next
 session starts without knowledge of what was decided.
 
----
-
 ## 6. Best Practices
 
 - **Keep generating sessions short.** 90 minutes is a practical
@@ -414,8 +452,6 @@ session starts without knowledge of what was decided.
 - **Paste the session starter at the start of every new session.**
   For Gemini, this is manual. For Copilot, the auto-loaded
   `copilot-instructions.md` handles it.
-
----
 
 ## 7. Troubleshooting and Recovery
 
@@ -436,8 +472,6 @@ design context during reconstruction.
 that contradicts an earlier decision, the session history was not
 updated after the earlier session. Update it now, re-render, and
 restart.
-
----
 
 ## References
 

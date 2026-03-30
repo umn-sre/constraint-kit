@@ -5,13 +5,9 @@ sources, with an AI surface acting as synthesizer rather than knowledge
 generator. The AI is constrained to only what you bring — it flags gaps
 and asks before it writes.
 
----
-
 ## Phase diagram
 
 ![Phase diagram](research-synthesis-flow.svg)
-
----
 
 ## What this workflow does
 
@@ -39,8 +35,6 @@ paper using only cited materials. Every assertion is tied to a source.
 Author conclusions are labelled as such and distinguished from cited
 findings.
 
----
-
 ## The epistemic constraint
 
 This is the core rule the AI must follow in every phase:
@@ -57,11 +51,10 @@ Common anti-patterns to watch for and reject:
 - Proceeding to Phase 3 with unresolved gaps affecting the argument
 - Using contested figures without flagging the contestation
 
----
-
 ## The `agent.yaml` config
 
 ```yaml
+
 project: my-paper
 role: researcher
 mode: collaborating
@@ -92,9 +85,8 @@ epistemic_constraint: >
   or in a full_text_provided: true source. When a claim cannot be
   sourced to provided materials, say so explicitly and ask.
   Never use training knowledge to fill factual gaps.
-```
 
----
+```
 
 ## The `notes.md` structure
 
@@ -102,28 +94,33 @@ Provide your notes in sections that map directly to what the AI
 needs to work with:
 
 ```markdown
+
 # Working notes — [topic]
 
 ## Facts I want to establish
+
 - Claim. Source: [source name, year]. NOTE: any caveats.
 - ...
 
 ## Things I am not sure about / need to check
+
 - Open question 1
 - Open question 2
 
 ## Intended argument
+
 One paragraph stating the thesis.
 
 ## Audience
-Who will read this. Tone, assumed knowledge, sensitivities.
-```
 
----
+Who will read this. Tone, assumed knowledge, sensitivities.
+
+```
 
 ## The `sources.yaml` structure
 
 ```yaml
+
 sources:
   - id: SOURCE-ID
     title: "Full title"
@@ -132,13 +129,12 @@ sources:
     url: "https://..."
     notes: "Any caveats about this source"
     full_text_provided: true   # or false — citation only
+
 ```
 
 Mark `full_text_provided: false` when you have the citation but not
 the full text. The AI will cite the reference but may only assert
 facts that also appear in your notes.
-
----
 
 ## Output path
 
@@ -150,25 +146,27 @@ When Phase 3 is complete, ask the AI to format for your target:
 | `.docx` | `pandoc -o paper.docx paper.md` |
 | Markdown | Keep as-is; version-control friendly, diff-able |
 
----
-
 ## New skill for `registry.yaml`
 
 Add this to make the epistemic constraint automatic for any
 `role: researcher` session:
 
 ```markdown
+
 # Skill: source-constrained-synthesis
 
 ## Purpose
+
 Constrain AI synthesis to only provided materials. Eliminate
 training-data fill-in. Make gaps explicit before writing begins.
 
 ## When this skill is active
+
 Any session producing a paper, brief, or report where the AI
 must not go beyond what the user has supplied.
 
 ## Agent behavior
+
 - Produce an explicit epistemic inventory before outlining.
 - Assert only what appears in notes or full_text_provided sources.
 - Flag every unsourced claim in notes as uncertain.
@@ -176,12 +174,15 @@ must not go beyond what the user has supplied.
 - Never write around a gap using assumed knowledge.
 
 ## Anti-patterns
+
 - Citing training knowledge as if it were a provided source.
 - Proceeding to Phase 3 with unresolved gaps that affect the argument.
 - Asserting contested figures without flagging the contestation.
 - Using "it is generally understood that…" to fill sourcing holes.
 
 ## Transition
+
 Phase 2 → Phase 3 only after the user has explicitly resolved
 all flagged gaps.
+
 ```
