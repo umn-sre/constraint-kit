@@ -217,13 +217,56 @@ def cmd_list():
     print()
 
 
+def load_agent_with_base(path: Path) -> dict:
+    """
+    Load agent.yaml, merging with base file if extends: is set.
+
+    Merge strategy:
+    - Scalar fields (role, mode, task, target, project): override wins
+    - List fields (task_skills, bundles, suppress_skills): override wins
+    - session_history: lists concatenated (base first, then override)
+    - context: override wins if present and non-empty; base used otherwise
+    - extends: consumed during merge, not passed to renderer
+    """
+    with path.open(encoding="utf-8") as f:
+        agent = yaml.safe_load(f) or {}
+
+    base_path_str = agent.pop("extends", None)
+    if not base_path_str:
+        return agent
+
+    base_path = path.parent / base_path_str
+    if not base_path.exists():
+        sys.exit(f"ERROR: extends base file not found: {base_path}")
+
+    with base_path.open(encoding="utf-8") as f:
+        base = yaml.safe_load(f) or {}
+
+    # Base values are the starting point — override file wins on conflict
+    merged = {**base}
+
+    for key, value in agent.items():
+        if key == "session_history":
+            # Concatenate — base history first, then override additions
+            base_history = base.get("session_history") or []
+            override_history = value or []
+            merged["session_history"] = base_history + override_history
+        elif key == "context":
+            # Override wins only if non-empty
+            if value and str(value).strip():
+                merged["context"] = value
+        else:
+            merged[key] = value
+
+    return merged
+
+
 def cmd_render(agent_path: str, target_override: str, write: bool):
     path = Path(agent_path)
     if not path.exists():
         sys.exit(f"ERROR: File not found: {agent_path}")
 
-    with open(path, encoding="utf-8") as f:
-        agent = yaml.safe_load(f)
+    agent = load_agent_with_base(path)
 
     output = render(agent, target_override)
 
