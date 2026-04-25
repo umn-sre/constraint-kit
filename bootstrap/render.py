@@ -62,7 +62,42 @@ def load_registry():
         return yaml.safe_load(f)
 
 
-def load_role(role_id: str) -> dict:
+def load_extension_index(agent: dict, agent_path: Path):
+    """
+    Reads the extension manifest named by agent['extension'] (relative to
+    agent_path's directory) and returns (skill_index, role_index).
+
+    skill_index: {skill_id: {"file": Path, "meta": Path|None}}
+    role_index:  {role_id: Path}
+    """
+    ext_rel = agent.get("extension")
+    if not ext_rel:
+        return {}, {}
+    manifest_path = (agent_path.parent.parent / ext_rel).resolve()
+    if not manifest_path.exists():
+        sys.exit(f"ERROR: Extension manifest not found: {manifest_path}")
+    with open(manifest_path, encoding="utf-8") as f:
+        manifest = yaml.safe_load(f)
+    ext_root = manifest_path.parent
+    skill_index = {}
+    for entry in manifest.get("skills", []):
+        skill_index[entry["id"]] = {
+            "file": ext_root / entry["file"],
+            "meta": (ext_root / entry["meta"]) if "meta" in entry else None,
+        }
+    role_index = {}
+    for entry in manifest.get("roles", []):
+        role_index[entry["id"]] = ext_root / entry["file"]
+    return skill_index, role_index
+
+
+def load_role(role_id: str, ext_roles: dict = None) -> dict:
+    if ext_roles and role_id in ext_roles:
+        role_path = ext_roles[role_id]
+        if not role_path.exists():
+            sys.exit(f"ERROR: Extension role '{role_id}' not found at {role_path}")
+        with open(role_path, encoding="utf-8") as f:
+            return yaml.safe_load(f)
     role_path = ROLES_DIR / f"{role_id}.yaml"
     if not role_path.exists():
         sys.exit(f"ERROR: Role '{role_id}' not found at {role_path}")
@@ -70,7 +105,23 @@ def load_role(role_id: str) -> dict:
         return yaml.safe_load(f)
 
 
-def load_skill(skill_id: str) -> dict:
+def load_skill(skill_id: str, ext_skills: dict = None) -> dict:
+    if ext_skills and skill_id in ext_skills:
+        entry = ext_skills[skill_id]
+        skill_file = entry["file"]
+        meta_file = entry["meta"]
+        if meta_file and meta_file.exists():
+            with open(meta_file, encoding="utf-8") as f:
+                meta = yaml.safe_load(f)
+            meta["file"] = str(skill_file)
+            return meta
+        return {
+            "id": skill_id,
+            "name": skill_id,
+            "description": "",
+            "file": str(skill_file),
+            "modes": [],
+        }
     meta_path = SKILLS_DIR / skill_id / "meta.yaml"
     skill_path = SKILLS_DIR / skill_id / "SKILL.md"
     if not meta_path.exists():
@@ -100,7 +151,8 @@ def load_bundle(bundle_id: str) -> dict:
 
 
 def resolve_skills(
-    role: dict, mode: str, task_skills: list, bundles: list, suppress: list
+    role: dict, mode: str, task_skills: list, bundles: list, suppress: list,
+    ext_skills: dict = None
 ) -> tuple:
     """
     Returns (required_skills, recommended_skills) as lists of skill dicts.
@@ -142,8 +194,8 @@ def resolve_skills(
     # recommended should not overlap with required
     recommended_ids -= required_ids
 
-    required_skills = [load_skill(sid) for sid in sorted(required_ids)]
-    recommended_skills = [load_skill(sid) for sid in sorted(recommended_ids)]
+    required_skills = [load_skill(sid, ext_skills) for sid in sorted(required_ids)]
+    recommended_skills = [load_skill(sid, ext_skills) for sid in sorted(recommended_ids)]
 
     return required_skills, recommended_skills
 
@@ -151,8 +203,11 @@ def resolve_skills(
 # ── Rendering ──────────────────────────────────────────────────────────────
 
 
-def render(agent: dict, target_override: str = None) -> str:
-    role = load_role(agent["role"])
+def render(agent: dict, target_override: str = None, agent_path: Path = None) -> str:
+    ext_skills, ext_roles = {}, {}
+    if agent_path:
+        ext_skills, ext_roles = load_extension_index(agent, agent_path)
+    role = load_role(agent["role"], ext_roles)
     mode = agent["mode"]
     target = target_override or agent.get("target", "session-prompt")
 
@@ -162,6 +217,7 @@ def render(agent: dict, target_override: str = None) -> str:
         task_skills=agent.get("task_skills", []),
         bundles=agent.get("bundles", []),
         suppress=agent.get("suppress_skills", []),
+        ext_skills=ext_skills,
     )
 
     template_name = TARGET_TO_TEMPLATE.get(target)
@@ -268,7 +324,7 @@ def cmd_render(agent_path: str, target_override: str, write: bool):
 
     agent = load_agent_with_base(path)
 
-    output = render(agent, target_override)
+    output = render(agent, target_override, agent_path=path)
 
     target = target_override or agent.get("target", "session-prompt")
     output_filename = TARGET_TO_OUTPUT.get(target, "output.md")

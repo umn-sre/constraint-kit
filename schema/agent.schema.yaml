@@ -81,6 +81,14 @@ context: |
 # Example: "../my-private-skills/constraint-kit.yaml"
 extension: <path>  # optional
 
+# Path to a surface registry YAML file.
+# Defines available AI surfaces and their constraints (token budget,
+# file verification requirements, loop detection behavior, etc.).
+# Resolved relative to the project root (the directory containing .constraint-kit/).
+# If set via extension manifest, this field is not required in agent.yaml.
+# Example: "registries/surface-registry.yaml"
+surface_registry_path: <path>  # optional
+
 # Notes on decisions made in previous sessions.
 # Human-maintained. Included in rendered output as prior context.
 # Updated manually after significant sessions.
