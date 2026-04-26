@@ -43,7 +43,7 @@ personas:
 roles:
 - id: engineer
   name: Engineer
-  file: roles/engineer.yaml
+  file: schema/roles/engineer.yaml
   persona: engineer
   description: 'For anyone building, maintaining, or automating software and infrastructure.
 
@@ -56,7 +56,7 @@ roles:
   version: 0.1.0
 - id: researcher
   name: Researcher
-  file: roles/researcher.yaml
+  file: schema/roles/researcher.yaml
   persona: researcher
   description: 'For anyone conducting structured inquiry and writing up findings.
     Add source-constrained-synthesis to task_skills when the output must
@@ -74,7 +74,7 @@ roles:
   version: 0.1.0
 - id: writer
   name: Writer
-  file: roles/writer.yaml
+  file: schema/roles/writer.yaml
   persona: writer
   description: 'For anyone producing written work where clarity and structure are
     the primary concerns.
@@ -88,7 +88,7 @@ roles:
   version: 0.1.0
 - id: product-owner
   name: Product Owner
-  file: roles/product-owner.yaml
+  file: schema/roles/product-owner.yaml
   persona: product-owner
   description: 'For anyone defining product work: features, stories, acceptance criteria,
     and the decisions that shape them.
