@@ -35,7 +35,7 @@ from jinja2 import Environment, FileSystemLoader
 
 REPO_ROOT = Path(__file__).parent.parent
 REGISTRY_PATH = REPO_ROOT / "registry.yaml"
-ROLES_DIR = REPO_ROOT / "roles"
+ROLES_DIR = REPO_ROOT / "schema" / "roles"
 SKILLS_DIR = REPO_ROOT / "skills"
 BUNDLES_DIR = REPO_ROOT / "bundles"
 RENDERERS_DIR = Path(__file__).parent / "renderers"
