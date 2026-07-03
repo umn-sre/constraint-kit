@@ -110,10 +110,10 @@ mode: generating-doc
 target: session-prompt
 surface: github-copilot
 
-skills:
-  - path: ~/ck-personal/skills/session-preflight/SKILL.md
-  - path: ~/ck-personal/skills/session-hygiene/SKILL.md
-  - path: ~/ck-personal/skills/session-bootstrap/SKILL.md
+task_skills:
+  - session-preflight
+  - session-hygiene
+  - session-bootstrap
 
 task: >
   S01 — Scaffolding verification only. No documentation content written.
@@ -136,7 +136,7 @@ checklist:
   - "[ ] Review .constraint-kit/agent-base.yaml: schema_version, project, environment, session_history entry present"
   - "[ ] Verify environment.tools paths exist on disk: ls ~/constraint-kit/bootstrap/validate.py ~/constraint-kit/bootstrap/render.py"
   - "[ ] Review .constraint-kit/agent-supervisor.yaml: extends, task, skill freshness step present"
-  - "[ ] Verify agent-supervisor.yaml has explicit skills: block — prose references in task: are not injected by render.py"
+  - "[ ] Verify agent-supervisor.yaml has explicit task_skills: block with skill IDs — prose references in task: are not injected by render.py"
   - "[ ] Run render and confirm output contains all three skill blocks by name with schema_version: 0.1.0"
   - "[ ] Review SESSION_PLAN.md: Session Table present, S01-S05 rows present, each block has embedded agent-implementer.yaml"
   - "[ ] Review .constraint-kit/INTAKE_NOTES.md: Resolved Decisions table present"
@@ -183,10 +183,10 @@ mode: generating-doc
 target: session-prompt
 surface: github-copilot
 
-skills:
-  - path: ~/ck-personal/skills/session-preflight/SKILL.md
-  - path: ~/ck-personal/skills/session-hygiene/SKILL.md
-  - path: ~/ck-personal/skills/session-bootstrap/SKILL.md
+task_skills:
+  - session-preflight
+  - session-hygiene
+  - session-bootstrap
 
 task: >
   S02 — Write docs/01-what-is-constraint-kit.md covering Sections 1–2
@@ -251,10 +251,10 @@ mode: generating-doc
 target: session-prompt
 surface: github-copilot
 
-skills:
-  - path: ~/ck-personal/skills/session-preflight/SKILL.md
-  - path: ~/ck-personal/skills/session-hygiene/SKILL.md
-  - path: ~/ck-personal/skills/session-bootstrap/SKILL.md
+task_skills:
+  - session-preflight
+  - session-hygiene
+  - session-bootstrap
 
 task: >
   S03 — Write docs/03-rendering-and-surfaces.md covering Section 4
@@ -319,10 +319,10 @@ mode: generating-doc
 target: session-prompt
 surface: github-copilot
 
-skills:
-  - path: ~/ck-personal/skills/session-preflight/SKILL.md
-  - path: ~/ck-personal/skills/session-hygiene/SKILL.md
-  - path: ~/ck-personal/skills/session-bootstrap/SKILL.md
+task_skills:
+  - session-preflight
+  - session-hygiene
+  - session-bootstrap
 
 task: >
   S04 — Write docs/05-supervisor-implementer.md covering Section 6
@@ -390,10 +390,10 @@ mode: generating-doc
 target: session-prompt
 surface: github-copilot
 
-skills:
-  - path: ~/ck-personal/skills/session-preflight/SKILL.md
-  - path: ~/ck-personal/skills/session-hygiene/SKILL.md
-  - path: ~/ck-personal/skills/session-bootstrap/SKILL.md
+task_skills:
+  - session-preflight
+  - session-hygiene
+  - session-bootstrap
 
 task: >
   S05 — Write docs/08-artifact-policy.md covering Section 9 of

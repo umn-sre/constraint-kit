@@ -1,6 +1,7 @@
 schema_version: "0.1.0"
 project: ck-docs
 role: engineer
+extension: ../ck-personal/constraint-kit.yaml
 
 environment:
   repo: ~/constraint-kit
@@ -41,4 +42,9 @@ session_history:
       checklist items updated accordingly; artifact filenames use hyphens
       throughout (agent-base.yaml not agent_base.yaml), consistent with
       session-preflight-skill precedent. Tools live in
+      ~/constraint-kit/bootstrap/, not tools/ — corrected post-commit.
+      Skill injection requires: (1) extension: field at top level pointing
+      to ck-personal/constraint-kit.yaml, (2) task_skills: field (not
+      skills:) listing skill IDs. path: entries and skills: are both
+      silently ignored by render.py. Tools live in
       ~/constraint-kit/bootstrap/, not tools/ — corrected post-commit.
