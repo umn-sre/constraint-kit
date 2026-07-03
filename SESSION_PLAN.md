@@ -102,7 +102,7 @@ reflect S01 complete and S02 unblocked.
 ### agent-implementer.yaml
 
 ```yaml
-extends: .constraint-kit/agent-base.yaml
+extends: agent-base.yaml
 schema_version: "0.1.0"
 project: ck-docs
 role: engineer
@@ -175,7 +175,7 @@ skills). Supervisor has reviewed each file before commit.
 ### agent-implementer.yaml
 
 ```yaml
-extends: .constraint-kit/agent-base.yaml
+extends: agent-base.yaml
 schema_version: "0.1.0"
 project: ck-docs
 role: engineer
@@ -243,7 +243,7 @@ Supervisor reviewed before commit.
 ### agent-implementer.yaml
 
 ```yaml
-extends: .constraint-kit/agent-base.yaml
+extends: agent-base.yaml
 schema_version: "0.1.0"
 project: ck-docs
 role: engineer
@@ -311,7 +311,7 @@ lifecycle). Supervisor reviewed before commit.
 ### agent-implementer.yaml
 
 ```yaml
-extends: .constraint-kit/agent-base.yaml
+extends: agent-base.yaml
 schema_version: "0.1.0"
 project: ck-docs
 role: engineer
@@ -382,7 +382,7 @@ actual repo artifacts.
 ### agent-implementer.yaml
 
 ```yaml
-extends: .constraint-kit/agent-base.yaml
+extends: agent-base.yaml
 schema_version: "0.1.0"
 project: ck-docs
 role: engineer

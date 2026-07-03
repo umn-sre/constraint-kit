@@ -5,7 +5,7 @@
 # Replace with the session-specific block from SESSION_PLAN.md
 # at each session open.
 # ─────────────────────────────────────────────────────────────
-extends: .constraint-kit/agent-base.yaml
+extends: agent-base.yaml
 schema_version: "0.1.0"
 project: ck-docs
 role: engineer
@@ -51,6 +51,8 @@ checklist:
   - "[ ] Verify environment.tools paths exist on disk: ls ~/constraint-kit/bootstrap/validate.py ~/constraint-kit/bootstrap/render.py"
   # agent-supervisor.yaml: extends, schema_version, task block with freshness check present
   - "[ ] Review .constraint-kit/agent-supervisor.yaml: extends, task, skill verification step present"
+  - "[ ] Verify agent-supervisor.yaml has explicit skills: block — prose references in task: are not injected by render.py"
+  - "[ ] Run render and confirm output contains all three skill blocks by name with schema_version: 0.1.0"
   # SESSION_PLAN.md: Session Table present, all S01-S05 rows present, each block has agent-implementer.yaml
   - "[ ] Review SESSION_PLAN.md: Session Table present, S01-S05 rows present"
   - "[ ] Verify .constraint-kit/INTAKE_NOTES.md exists and Resolved Decisions table is present"
