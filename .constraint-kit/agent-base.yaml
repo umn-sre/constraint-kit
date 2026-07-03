@@ -6,8 +6,8 @@ environment:
   repo: ~/constraint-kit
   personal_skills: ~/ck-personal/skills
   tools:
-    validate: ~/ck-personal/constraint-kit/tools/validate.py
-    render: ~/ck-personal/constraint-kit/tools/render.py
+    validate: ~/constraint-kit/bootstrap/validate.py
+    render: ~/constraint-kit/bootstrap/render.py
   surfaces:
     supervisor: claude-browser
     implementer: github-copilot
@@ -26,12 +26,19 @@ session_plan:
 
 session_history:
   - session_id: S01
-    date: null
+    date: "2026-07-03"
     surface: claude-browser
-    tasks_completed: 0
+    tasks_completed: 13
     tasks_carried_forward: 0
-    budget_consumed_estimate: null
+    budget_consumed_estimate: 1 session
     summary: >
-      Pending. S01 produces scaffolding artifacts only — meta.yaml,
-      agent-base.yaml, agent-supervisor.yaml, agent-implementer.yaml,
-      SESSION_PLAN.md, INTAKE_NOTES.md. No documentation content written.
+      Produced all six scaffolding artifacts: meta.yaml, agent-base.yaml,
+      agent-supervisor.yaml, agent-implementer.yaml, SESSION_PLAN.md,
+      INTAKE_NOTES.md. Initial intake confusion resolved via QC Drill
+      gap-resolution conversation before artifact generation. Two lessons
+      encoded: validate.py --file only dispatches on skills/, roles/,
+      bundles/ path parts — .constraint-kit/ files are out of scope and
+      checklist items updated accordingly; artifact filenames use hyphens
+      throughout (agent-base.yaml not agent_base.yaml), consistent with
+      session-preflight-skill precedent. Tools live in
+      ~/constraint-kit/bootstrap/, not tools/ — corrected post-commit.

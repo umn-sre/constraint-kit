@@ -4,7 +4,7 @@
 # Inherits shared context from agent-base.yaml.
 #
 # Render (run immediately before opening session):
-#   python ~/ck-personal/constraint-kit/tools/render.py \
+#   python ~/constraint-kit/bootstrap/render.py \
 #     .constraint-kit/agent-supervisor.yaml
 #
 # IMPORTANT: Re-render immediately before each session open.

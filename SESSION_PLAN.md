@@ -56,8 +56,8 @@ Includes before/after example (vibe session vs constraint-kit session).
 
 | ID  | Title                        | Epics | Status   | Depends on |
 |-----|------------------------------|-------|----------|------------|
-| S01 | Scaffolding                  | E1    | ready    | —          |
-| S02 | Core concepts                | E2    | blocked  | S01        |
+| S01 | Scaffolding                  | E1    | complete | —          |
+| S02 | Core concepts                | E2    | ready    | S01        |
 | S03 | Tooling and artifacts        | E3    | blocked  | S02        |
 | S04 | Workflow and discipline      | E4    | blocked  | S03        |
 | S05 | Policy, reference, wrap-up   | E5    | blocked  | S04        |
@@ -71,25 +71,30 @@ Includes before/after example (vibe session vs constraint-kit session).
 committed. No documentation content written. Session Table updated to
 reflect S01 complete and S02 unblocked.
 
-- Status: ready
+- Status: complete
 - Estimated effort: 1 session
-- Actual effort:
-- Lessons:
+- Actual effort: 1 session (2026-07-03)
+- Lessons: validate.py --file only dispatches on skills/, roles/, bundles/ —
+  .constraint-kit/ files are out of scope; checklist items updated to use
+  python -c parse checks and explicit field-presence reviews instead.
+  Artifact filenames use hyphens throughout, consistent with
+  session-preflight-skill precedent. Lesson: update SESSION_PLAN.md and
+  session_history before git commit, not after.
 
 ### Tasks
-- [ ] `python -c "import yaml; yaml.safe_load(open('.constraint-kit/meta.yaml'))"`
-- [ ] `python -c "import yaml; yaml.safe_load(open('.constraint-kit/agent-base.yaml'))"`
-- [ ] `python -c "import yaml; yaml.safe_load(open('.constraint-kit/agent-supervisor.yaml'))"`
-- [ ] `python -c "import yaml; yaml.safe_load(open('.constraint-kit/agent-implementer.yaml'))"`
-- [ ] Review `.constraint-kit/meta.yaml`: `bootstrap_type`, `greenfield`, `pattern`, `repo`, `schema_version` present
-- [ ] Review `.constraint-kit/agent-base.yaml`: `schema_version`, `project`, `environment`, `session_history` entry present
-- [ ] Review `.constraint-kit/agent-supervisor.yaml`: `extends`, `task`, skill freshness verification step present
-- [ ] Review `SESSION_PLAN.md`: Session Table present, S01–S05 rows present, each block has embedded `agent-implementer.yaml`
-- [ ] Review `.constraint-kit/INTAKE_NOTES.md`: Resolved Decisions table present
-- [ ] Report any issues to supervisor before proceeding
-- [ ] `git add -A && git commit -m 'S01: scaffolding artifacts' && git push`
-- [ ] Update `SESSION_PLAN.md` S01 row to complete, S02 to ready
-- [ ] Append S01 entry to `session_history` in `.constraint-kit/agent-base.yaml`
+- [x] `python -c "import yaml; yaml.safe_load(open('.constraint-kit/meta.yaml'))"`
+- [x] `python -c "import yaml; yaml.safe_load(open('.constraint-kit/agent-base.yaml'))"`
+- [x] `python -c "import yaml; yaml.safe_load(open('.constraint-kit/agent-supervisor.yaml'))"`
+- [x] `python -c "import yaml; yaml.safe_load(open('.constraint-kit/agent-implementer.yaml'))"`
+- [x] Review `.constraint-kit/meta.yaml`: `bootstrap_type`, `greenfield`, `pattern`, `repo`, `schema_version` present
+- [x] Review `.constraint-kit/agent-base.yaml`: `schema_version`, `project`, `environment`, `session_history` entry present
+- [x] Review `.constraint-kit/agent-supervisor.yaml`: `extends`, `task`, skill freshness verification step present
+- [x] Review `SESSION_PLAN.md`: Session Table present, S01–S05 rows present, each block has embedded `agent-implementer.yaml`
+- [x] Review `.constraint-kit/INTAKE_NOTES.md`: Resolved Decisions table present
+- [x] Report any issues to supervisor before proceeding
+- [x] `git add -A && git commit -m 'S01: scaffolding artifacts' && git push`
+- [x] Update `SESSION_PLAN.md` S01 row to complete, S02 to ready
+- [x] Append S01 entry to `session_history` in `.constraint-kit/agent-base.yaml`
 
 ### agent-implementer.yaml
 
