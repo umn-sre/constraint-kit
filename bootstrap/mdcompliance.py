@@ -37,7 +37,6 @@ log = logging.getLogger(__name__)
 # ---------------------------------------------------------------------------
 
 
-
 @dataclass
 class MdConfig:
     """Runtime configuration merged from defaults + config file + CLI flags."""
@@ -166,9 +165,7 @@ def load_config(search_dir: Path) -> MdConfig:
 
     # markdownlint-compatible shorthand overrides
     if "MD013" in raw and isinstance(raw["MD013"], dict):
-        cfg.max_line_length = raw["MD013"].get(
-            "line_length", cfg.max_line_length
-        )
+        cfg.max_line_length = raw["MD013"].get("line_length", cfg.max_line_length)
     if "default" in raw and raw["default"] is False:
         # User opted out of everything — respect it but warn
         log.warning(
@@ -229,9 +226,7 @@ def detect_line_length(lines: List[str], cfg: MdConfig) -> List[Violation]:
     return violations
 
 
-def detect_heading_progression(
-    lines: List[str], cfg: MdConfig
-) -> List[Violation]:
+def detect_heading_progression(lines: List[str], cfg: MdConfig) -> List[Violation]:
     """MD001 — heading level should increment by one at a time."""
     if "MD001" in cfg.disable or not cfg.require_heading_progression:
         return []
@@ -281,11 +276,7 @@ def detect_heading_style(lines: List[str], cfg: MdConfig) -> List[Violation]:
     violations = []
     setext_underlines = re.compile(r"^[=\-]{2,}\s*$")
     for i, line in enumerate(lines, 1):
-        if (
-            i > 1
-            and setext_underlines.match(line)
-            and cfg.heading_style == "atx"
-        ):
+        if i > 1 and setext_underlines.match(line) and cfg.heading_style == "atx":
             violations.append(
                 Violation(
                     "MD003",
@@ -305,9 +296,7 @@ def detect_trailing_spaces(lines: List[str], cfg: MdConfig) -> List[Violation]:
     for i, line in enumerate(lines, 1):
         stripped = line.rstrip("\n")
         if stripped != stripped.rstrip():
-            violations.append(
-                Violation("MD009", i, "Trailing spaces", fixable=True)
-            )
+            violations.append(Violation("MD009", i, "Trailing spaces", fixable=True))
     return violations
 
 
@@ -376,9 +365,7 @@ def detect_heading_trailing_punctuation(
     return violations
 
 
-def detect_blanks_around_headings(
-    lines: List[str], cfg: MdConfig
-) -> List[Violation]:
+def detect_blanks_around_headings(lines: List[str], cfg: MdConfig) -> List[Violation]:
     """MD022 — headings should be surrounded by blank lines."""
     if "MD022" in cfg.disable:
         return []
@@ -411,9 +398,7 @@ def detect_blanks_around_headings(
     return violations
 
 
-def detect_blanks_around_fences(
-    lines: List[str], cfg: MdConfig
-) -> List[Violation]:
+def detect_blanks_around_fences(lines: List[str], cfg: MdConfig) -> List[Violation]:
     """MD031 — fenced code blocks surrounded by blank lines."""
     if "MD031" in cfg.disable:
         return []
@@ -445,16 +430,12 @@ def detect_blanks_around_fences(
     return violations
 
 
-def detect_emphasis_as_heading(
-    lines: List[str], cfg: MdConfig
-) -> List[Violation]:
+def detect_emphasis_as_heading(lines: List[str], cfg: MdConfig) -> List[Violation]:
     """MD036 — emphasis used instead of a heading."""
     if "MD036" in cfg.disable or not cfg.no_emphasis_as_heading:
         return []
     # A line that is *only* bold/italic text (no other content)
-    emphasis_only = re.compile(
-        r"^\s*(\*{1,2}|_{1,2})[^*_\n]+(\*{1,2}|_{1,2})\s*$"
-    )
+    emphasis_only = re.compile(r"^\s*(\*{1,2}|_{1,2})[^*_\n]+(\*{1,2}|_{1,2})\s*$")
     violations = []
     for i, line in enumerate(lines, 1):
         if emphasis_only.match(line):
@@ -469,18 +450,14 @@ def detect_emphasis_as_heading(
     return violations
 
 
-def detect_unordered_list_marker(
-    lines: List[str], cfg: MdConfig
-) -> List[Violation]:
+def detect_unordered_list_marker(lines: List[str], cfg: MdConfig) -> List[Violation]:
     """MD004 — unordered list marker consistency."""
     if "MD004" in cfg.disable or cfg.unordered_list_marker == "any":
         return []
     list_pat = re.compile(r"^(\s*)([-*+])\s")
     violations = []
     expected: Optional[str] = (
-        None
-        if cfg.unordered_list_marker == "consistent"
-        else cfg.unordered_list_marker
+        None if cfg.unordered_list_marker == "consistent" else cfg.unordered_list_marker
     )
     for i, line in enumerate(lines, 1):
         m = list_pat.match(line)
@@ -501,9 +478,7 @@ def detect_unordered_list_marker(
     return violations
 
 
-def detect_ordered_list_style(
-    lines: List[str], cfg: MdConfig
-) -> List[Violation]:
+def detect_ordered_list_style(lines: List[str], cfg: MdConfig) -> List[Violation]:
     """MD029 — ordered list item prefix."""
     if "MD029" in cfg.disable or cfg.ordered_list_style == "any":
         return []
@@ -569,9 +544,7 @@ def detect_no_final_newline(lines: List[str], cfg: MdConfig) -> List[Violation]:
 
 def fix_trailing_spaces(lines: List[str]) -> List[str]:
     """Strip trailing whitespace from every line."""
-    return [
-        line.rstrip() + ("\n" if line.endswith("\n") else "") for line in lines
-    ]
+    return [line.rstrip() + ("\n" if line.endswith("\n") else "") for line in lines]
 
 
 def fix_multiple_blanks(lines: List[str], max_blanks: int = 1) -> List[str]:
@@ -602,9 +575,7 @@ def fix_horizontal_rules(lines: List[str]) -> List[str]:
     return [line for line in lines if not hr_pattern.match(line)]
 
 
-def fix_heading_trailing_punctuation(
-    lines: List[str], bad_chars: str
-) -> List[str]:
+def fix_heading_trailing_punctuation(lines: List[str], bad_chars: str) -> List[str]:
     """Strip disallowed trailing punctuation from headings."""
     bad_set = set(bad_chars)
     result = []
@@ -734,9 +705,7 @@ def fix_unordered_list_markers(lines: List[str], marker: str) -> List[str]:
     return result
 
 
-def fix_ordered_list_numbering(
-    lines: List[str], style: str = "ordered"
-) -> List[str]:
+def fix_ordered_list_numbering(lines: List[str], style: str = "ordered") -> List[str]:
     """Renumber ordered lists sequentially."""
     if style == "any":
         return lines
@@ -824,17 +793,13 @@ def apply_fixes(lines: List[str], cfg: MdConfig) -> Tuple[List[str], int]:
         (
             "heading progression",
             lambda ln: (
-                fix_heading_progression(ln)
-                if cfg.require_heading_progression
-                else ln
+                fix_heading_progression(ln) if cfg.require_heading_progression else ln
             ),
         ),
         (
             "trailing punctuation in headings",
             lambda ln: (
-                fix_heading_trailing_punctuation(
-                    ln, cfg.heading_no_trailing_chars
-                )
+                fix_heading_trailing_punctuation(ln, cfg.heading_no_trailing_chars)
                 if cfg.no_trailing_punctuation_in_headings
                 else ln
             ),
@@ -853,9 +818,7 @@ def apply_fixes(lines: List[str], cfg: MdConfig) -> Tuple[List[str], int]:
         ),
         (
             "unordered list markers",
-            lambda ln: fix_unordered_list_markers(
-                ln, cfg.unordered_list_marker
-            ),
+            lambda ln: fix_unordered_list_markers(ln, cfg.unordered_list_marker),
         ),
         (
             "ordered list numbering",
@@ -867,9 +830,7 @@ def apply_fixes(lines: List[str], cfg: MdConfig) -> Tuple[List[str], int]:
         ),
         (
             "trailing spaces",
-            lambda ln: (
-                fix_trailing_spaces(ln) if cfg.no_trailing_spaces else ln
-            ),
+            lambda ln: (fix_trailing_spaces(ln) if cfg.no_trailing_spaces else ln),
         ),
         (
             "final newline",
@@ -920,9 +881,7 @@ def process_file(
     if check_only:
         manual = [v for v in pre_violations if not v.fixable]
         if manual:
-            log.warning(
-                "%d violation(s) require manual correction.", len(manual)
-            )
+            log.warning("%d violation(s) require manual correction.", len(manual))
 
         return False, pre_violations
 
@@ -949,9 +908,7 @@ def process_file(
             log.warning("%s", v)
 
     if remaining_manual:
-        log.warning(
-            "%d violation(s) require manual correction:", len(remaining_manual)
-        )
+        log.warning("%d violation(s) require manual correction:", len(remaining_manual))
 
         for v in remaining_manual:
             log.warning("%s", v)
@@ -969,9 +926,7 @@ def process_file(
     return len(post_violations) == 0, post_violations
 
 
-def process_directory(
-    directory: Path, cfg: MdConfig, check_only: bool = False
-) -> bool:
+def process_directory(directory: Path, cfg: MdConfig, check_only: bool = False) -> bool:
     """Recursively process all .md files under directory."""
     md_files = sorted(directory.rglob("*.md"))
     if not md_files:
@@ -1086,9 +1041,7 @@ def main() -> None:
         clean = process_directory(target, cfg, check_only=args.check)
     else:
         if target.suffix.lower() not in (".md", ".markdown"):
-            log.error(
-                "File must be a Markdown file (.md / .markdown): %s", target
-            )
+            log.error("File must be a Markdown file (.md / .markdown): %s", target)
 
             sys.exit(1)
         clean, _ = process_file(target, cfg, check_only=args.check)

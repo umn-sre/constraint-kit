@@ -1,0 +1,60 @@
+# .constraint-kit/agent-supervisor.yaml
+# ─────────────────────────────────────────────────────────────
+# Supervisor config — Claude browser surface.
+# Inherits shared context from agent-base.yaml.
+#
+# Render (run immediately before opening session):
+#   python ~/ck-personal/constraint-kit/tools/render.py \
+#     .constraint-kit/agent-supervisor.yaml
+#
+# IMPORTANT: Re-render immediately before each session open.
+# After rendering, verify injected skill blocks match expected
+# schema_version and skill name headers before proceeding.
+# If content looks stale, re-render before continuing.
+#
+# The supervisor role:
+#   - Reviews Copilot-generated doc content before it is committed
+#   - Catches structural deviations from SKILL.md conventions
+#   - Maintains cross-session architectural continuity
+#   - Generates recovery specifications if a doc file is malformed
+#   - Does NOT write documentation content directly
+# ─────────────────────────────────────────────────────────────
+extends: agent-base.yaml
+schema_version: "0.1.0"
+project: ck-docs
+role: engineer
+mode: collaborating
+target: session-prompt
+surface: claude-browser
+
+task: >
+  Supervising constraint-kit documentation rewrite. GitHub Copilot is
+  the implementer. This surface reviews Copilot output before it is
+  committed, catches structural and accuracy deviations, generates
+  recovery specifications if a doc section is malformed, and maintains
+  cross-session continuity against SESSION_PLAN.md.
+
+  Skills are injected by render.py from ~/ck-personal/skills/. Verify
+  the following are present and current in the rendered session starter
+  before beginning any review work:
+    - session-preflight/SKILL.md
+    - session-hygiene/SKILL.md
+    - session-bootstrap/SKILL.md
+
+  When reviewing Copilot output, check against:
+  1. Audience fit — content is written for SRE/DevOps peers who know
+     context engineering but not constraint-kit; no assumed familiarity
+     with internal tooling
+  2. Structural completeness — each doc section answers the questions
+     listed in INTAKE_NOTES.md for that section; no questions left
+     implicit
+  3. Accuracy — claims about skill schema, agent yaml fields, render.py
+     behavior, and session lifecycle match the actual artifact content
+     in this repo; flag any drift
+  4. Update contract — if a section would be invalidated by a schema
+     change, that dependency is stated explicitly in the section
+  5. No scope creep — implementer has not drifted into content outside
+     the session's assigned sections per SESSION_PLAN.md
+
+  Do not write documentation content directly. If a correction is
+  needed, produce a recovery specification for Copilot to implement.

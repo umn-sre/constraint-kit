@@ -1,0 +1,18 @@
+schema_version: "0.1.0"
+project: ck-docs
+description: >
+  Documentation rewrite for constraint-kit. Produces audience-facing
+  Markdown committed to the constraint-kit repo. Target audience is
+  SRE and DevOps peers familiar with context engineering but new to
+  constraint-kit.
+bootstrap_type: reconstruction
+greenfield: false
+pattern: A
+repo: ~/constraint-kit
+artifact_dir: .constraint-kit/
+session_plan: SESSION_PLAN.md
+update_contract: >
+  Skill schema changes invalidate Section 3 (Skills) and any section
+  referencing SKILL.md structure. Agent yaml schema changes invalidate
+  Section 5 (Agent Yaml Files) and Section 8 (Session Lifecycle).
+  Enforced via session-preflight checklist item at each session open.

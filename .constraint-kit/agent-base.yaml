@@ -1,0 +1,37 @@
+schema_version: "0.1.0"
+project: ck-docs
+role: engineer
+
+environment:
+  repo: ~/constraint-kit
+  personal_skills: ~/ck-personal/skills
+  tools:
+    validate: ~/ck-personal/constraint-kit/tools/validate.py
+    render: ~/ck-personal/constraint-kit/tools/render.py
+  surfaces:
+    supervisor: claude-browser
+    implementer: github-copilot
+
+conventions:
+  artifact_dir: .constraint-kit/
+  session_plan: SESSION_PLAN.md
+  intake_notes: .constraint-kit/INTAKE_NOTES.md
+  pattern: A
+
+session_plan:
+  update_instructions: >
+    After each session: update SESSION_PLAN.md (Status, Actual effort,
+    Lessons), set Status ready for any newly unblocked sessions, and
+    append a session_history entry below.
+
+session_history:
+  - session_id: S01
+    date: null
+    surface: claude-browser
+    tasks_completed: 0
+    tasks_carried_forward: 0
+    budget_consumed_estimate: null
+    summary: >
+      Pending. S01 produces scaffolding artifacts only — meta.yaml,
+      agent-base.yaml, agent-supervisor.yaml, agent-implementer.yaml,
+      SESSION_PLAN.md, INTAKE_NOTES.md. No documentation content written.

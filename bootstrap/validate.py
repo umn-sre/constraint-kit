@@ -531,9 +531,7 @@ def _apply_one(issue, dry_run):
         data = load_yaml(path)
         if data is None:
             return False
-        print(
-            f"{tag} {issue.path}: set schema_version → '{CURRENT_SCHEMA_VERSION}'"
-        )
+        print(f"{tag} {issue.path}: set schema_version → '{CURRENT_SCHEMA_VERSION}'")
         if not dry_run:
             data["schema_version"] = CURRENT_SCHEMA_VERSION
             save_yaml(path, data)
@@ -830,13 +828,9 @@ def run_validation(do_skills, do_roles, do_bundles, do_registry, single_file):
         if "skills" in path.parts:
             validate_skill(path if path.is_dir() else path.parent)
         elif "roles" in path.parts:
-            validate_role(
-                path if path.suffix == ".yaml" else path, known_skill_ids
-            )
+            validate_role(path if path.suffix == ".yaml" else path, known_skill_ids)
         elif "bundles" in path.parts:
-            validate_bundle(
-                path if path.suffix == ".yaml" else path, known_skill_ids
-            )
+            validate_bundle(path if path.suffix == ".yaml" else path, known_skill_ids)
         else:
             print(f"Cannot determine file type: {single_file}")
             sys.exit(1)
@@ -883,18 +877,14 @@ def main():
     p.add_argument(
         "--explain", action="store_true", help="Explain all validation rules"
     )
-    p.add_argument(
-        "--json", action="store_true", help="Machine-readable JSON output"
-    )
+    p.add_argument("--json", action="store_true", help="Machine-readable JSON output")
     args = p.parse_args()
 
     if args.explain:
         print_explanations()
         return
 
-    any_flag = (
-        args.skills or args.roles or args.bundles or args.registry or args.file
-    )
+    any_flag = args.skills or args.roles or args.bundles or args.registry or args.file
     run_validation(
         do_skills=args.skills or not any_flag,
         do_roles=args.roles or not any_flag,
@@ -905,20 +895,12 @@ def main():
 
     if args.fix:
         print()
-        label = (
-            "Previewing fixes (dry run)..."
-            if args.dry_run
-            else "Applying fixes..."
-        )
+        label = "Previewing fixes (dry run)..." if args.dry_run else "Applying fixes..."
         print(label)
         apply_fixes(dry_run=args.dry_run)
 
     print_results(as_json=args.json)
-    sys.exit(
-        0
-        if not [i for i in issues if i.level == "error" and not i.fixed]
-        else 1
-    )
+    sys.exit(0 if not [i for i in issues if i.level == "error" and not i.fixed] else 1)
 
 
 if __name__ == "__main__":

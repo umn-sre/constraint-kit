@@ -54,6 +54,23 @@ TARGET_TO_OUTPUT = {
     "skill-md": "SKILL.md",
 }
 
+# ── Path helpers ───────────────────────────────────────────────────────────
+
+
+def portable_path(p: Path) -> str:
+    """
+    Return a ~-prefixed path string when the path is inside the current
+    user's home directory, otherwise return the absolute path string.
+
+    VS Code #file: directives and most shell tools expand ~ correctly.
+    This avoids hardcoding /home/<username> in generated output.
+    """
+    try:
+        return "~/" + str(p.relative_to(Path.home()))
+    except ValueError:
+        return str(p.resolve())
+
+
 # ── Loaders ────────────────────────────────────────────────────────────────
 
 
@@ -113,13 +130,13 @@ def load_skill(skill_id: str, ext_skills: dict = None) -> dict:
         if meta_file and meta_file.exists():
             with open(meta_file, encoding="utf-8") as f:
                 meta = yaml.safe_load(f)
-            meta["file"] = str(skill_file)
+            meta["file"] = portable_path(skill_file)
             return meta
         return {
             "id": skill_id,
             "name": skill_id,
             "description": "",
-            "file": str(skill_file),
+            "file": portable_path(skill_file),
             "modes": [],
         }
     meta_path = SKILLS_DIR / skill_id / "meta.yaml"
@@ -130,12 +147,12 @@ def load_skill(skill_id: str, ext_skills: dict = None) -> dict:
             "id": skill_id,
             "name": skill_id,
             "description": "",
-            "file": str(skill_path),
+            "file": portable_path(skill_path),
             "modes": [],
         }
     with open(meta_path, encoding="utf-8") as f:
         meta = yaml.safe_load(f)
-    meta["file"] = str(skill_path.relative_to(REPO_ROOT))
+    meta["file"] = portable_path(skill_path)
     return meta
 
 
@@ -151,8 +168,12 @@ def load_bundle(bundle_id: str) -> dict:
 
 
 def resolve_skills(
-    role: dict, mode: str, task_skills: list, bundles: list, suppress: list,
-    ext_skills: dict = None
+    role: dict,
+    mode: str,
+    task_skills: list,
+    bundles: list,
+    suppress: list,
+    ext_skills: dict = None,
 ) -> tuple:
     """
     Returns (required_skills, recommended_skills) as lists of skill dicts.
@@ -164,9 +185,7 @@ def resolve_skills(
     # Role baseline — all_modes
     for sid in role.get("skills", {}).get("all_modes", {}).get("required", []):
         required_ids.add(sid)
-    for sid in (
-        role.get("skills", {}).get("all_modes", {}).get("recommended", [])
-    ):
+    for sid in role.get("skills", {}).get("all_modes", {}).get("recommended", []):
         recommended_ids.add(sid)
 
     # Role baseline — mode-specific
@@ -195,7 +214,9 @@ def resolve_skills(
     recommended_ids -= required_ids
 
     required_skills = [load_skill(sid, ext_skills) for sid in sorted(required_ids)]
-    recommended_skills = [load_skill(sid, ext_skills) for sid in sorted(recommended_ids)]
+    recommended_skills = [
+        load_skill(sid, ext_skills) for sid in sorted(recommended_ids)
+    ]
 
     return required_skills, recommended_skills
 

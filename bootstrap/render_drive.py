@@ -114,9 +114,7 @@ def resolve_skills_with_content(role: dict, mode: str, bundles: list) -> tuple:
     # all_modes baseline
     for sid in role.get("skills", {}).get("all_modes", {}).get("required", []):
         required_ids.add(sid)
-    for sid in (
-        role.get("skills", {}).get("all_modes", {}).get("recommended", [])
-    ):
+    for sid in role.get("skills", {}).get("all_modes", {}).get("recommended", []):
         recommended_ids.add(sid)
 
     # mode-specific
@@ -135,9 +133,7 @@ def resolve_skills_with_content(role: dict, mode: str, bundles: list) -> tuple:
     recommended_ids -= required_ids
 
     required = [load_skill_with_content(sid) for sid in sorted(required_ids)]
-    recommended = [
-        load_skill_with_content(sid) for sid in sorted(recommended_ids)
-    ]
+    recommended = [load_skill_with_content(sid) for sid in sorted(recommended_ids)]
 
     return required, recommended
 

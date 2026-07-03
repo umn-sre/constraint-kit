@@ -1,0 +1,61 @@
+# .constraint-kit/agent-implementer.yaml
+# ─────────────────────────────────────────────────────────────
+# Implementer config — GitHub Copilot surface.
+# Paste this as your first message to begin each session.
+# Replace with the session-specific block from SESSION_PLAN.md
+# at each session open.
+# ─────────────────────────────────────────────────────────────
+extends: .constraint-kit/agent-base.yaml
+schema_version: "0.1.0"
+project: ck-docs
+role: engineer
+mode: generating-doc
+target: session-prompt
+surface: github-copilot
+
+skills:
+  - path: ~/ck-personal/skills/session-preflight/SKILL.md
+  - path: ~/ck-personal/skills/session-hygiene/SKILL.md
+  - path: ~/ck-personal/skills/session-bootstrap/SKILL.md
+
+task: >
+  S01 — Scaffolding only. No documentation content is written this session.
+  Verify all artifacts produced by the supervisor surface are present and
+  well-formed:
+    - .constraint-kit/meta.yaml
+    - .constraint-kit/agent-base.yaml
+    - .constraint-kit/agent-supervisor.yaml
+    - .constraint-kit/agent-implementer.yaml (this file)
+    - SESSION_PLAN.md
+    - .constraint-kit/INTAKE_NOTES.md
+  Report any missing or malformed artifacts to the supervisor before
+  proceeding. Do not write documentation content.
+
+constraints:
+  - Copilot operates headlessly — no interactive fallback loop
+  - All ambiguity must be resolved in this file before session open
+  - Do not drift into documentation content; S01 scope is scaffolding only
+  - File verification is required before marking S01 complete
+
+checklist:
+  # YAML parse checks — confirms files are not malformed, not schema-correct
+  - "[ ] python -c \"import yaml; yaml.safe_load(open('.constraint-kit/meta.yaml'))\""
+  - "[ ] python -c \"import yaml; yaml.safe_load(open('.constraint-kit/agent-base.yaml'))\""
+  - "[ ] python -c \"import yaml; yaml.safe_load(open('.constraint-kit/agent-supervisor.yaml'))\""
+  - "[ ] python -c \"import yaml; yaml.safe_load(open('.constraint-kit/agent-implementer.yaml'))\""
+  # Field presence review — agent-guided, not automated
+  # meta.yaml: bootstrap_type, greenfield, pattern, repo, schema_version present
+  - "[ ] Review .constraint-kit/meta.yaml: required fields present"
+  # agent-base.yaml: schema_version, project, environment, session_history present
+  - "[ ] Review .constraint-kit/agent-base.yaml: required fields and session_history entry present"
+  # agent-supervisor.yaml: extends, schema_version, task block with freshness check present
+  - "[ ] Review .constraint-kit/agent-supervisor.yaml: extends, task, skill verification step present"
+  # SESSION_PLAN.md: Session Table present, all S01-S05 rows present, each block has agent-implementer.yaml
+  - "[ ] Review SESSION_PLAN.md: Session Table present, S01-S05 rows present"
+  - "[ ] Verify .constraint-kit/INTAKE_NOTES.md exists and Resolved Decisions table is present"
+  - "[ ] Report any issues to supervisor before proceeding"
+  - "[ ] git add -A"
+  - "[ ] git commit -m 'S01: scaffolding artifacts'"
+  - "[ ] git push"
+  - "[ ] Append S01 session summary to session_history in .constraint-kit/agent-base.yaml"
+  - "[ ] Update SESSION_PLAN.md: S01 Status complete, Actual effort, Lessons"
