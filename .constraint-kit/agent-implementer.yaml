@@ -48,6 +48,7 @@ checklist:
   - "[ ] Review .constraint-kit/meta.yaml: required fields present"
   # agent-base.yaml: schema_version, project, environment, session_history present
   - "[ ] Review .constraint-kit/agent-base.yaml: required fields and session_history entry present"
+  - "[ ] Verify environment.tools paths exist on disk: ls ~/constraint-kit/bootstrap/validate.py ~/constraint-kit/bootstrap/render.py"
   # agent-supervisor.yaml: extends, schema_version, task block with freshness check present
   - "[ ] Review .constraint-kit/agent-supervisor.yaml: extends, task, skill verification step present"
   # SESSION_PLAN.md: Session Table present, all S01-S05 rows present, each block has agent-implementer.yaml

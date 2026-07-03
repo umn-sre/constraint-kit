@@ -88,7 +88,10 @@ reflect S01 complete and S02 unblocked.
 - [x] `python -c "import yaml; yaml.safe_load(open('.constraint-kit/agent-implementer.yaml'))"`
 - [x] Review `.constraint-kit/meta.yaml`: `bootstrap_type`, `greenfield`, `pattern`, `repo`, `schema_version` present
 - [x] Review `.constraint-kit/agent-base.yaml`: `schema_version`, `project`, `environment`, `session_history` entry present
+- [x] Verify `environment.tools` paths exist on disk: `ls ~/constraint-kit/bootstrap/validate.py ~/constraint-kit/bootstrap/render.py`
 - [x] Review `.constraint-kit/agent-supervisor.yaml`: `extends`, `task`, skill freshness verification step present
+- [x] Verify `agent-supervisor.yaml` has explicit `skills:` block — prose references in `task:` are not injected by render.py
+- [x] Run render and confirm output contains all three skill blocks by name with `schema_version: "0.1.0"`
 - [x] Review `SESSION_PLAN.md`: Session Table present, S01–S05 rows present, each block has embedded `agent-implementer.yaml`
 - [x] Review `.constraint-kit/INTAKE_NOTES.md`: Resolved Decisions table present
 - [x] Report any issues to supervisor before proceeding
@@ -131,7 +134,10 @@ checklist:
   # Field presence review — agent-guided, not automated
   - "[ ] Review .constraint-kit/meta.yaml: bootstrap_type, greenfield, pattern, repo, schema_version present"
   - "[ ] Review .constraint-kit/agent-base.yaml: schema_version, project, environment, session_history entry present"
+  - "[ ] Verify environment.tools paths exist on disk: ls ~/constraint-kit/bootstrap/validate.py ~/constraint-kit/bootstrap/render.py"
   - "[ ] Review .constraint-kit/agent-supervisor.yaml: extends, task, skill freshness step present"
+  - "[ ] Verify agent-supervisor.yaml has explicit skills: block — prose references in task: are not injected by render.py"
+  - "[ ] Run render and confirm output contains all three skill blocks by name with schema_version: 0.1.0"
   - "[ ] Review SESSION_PLAN.md: Session Table present, S01-S05 rows present, each block has embedded agent-implementer.yaml"
   - "[ ] Review .constraint-kit/INTAKE_NOTES.md: Resolved Decisions table present"
   - "[ ] Report any issues to supervisor before proceeding"
