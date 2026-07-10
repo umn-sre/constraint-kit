@@ -2,8 +2,27 @@
 
 ## Overview
 
-This document details every automated fix the compliance script performs
-and indicates what can vs. cannot be fully automated.
+This document details every automated fix `bootstrap/pycompliance.py`
+performs and indicates what can vs. cannot be fully automated. It covers
+that one script in depth. For the other scripts in `bootstrap/`, see
+below.
+
+## Related bootstrap scripts
+
+`pycompliance.py` is one of four scripts in `bootstrap/`. Quick reference
+for the other three — see each script's own `--help` output for the full,
+current flag list.
+
+| Script | Purpose | Usage |
+|---|---|---|
+| `render.py` | Renders a session starter from `agent.yaml` | `python render.py .constraint-kit/agent.yaml`; `--target`, `--write`, `--list`, `--drive` — see `HOW_TO_USE_GITHUB.md` |
+| `validate.py` | Validates skills, roles, bundles, and the registry against schema | `python validate.py` (validate everything); `--fix` (auto-fix safe issues); `--fix --dry-run` (preview); `--explain` (explain rules); `--json`; `--file path/to/file.yaml` |
+| `mdcompliance.py` | Enforces Markdown lint rules with auto-fixes | `python mdcompliance.py <file.md>` or a directory to process recursively; `--max-line-length`, `--check`; reads config from `.markdownlintrc` or `pyproject.toml [tool.mdcompliance]` |
+| `batch_comply.py` | Runs `pycompliance.py` across a directory tree in parallel | `python batch_comply.py ./src -j 4` (`-j`/`--jobs` sets parallelism, default 1) |
+
+Exit codes and JSON output flags (where present) are meant for CI use —
+see `.github/workflows/validate.yml` for how `validate.py` is wired into
+the pipeline.
 
 ## Fully Automated Fixes ✓
 
@@ -288,7 +307,7 @@ steps = [
 
 # Test on sample files
 
-python pycompliance_v2.py test_file.py
+python pycompliance.py test_file.py
 
 # Verify output
 
@@ -320,7 +339,7 @@ Even with comprehensive automation, agents are valuable for:
 
 ```
 
-1. Run pycompliance_v2.py (automated fixes)
+1. Run pycompliance.py (automated fixes)
    ↓
 2. Review remaining warnings
    ↓
@@ -352,13 +371,13 @@ python batch_comply.py ./src -j 4
 
 # Skip expensive checks if not needed
 
-# Edit pycompliance_v2.py to comment out steps
+# Edit pycompliance.py to comment out steps
 
 # Cache results in CI/CD
 
 # Only run on changed files
 
-git diff --name-only | grep '\.py$' | xargs -I {} python pycompliance_v2.py {}
+git diff --name-only | grep '\.py$' | xargs -I {} python pycompliance.py {}
 
 ```
 
