@@ -23,7 +23,8 @@ skills:
   all_modes:
     required:
       - plain-language
-    recommended: []
+    recommended:
+      - token-budget
 
   reasoning:
     required:

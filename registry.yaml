@@ -520,6 +520,62 @@ skills:
 
     '
   version: 0.1.0
+- id: security-compliance
+  name: Security Compliance
+  file: skills/security-compliance/SKILL.md
+  meta: skills/security-compliance/meta.yaml
+  modes:
+  - generating-code
+  - reasoning
+  personas:
+  - engineer
+  tags:
+  - security
+  - compliance
+  - secrets
+  - credentials
+  - engineering
+  pairs_with:
+  - python-compliance
+  - test-driven-development
+  - decision-records
+  provenance: null
+  description: 'Enforces credential and secrets handling discipline: no hardcoded
+    secrets, Vault-first credential retrieval, least-privilege scoping, and clean
+    logging hygiene. Scoped to secrets/credential handling — not a general application-security
+    skill.
+
+    '
+  version: 0.1.0
+- id: token-budget
+  name: Token Budget
+  file: skills/token-budget/SKILL.md
+  meta: skills/token-budget/meta.yaml
+  modes:
+  - reasoning
+  - collaborating
+  - generating-code
+  - generating-doc
+  - generating-structured
+  personas:
+  - any
+  tags:
+  - context
+  - efficiency
+  - session-management
+  - universal
+  pairs_with:
+  - systematic-debugging
+  - requirements-gathering
+  - decision-records
+  provenance: null
+  description: 'Manages context/token consumption within an agent session: prefers
+    targeted reads over full-file dumps, avoids redundant re-reads, chunks large
+    tasks explicitly, and flags early when a task is likely to outgrow one session''s
+    practical context budget.
+
+    '
+  version: 0.1.0
 - id: source-constrained-synthesis
   name: Source-Constrained Synthesis
   file: skills/source-constrained-synthesis/SKILL.md
@@ -610,3 +666,4 @@ skills:
 
     '
   version: 0.1.0
+  

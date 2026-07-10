@@ -1,0 +1,25 @@
+id: security-compliance
+name: Security Compliance
+description: >
+  Enforces credential and secrets handling discipline: no hardcoded
+  secrets, Vault-first credential retrieval, least-privilege scoping,
+  and clean logging hygiene. Scoped to secrets/credential handling —
+  not a general application-security skill.
+schema_version: "0.1.0"
+modes:
+  - generating-code
+  - reasoning
+tags:
+  - security
+  - compliance
+  - secrets
+  - credentials
+  - engineering
+personas:
+  - engineer
+pairs_with:
+  - python-compliance
+  - test-driven-development
+  - decision-records
+version: "0.1.0"
+author: constraint-kit

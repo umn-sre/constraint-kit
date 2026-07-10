@@ -22,13 +22,15 @@ skills:
   all_modes:
     required:
       - decision-records
-    recommended: []
+    recommended:
+      - token-budget
 
   reasoning:
     required:
       - systematic-debugging
     recommended:
       - requirements-gathering
+      - security-compliance
 
   collaborating:
     required:
@@ -43,6 +45,7 @@ skills:
       - systematic-debugging
     recommended:
       - decision-records
+      - security-compliance
 
   generating-doc:
     required:
