@@ -38,6 +38,9 @@ skills:
       - requirements-gathering
     recommended:
       - decision-records
+      - session-preflight
+      - session-bootstrap
+      - session-hygiene
 
   generating-code:
     required:
@@ -46,6 +49,7 @@ skills:
     recommended:
       - decision-records
       - security-compliance
+      - session-hygiene
 
   generating-doc:
     required:
@@ -53,12 +57,16 @@ skills:
       - plain-language
     recommended:
       - decision-records
+      - session-hygiene
 
   generating-structured:
     required:
       - requirements-gathering
       - decision-records
-    recommended: []
+    recommended:
+      - session-preflight
+      - session-bootstrap
+      - session-hygiene
 
 typical_bundles:
   - new-feature-design

@@ -666,4 +666,90 @@ skills:
 
     '
   version: 0.1.0
-  
+- id: session-preflight
+  name: Session Preflight
+  file: skills/session-preflight/SKILL.md
+  meta: skills/session-preflight/meta.yaml
+  modes:
+  - collaborating
+  - generating-structured
+  personas:
+  - engineer
+  tags:
+  - planning
+  - session-management
+  - surface-awareness
+  - workslop-prevention
+  - anti-workslop
+  pairs_with:
+  - session-hygiene
+  - vibe-coding-discipline
+  - requirements-gathering
+  provenance: null
+  description: 'Converts raw user notes or gripes into a surface-aware SESSION_PLAN.md
+    and paste-ready agent-base.yaml / agent-implementer.yaml pair before any implementation
+    session begins. Interrogates the target AI surface, applies the surface registry,
+    identifies skill gaps, and enforces that no implementation work starts without
+    a complete plan artifact.
+
+    '
+  version: 0.1.0
+- id: session-bootstrap
+  name: Session Bootstrap
+  file: skills/session-bootstrap/SKILL.md
+  meta: skills/session-bootstrap/meta.yaml
+  modes:
+  - generating-structured
+  - collaborating
+  personas:
+  - engineer
+  tags:
+  - session-management
+  - scaffolding
+  - validation
+  - workslop-prevention
+  - anti-workslop
+  pairs_with:
+  - session-preflight
+  - session-hygiene
+  provenance: null
+  description: 'Scaffold creation and validation for constraint-kit projects. Runs
+    before any preflight or implementation session. CREATE mode produces the three
+    core scaffold files (agent-base.yaml, agent-implementer.yaml for Pattern B,
+    SESSION_PLAN.md). VERIFY mode audits an existing scaffold for schema validity,
+    path conventions, internal consistency, and SESSION_PLAN session block completeness,
+    then proposes and applies fixes after human confirmation.
+
+    '
+  version: 0.1.0
+- id: session-hygiene
+  name: Session Hygiene
+  file: skills/session-hygiene/SKILL.md
+  meta: skills/session-hygiene/meta.yaml
+  modes:
+  - generating-code
+  - generating-doc
+  - generating-structured
+  - collaborating
+  personas:
+  - engineer
+  tags:
+  - session-management
+  - loop-detection
+  - file-verification
+  - budget-tracking
+  - workslop-prevention
+  - anti-workslop
+  pairs_with:
+  - session-preflight
+  - vibe-coding-discipline
+  - systematic-debugging
+  provenance: null
+  description: 'Runtime discipline for implementation sessions. Maintains a session
+    ledger, detects and surfaces loops before they consume context, tracks token
+    budget against surface thresholds, verifies file changes were actually applied,
+    and executes a seven-step wrap-up protocol that closes every session in a known,
+    resumable state.
+
+    '
+  version: 0.1.0

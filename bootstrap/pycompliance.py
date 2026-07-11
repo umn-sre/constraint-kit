@@ -90,7 +90,9 @@ def run_command(cmd: str, check: bool = False) -> Tuple[bool, str, str]:
     return success, result.stdout, result.stderr
 
 
-def fix_logging_fstring_interpolation(filepath: Path, dry_run: bool = False) -> bool:
+def fix_logging_fstring_interpolation(
+    filepath: Path, dry_run: bool = False
+) -> bool:
     """Fix logging calls that use f-string interpolation.
 
     Converts: logging.info("Value: %s", value)
@@ -245,7 +247,10 @@ def fix_bare_except(filepath: Path, dry_run: bool = False) -> bool:
 
     if content != original_content:
         if dry_run:
-            logging.info("[DRY RUN] Would fix bare except clauses in %s", filepath)
+            logging.info(
+                "[DRY RUN] Would fix bare except clauses in %s", filepath
+            )
+
         else:
             with open(filepath, "w", encoding="utf-8") as f:
                 f.write(content)
@@ -311,11 +316,16 @@ def fix_comparison_to_true_false(filepath: Path, dry_run: bool = False) -> bool:
 
     # Fix == False to not variable
     content = re.sub(r"\bif\s+(\w+)\s*==\s*False\s*:", r"if not \1:", content)
-    content = re.sub(r"\bwhile\s+(\w+)\s*==\s*False\s*:", r"while not \1:", content)
+    content = re.sub(
+        r"\bwhile\s+(\w+)\s*==\s*False\s*:", r"while not \1:", content
+    )
 
     if content != original_content:
         if dry_run:
-            logging.info("[DRY RUN] Would fix True/False comparisons in %s", filepath)
+            logging.info(
+                "[DRY RUN] Would fix True/False comparisons in %s", filepath
+            )
+
         else:
             with open(filepath, "w", encoding="utf-8") as f:
                 f.write(content)
@@ -342,8 +352,12 @@ def fix_type_comparison(filepath: Path, dry_run: bool = False) -> bool:
     original_content = content
 
     # Fix isinstance(x, SomeType) to isinstance(x, SomeType)
-    content = re.sub(r"type\(([^)]+)\)\s*==\s*(\w+)", r"isinstance(\1, \2)", content)
-    content = re.sub(r"type\(([^)]+)\)\s*is\s*(\w+)", r"isinstance(\1, \2)", content)
+    content = re.sub(
+        r"type\(([^)]+)\)\s*==\s*(\w+)", r"isinstance(\1, \2)", content
+    )
+    content = re.sub(
+        r"type\(([^)]+)\)\s*is\s*(\w+)", r"isinstance(\1, \2)", content
+    )
 
     if content != original_content:
         if dry_run:
@@ -384,7 +398,9 @@ def fix_indentation(filepath: Path) -> bool:
     if new_lines != original_lines:
         with open(filepath, "w", encoding="utf-8") as f:
             f.writelines(new_lines)
-        logging.info("Fixed indentation (converted tabs to spaces) in %s", filepath)
+        logging.info(
+            "Fixed indentation (converted tabs to spaces) in %s", filepath
+        )
 
         return True
 
@@ -494,9 +510,13 @@ def fix_subprocess_run_check(filepath: Path) -> bool:
         # If last char is a comma, add after it with space
         # Otherwise add comma before check=False
         if content[insert_pos - 1] == ",":
-            new_content = content[:insert_pos] + " check=False" + content[insert_pos:]
+            new_content = (
+                content[:insert_pos] + " check=False" + content[insert_pos:]
+            )
         else:
-            new_content = content[:insert_pos] + ", check=False" + content[insert_pos:]
+            new_content = (
+                content[:insert_pos] + ", check=False" + content[insert_pos:]
+            )
 
         # Update content and offset
         added_len = len(new_content) - len(content)
@@ -507,7 +527,10 @@ def fix_subprocess_run_check(filepath: Path) -> bool:
     if changes_made:
         with open(filepath, "w", encoding="utf-8") as f:
             f.write(content)
-        logging.info("Added explicit check parameter to subprocess.run in %s", filepath)
+        logging.info(
+            "Added explicit check parameter to subprocess.run in %s", filepath
+        )
+
         return True
 
     return False
@@ -545,10 +568,14 @@ def fix_import_outside_toplevel(filepath: Path, dry_run: bool = False) -> bool:
         return False
 
     # Extract import lines to move and dedent them
-    moved_import_lines = [lines[n].lstrip() for n in sorted(import_line_numbers)]
+    moved_import_lines = [
+        lines[n].lstrip() for n in sorted(import_line_numbers)
+    ]
 
     # Remove those lines from their original locations
-    new_lines = [lines[i] for i in range(len(lines)) if i not in import_line_numbers]
+    new_lines = [
+        lines[i] for i in range(len(lines)) if i not in import_line_numbers
+    ]
 
     # Find where to insert: after shebang and module docstring (if any)
     insert_at = 0
@@ -557,7 +584,9 @@ def fix_import_outside_toplevel(filepath: Path, dry_run: bool = False) -> bool:
     if n > 0 and new_lines[0].startswith("#!"):
         insert_at = 1
     # Check for module docstring (single or multi-line) after shebang
-    if n > insert_at and new_lines[insert_at].lstrip().startswith(('"""', "'''")):
+    if n > insert_at and new_lines[insert_at].lstrip().startswith(
+        ('"""', "'''")
+    ):
         docstring_end = None
         docstring_delim = new_lines[insert_at].lstrip()[:3]
         # Single-line docstring
@@ -574,7 +603,9 @@ def fix_import_outside_toplevel(filepath: Path, dry_run: bool = False) -> bool:
             else:
                 insert_at += 1  # fallback
     # Insert moved imports after shebang and docstring
-    new_lines = new_lines[:insert_at] + moved_import_lines + new_lines[insert_at:]
+    new_lines = (
+        new_lines[:insert_at] + moved_import_lines + new_lines[insert_at:]
+    )
 
     if dry_run:
         logging.info(
@@ -667,7 +698,9 @@ def fix_boolean_return_simplification(filepath: Path) -> bool:
                 next_line = lines[i + 1].strip()
                 third_line = lines[i + 2].strip() if i + 2 < len(lines) else ""
 
-                if next_line.startswith("return ") and third_line.startswith("else:"):
+                if next_line.startswith("return ") and third_line.startswith(
+                    "else:"
+                ):
                     if i + 4 < len(lines):
                         fourth_line = lines[i + 3].strip()
                         if fourth_line.startswith("return "):
@@ -897,7 +930,10 @@ def detect_undefined_variables(filepath: Path) -> Set[str]:
             if node.name:
                 defined_names.add(node.name)
         elif isinstance(node, ast.withitem):
-            if hasattr(node, "optional_vars") and node.optional_vars is not None:
+            if (
+                hasattr(node, "optional_vars")
+                and node.optional_vars is not None
+            ):
                 add_targets(node.optional_vars)
         elif isinstance(node, ast.comprehension):
             add_targets(node.target)
@@ -1066,12 +1102,14 @@ def fix_undefined_variables(filepath: Path) -> bool:
         insert_at = 0
         for i, line in enumerate(lines):
             stripped = line.strip()
-            if i == 0 and (stripped.startswith('"""') or stripped.startswith("'''")):
+            if i == 0 and (
+                stripped.startswith('"""') or stripped.startswith("'''")
+            ):
                 # Skip module docstring
                 for j in range(i + 1, len(lines)):
-                    if lines[j].strip().endswith('"""') or lines[j].strip().endswith(
-                        "'''"
-                    ):
+                    if lines[j].strip().endswith('"""') or lines[
+                        j
+                    ].strip().endswith("'''"):
                         insert_at = j + 1
                         break
                 else:
@@ -1155,7 +1193,10 @@ def ensure_module_docstring(filepath: Path, dry_run: bool = False) -> bool:
             and isinstance(tree.body[0].value.value, str)
         )
     except SyntaxError:
-        logging.warning("Syntax error in %s, skipping docstring check", filepath)
+        logging.warning(
+            "Syntax error in %s, skipping docstring check", filepath
+        )
+
         return False
 
     if not has_docstring:
@@ -1281,7 +1322,9 @@ def check_syntax(filepath: Path) -> bool:
         return False
 
 
-def wrap_long_comments_and_logging(filepath: Path, max_line_length: int = 80) -> bool:
+def wrap_long_comments_and_logging(
+    filepath: Path, max_line_length: int = 80
+) -> bool:
     """Wrap comment and logging lines to fit within max_line_length.
     Args:
         filepath: Path to the Python file
@@ -1308,12 +1351,13 @@ def wrap_long_comments_and_logging(filepath: Path, max_line_length: int = 80) ->
                 comment = comment[split_at:].lstrip()
             if comment:
                 new_lines.append("# " + comment + "\n")
-        # # # # Only wrap logging lines if we can do so safely (not inside a string
+        # # # # # # Only wrap logging lines if we can do so safely (not inside a string
         # literal)
-        elif ("logging." in line or "logger." in line or "log." in line) and len(
-            line
-        ) > max_line_length:
-            # # # # Only wrap if the line contains a comma outside of quotes (i.e., after
+        elif (
+            "logging." in line or "logger." in line or "log." in line
+        ) and len(line) > max_line_length:
+            # # # # # # Only wrap if the line contains a comma outside of quotes (i.e.,
+            # after
             # the
             # log message)
             # Find the first comma outside of quotes
@@ -1337,7 +1381,7 @@ def wrap_long_comments_and_logging(filepath: Path, max_line_length: int = 80) ->
                 indent = " " * (len(line) - len(line.lstrip()))
                 new_lines.append(indent + second + "\n")
             else:
-                # # # # If we can't safely wrap, leave the line as is to avoid syntax errors
+                # # # # # # If we can't safely wrap, leave the line as is to avoid syntax errors
                 new_lines.append(line)
         else:
             new_lines.append(line)
@@ -1369,7 +1413,9 @@ def run_compliance_checks(
     if not dry_run:
         # Create backup
         backup_path = filepath.with_suffix(filepath.suffix + ".bak")
-        backup_path.write_text(filepath.read_text(encoding="utf-8"), encoding="utf-8")
+        backup_path.write_text(
+            filepath.read_text(encoding="utf-8"), encoding="utf-8"
+        )
         logging.info("✓ Backup created at %s", backup_path)
     else:
         logging.info("[DRY RUN] No backup created for %s", filepath)
@@ -1475,7 +1521,9 @@ def run_compliance_checks(
     # Final syntax check (only if not dry_run)
     if not dry_run:
         if not check_syntax(filepath):
-            logging.error("✗ File has syntax errors after processing, restoring backup")
+            logging.error(
+                "✗ File has syntax errors after processing, restoring backup"
+            )
             filepath.write_text(
                 backup_path.read_text(encoding="utf-8"), encoding="utf-8"
             )
@@ -1519,7 +1567,9 @@ def main() -> None:
         logging.error("File must be a Python file (.py)")
         sys.exit(1)
 
-    success = run_compliance_checks(path, args.max_line_length, dry_run=args.dry_run)
+    success = run_compliance_checks(
+        path, args.max_line_length, dry_run=args.dry_run
+    )
     sys.exit(0 if success else 1)
 
 

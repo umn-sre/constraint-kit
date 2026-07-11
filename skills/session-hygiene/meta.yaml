@@ -1,0 +1,30 @@
+id: session-hygiene
+name: Session Hygiene
+description: >
+  Runtime discipline for implementation sessions. Maintains a session
+  ledger, detects and surfaces loops before they consume context, tracks
+  token budget against surface thresholds, verifies file changes were
+  actually applied, and executes a seven-step wrap-up protocol that closes
+  every session in a known, resumable state.
+schema_version: "0.1.0"
+modes:
+  - generating-code
+  - generating-doc
+  - generating-structured
+  - collaborating
+doc_type: structured
+personas:
+  - engineer
+tags:
+  - session-management
+  - loop-detection
+  - file-verification
+  - budget-tracking
+  - workslop-prevention
+  - anti-workslop
+pairs_with:
+  - session-preflight
+  - vibe-coding-discipline
+  - systematic-debugging
+version: "0.1.0"
+author: constraint-kit

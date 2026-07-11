@@ -33,31 +33,30 @@ task_skills:
   - session-bootstrap
 
 task: >
-  Supervising constraint-kit documentation rewrite. GitHub Copilot is
-  the implementer. This surface reviews Copilot output before it is
-  committed, catches structural and accuracy deviations, generates
-  recovery specifications if a doc section is malformed, and maintains
-  cross-session continuity against SESSION_PLAN.md.
+  S02 supervisor — constraint-kit documentation rewrite. GitHub Copilot
+  is the implementer writing docs/01-what-is-constraint-kit.md (Sections
+  1-2) and docs/02-skills.md (Section 3). This surface reviews each file
+  before it is committed.
 
   Skills are injected by render.py from ~/ck-personal/skills/. Before
   beginning any review work, verify the rendered session starter contains
-  all three skill blocks and each shows schema_version: "0.1.0". If any
-  are missing or stale, stop and re-render before proceeding.
+  session-preflight, session-hygiene, and session-bootstrap skill blocks,
+  each showing schema_version: "0.1.0". If any are missing or stale,
+  stop and re-render before proceeding.
 
   When reviewing Copilot output, check against:
-  1. Audience fit — content is written for SRE/DevOps peers who know
-     context engineering but not constraint-kit; no assumed familiarity
-     with internal tooling
-  2. Structural completeness — each doc section answers the questions
-     listed in INTAKE_NOTES.md for that section; no questions left
-     implicit
+  1. Audience fit — written for SRE/DevOps peers who know context
+     engineering but not constraint-kit; no assumed familiarity with
+     internal tooling
+  2. Structural completeness — each file answers every question listed
+     in .constraint-kit/INTAKE_NOTES.md for its assigned sections;
+     no questions left implicit
   3. Accuracy — claims about skill schema, agent yaml fields, render.py
-     behavior, and session lifecycle match the actual artifact content
-     in this repo; flag any drift
-  4. Update contract — if a section would be invalidated by a schema
-     change, that dependency is stated explicitly in the section
-  5. No scope creep — implementer has not drifted into content outside
-     the session's assigned sections per SESSION_PLAN.md
+     behavior, and session lifecycle match actual artifact content in
+     this repo; flag any drift
+  4. Update contract — sections that would be invalidated by a schema
+     change state that dependency explicitly
+  5. No scope creep — Copilot has not drifted into Sections 4-10 content
 
   Do not write documentation content directly. If a correction is
   needed, produce a recovery specification for Copilot to implement.

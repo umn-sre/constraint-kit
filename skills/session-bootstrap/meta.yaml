@@ -1,0 +1,27 @@
+id: session-bootstrap
+name: Session Bootstrap
+description: >
+  Scaffold creation and validation for constraint-kit projects. Runs before
+  any preflight or implementation session. CREATE mode produces the three
+  core scaffold files (agent-base.yaml, agent-implementer.yaml for Pattern B,
+  SESSION_PLAN.md). VERIFY mode audits an existing scaffold for schema
+  validity, path conventions, internal consistency, and SESSION_PLAN session
+  block completeness, then proposes and applies fixes after human confirmation.
+schema_version: "0.1.0"
+modes:
+  - generating-structured
+  - collaborating
+doc_type: structured
+personas:
+  - engineer
+tags:
+  - session-management
+  - scaffolding
+  - validation
+  - workslop-prevention
+  - anti-workslop
+pairs_with:
+  - session-preflight
+  - session-hygiene
+version: "0.1.0"
+author: constraint-kit

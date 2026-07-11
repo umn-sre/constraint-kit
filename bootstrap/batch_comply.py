@@ -54,7 +54,9 @@ def find_python_files(
     return python_files
 
 
-def process_file(filepath: Path, max_line_length: int = 120) -> tuple[Path, bool, str]:
+def process_file(
+    filepath: Path, max_line_length: int = 120
+) -> tuple[Path, bool, str]:
     """
     Process a single Python file.
 
@@ -178,7 +180,9 @@ def main() -> None:
         # Parallel processing
         with ProcessPoolExecutor(max_workers=args.jobs) as executor:
             futures = {
-                executor.submit(process_file, filepath, args.line_length): filepath
+                executor.submit(
+                    process_file, filepath, args.line_length
+                ): filepath
                 for filepath in python_files
             }
 
