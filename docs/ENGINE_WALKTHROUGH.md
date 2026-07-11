@@ -41,7 +41,7 @@ id if referenced correctly elsewhere).
 
 ## The compile pipeline
 
-`render.py` is the engine. It reads one `agent.yaml`, resolves which
+`bootstrap/render.py` is the engine. It reads one `agent.yaml`, resolves which
 skills apply, and produces one rendered output file. As a pipeline:
 
 ![constraint-kit compile pipeline](diagrams/compile-pipeline.svg)
@@ -98,8 +98,8 @@ these two fields is actually set in the `agent.yaml` you're debugging
 
 ## The validation gate chain
 
-`validate.py` is what keeps the schema internally consistent. It
-enforces ten rules (run `python validate.py --explain` for the live,
+`bootstrap/validate.py` is what keeps the schema internally consistent. It
+enforces ten rules (run `python bootstrap/validate.py --explain` for the live,
 current list — this is a snapshot, not the source of truth):
 
 | Rule | Why it matters |
@@ -119,12 +119,12 @@ Run modes:
 
 ```bash
 
-python validate.py                  # validate everything
-python validate.py --fix            # auto-fix safe mechanical issues
-python validate.py --fix --dry-run  # preview fixes without writing
-python validate.py --explain        # print the full rule list with reasoning
-python validate.py --json           # machine-readable output, for CI
-python validate.py --file path/to/file.yaml   # validate one file
+python bootstrap/validate.py                  # validate everything
+python bootstrap/validate.py --fix            # auto-fix safe mechanical issues
+python bootstrap/validate.py --fix --dry-run  # preview fixes without writing
+python bootstrap/validate.py --explain        # print the full rule list with reasoning
+python bootstrap/validate.py --json           # machine-readable output, for CI
+python bootstrap/validate.py --file path/to/file.yaml   # validate one file
 
 ```
 

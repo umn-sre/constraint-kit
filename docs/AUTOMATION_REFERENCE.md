@@ -15,10 +15,10 @@ current flag list.
 
 | Script | Purpose | Usage |
 |---|---|---|
-| `render.py` | Renders a session starter from `agent.yaml` | `python render.py .constraint-kit/agent.yaml`; `--target`, `--write`, `--list`, `--drive` — see `HOW_TO_USE_GITHUB.md` |
-| `validate.py` | Validates skills, roles, bundles, and the registry against schema | `python validate.py` (validate everything); `--fix` (auto-fix safe issues); `--fix --dry-run` (preview); `--explain` (explain rules); `--json`; `--file path/to/file.yaml` |
-| `mdcompliance.py` | Enforces Markdown lint rules with auto-fixes | `python mdcompliance.py <file.md>` or a directory to process recursively; `--max-line-length`, `--check`; reads config from `.markdownlintrc` or `pyproject.toml [tool.mdcompliance]` |
-| `batch_comply.py` | Runs `pycompliance.py` across a directory tree in parallel | `python batch_comply.py ./src -j 4` (`-j`/`--jobs` sets parallelism, default 1) |
+| `render.py` | Renders a session starter from `agent.yaml` | `python bootstrap/render.py .constraint-kit/agent.yaml`; `--target`, `--write`, `--list`, `--drive` — see `HOW_TO_USE_GITHUB.md` |
+| `validate.py` | Validates skills, roles, bundles, and the registry against schema | `python bootstrap/validate.py` (validate everything); `--fix` (auto-fix safe issues); `--fix --dry-run` (preview); `--explain` (explain rules); `--json`; `--file path/to/file.yaml` |
+| `mdcompliance.py` | Enforces Markdown lint rules with auto-fixes | `python bootstrap/mdcompliance.py <file.md>` or a directory to process recursively; `--max-line-length`, `--check`; reads config from `.markdownlintrc` or `pyproject.toml [tool.mdcompliance]` |
+| `batch_comply.py` | Runs `pycompliance.py` across a directory tree in parallel | `python bootstrap/batch_comply.py ./src -j 4` (`-j`/`--jobs` sets parallelism, default 1) |
 
 Exit codes and JSON output flags (where present) are meant for CI use —
 see `.github/workflows/validate.yml` for how `validate.py` is wired into

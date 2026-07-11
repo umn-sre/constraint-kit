@@ -65,7 +65,7 @@ kind of output.
       .constraint-kit/agent.yaml
    ```
 
-2. **Fill in the four required fields** in `agent.yaml`:
+2. **Fill in the five required fields** in `agent.yaml`:
    - `project` — a short kebab-case name
    - `role` — `engineer`, `researcher`, `writer`, or `product-owner`
    - `task` — one or two sentences on what you're doing right now
