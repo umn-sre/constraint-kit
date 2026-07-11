@@ -1351,12 +1351,13 @@ def wrap_long_comments_and_logging(
                 comment = comment[split_at:].lstrip()
             if comment:
                 new_lines.append("# " + comment + "\n")
-        # # # # # # Only wrap logging lines if we can do so safely (not inside a string
+        # # # # # # # Only wrap logging lines if we can do so safely (not inside a
+        # string
         # literal)
         elif (
             "logging." in line or "logger." in line or "log." in line
         ) and len(line) > max_line_length:
-            # # # # # # Only wrap if the line contains a comma outside of quotes (i.e.,
+            # # # # # # # Only wrap if the line contains a comma outside of quotes (i.e.,
             # after
             # the
             # log message)
@@ -1381,7 +1382,8 @@ def wrap_long_comments_and_logging(
                 indent = " " * (len(line) - len(line.lstrip()))
                 new_lines.append(indent + second + "\n")
             else:
-                # # # # # # If we can't safely wrap, leave the line as is to avoid syntax errors
+                # # # # # # # If we can't safely wrap, leave the line as is to avoid syntax
+                # errors
                 new_lines.append(line)
         else:
             new_lines.append(line)
