@@ -22,13 +22,15 @@ skills:
   all_modes:
     required:
       - decision-records
-    recommended: []
+    recommended:
+      - token-budget
 
   reasoning:
     required:
       - systematic-debugging
     recommended:
       - requirements-gathering
+      - security-compliance
 
   collaborating:
     required:
@@ -36,6 +38,9 @@ skills:
       - requirements-gathering
     recommended:
       - decision-records
+      - session-preflight
+      - session-bootstrap
+      - session-hygiene
 
   generating-code:
     required:
@@ -43,6 +48,8 @@ skills:
       - systematic-debugging
     recommended:
       - decision-records
+      - security-compliance
+      - session-hygiene
 
   generating-doc:
     required:
@@ -50,12 +57,16 @@ skills:
       - plain-language
     recommended:
       - decision-records
+      - session-hygiene
 
   generating-structured:
     required:
       - requirements-gathering
       - decision-records
-    recommended: []
+    recommended:
+      - session-preflight
+      - session-bootstrap
+      - session-hygiene
 
 typical_bundles:
   - new-feature-design

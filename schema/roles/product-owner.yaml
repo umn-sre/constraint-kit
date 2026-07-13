@@ -23,7 +23,8 @@ skills:
   all_modes:
     required:
       - requirements-gathering
-    recommended: []
+    recommended:
+      - token-budget
 
   collaborating:
     required:

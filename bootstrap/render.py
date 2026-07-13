@@ -112,7 +112,9 @@ def load_role(role_id: str, ext_roles: dict = None) -> dict:
     if ext_roles and role_id in ext_roles:
         role_path = ext_roles[role_id]
         if not role_path.exists():
-            sys.exit(f"ERROR: Extension role '{role_id}' not found at {role_path}")
+            sys.exit(
+                f"ERROR: Extension role '{role_id}' not found at {role_path}"
+            )
         with open(role_path, encoding="utf-8") as f:
             return yaml.safe_load(f)
     role_path = ROLES_DIR / f"{role_id}.yaml"
@@ -185,7 +187,9 @@ def resolve_skills(
     # Role baseline — all_modes
     for sid in role.get("skills", {}).get("all_modes", {}).get("required", []):
         required_ids.add(sid)
-    for sid in role.get("skills", {}).get("all_modes", {}).get("recommended", []):
+    for sid in (
+        role.get("skills", {}).get("all_modes", {}).get("recommended", [])
+    ):
         recommended_ids.add(sid)
 
     # Role baseline — mode-specific
@@ -213,7 +217,9 @@ def resolve_skills(
     # recommended should not overlap with required
     recommended_ids -= required_ids
 
-    required_skills = [load_skill(sid, ext_skills) for sid in sorted(required_ids)]
+    required_skills = [
+        load_skill(sid, ext_skills) for sid in sorted(required_ids)
+    ]
     recommended_skills = [
         load_skill(sid, ext_skills) for sid in sorted(recommended_ids)
     ]
@@ -224,7 +230,9 @@ def resolve_skills(
 # ── Rendering ──────────────────────────────────────────────────────────────
 
 
-def render(agent: dict, target_override: str = None, agent_path: Path = None) -> str:
+def render(
+    agent: dict, target_override: str = None, agent_path: Path = None
+) -> str:
     ext_skills, ext_roles = {}, {}
     if agent_path:
         ext_skills, ext_roles = load_extension_index(agent, agent_path)

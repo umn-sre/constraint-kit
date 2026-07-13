@@ -1,0 +1,337 @@
+# surface-registry.yaml
+# ──────────────────────────────────────────────────────────────────────────────
+# constraint-kit surface registry
+# Curated profiles of known AI surfaces for use by session-preflight and
+# session-hygiene skills.
+#
+# Each surface entry describes capability, limits, and known failure modes
+# so that preflight can tailor session plans and hygiene constraints.
+# Cost is deliberately not tracked here — vendor pricing changes too often
+# to keep current in a static registry, and no skill consumes it. Check
+# vendor pricing pages directly if cost is a factor in surface selection.
+#
+# Location (ck-personal):  registries/surface-registry.yaml
+# Location (base kit):     registries/surface-registry.yaml
+# Override key in manifest: surface_registry_path:
+#
+# Auto-detection: the agent MAY introspect its own identity and match against
+# this registry. If detection is ambiguous, the user MUST confirm the surface.
+# ──────────────────────────────────────────────────────────────────────────────
+#
+# KNOWN TECHNICAL DEBT: unlike cost (removed — see above), `capabilities` and
+# `known_failure_modes` are load-bearing: session-hygiene branches its
+# verification behavior directly on file_system_access, and gates wrap-up on
+# the budget thresholds here. They can't be dropped the way cost was. But
+# vendor products change capabilities on their own release cycles (memory,
+# extended thinking, etc. have all shipped or changed recently), so these
+# fields go stale silently unless someone checks. Each surface entry carries
+# a `last_verified` date — treat a missing or old date as a signal this entry
+# needs a manual recheck against the vendor's current docs before being
+# trusted, not as a guarantee it's still accurate.
+# ──────────────────────────────────────────────────────────────────────────────
+
+schema_version: "0.1.0"
+
+surfaces:
+
+  # ── Claude (claude.ai browser chat) ────────────────────────────────────────
+  - id: claude-browser
+    last_verified: "2026-07-11"  # capabilities confirmed against Anthropic docs; cost block removed (see header)
+    display_name: "Claude (claude.ai — browser/mobile chat)"
+    vendor: Anthropic
+    auto_detect_hints:
+      - "model name contains 'claude'"
+      - "no explicit file system access"
+      - "no shell execution"
+    interface: browser-chat
+
+    context:
+      window_tokens: 200000          # Claude 3.x / Sonnet 4.x
+      usable_estimate: 180000        # conservative — system prompt + history overhead
+      budget_warning_threshold: 0.70 # warn user at 70% consumed
+      budget_hard_stop: 0.88         # initiate wrap-up protocol at 88%
+
+    capabilities:
+      file_system_access: false
+      shell_execution: false
+      tool_use: true                 # web search, artifacts
+      extended_thinking: true        # toggleable via model selector — updated July 2026
+      image_input: true
+      multi_turn_memory: true        # search/reference past chats + memory generation — updated July 2026
+      artifact_rendering: true
+
+    known_failure_modes:
+      - id: phantom-edit
+        description: >
+          Agent reports file edits in artifact blocks but has no file system
+          access. Changes exist only in the conversation artifact, not on disk.
+          User must manually apply.
+        mitigation: >
+          Agent MUST explicitly state after every code block:
+          "This is a proposed change. I cannot verify it was applied.
+          Please confirm before I continue."
+
+      - id: loop-blindness
+        description: >
+          Agent has no memory of prior turns beyond the context window.
+          It can re-attempt the same fix multiple times without recognizing
+          the loop. User bears full loop-detection burden.
+        mitigation: >
+          Session ledger maintained as a running markdown checklist in the
+          conversation. Agent re-reads ledger summary at start of each response
+          turn and explicitly checks: "Have I attempted this before?"
+
+      - id: completion-hallucination
+        description: >
+          Agent marks a task complete based on its own output, not on verified
+          outcome. Common pattern: "Done! Now let's move on" with no evidence.
+        mitigation: >
+          Agent may not mark any task complete without stating explicit
+          verification criteria and confirming they are met.
+
+      - id: constraint-amnesia
+        description: >
+          In long sessions agent loses fidelity to constraints established
+          early in the context window.
+        mitigation: >
+          Agent re-reads agent-implementer.yaml constraints block at the
+          start of any turn following a multi-response subtask.
+
+    session_hygiene:
+      wrap_up_protocol: >
+        At budget_hard_stop threshold: (1) complete current atomic task only,
+        (2) write session ledger summary, (3) update SESSION_PLAN.md with
+        completed/remaining tasks, (4) append session history entry to
+        agent-base.yaml, (5) state continuation prompt for next session.
+      loop_detection: manual        # agent relies on ledger; no automatic tooling
+      file_verification: not-applicable
+
+  # ── Claude Code (terminal) ─────────────────────────────────────────────────
+  - id: claude-code-terminal
+    last_verified: "2026-07-11"  # extended_thinking confirmed against Anthropic docs; cost block removed (see header)
+    display_name: "Claude Code (terminal / CLI)"
+    vendor: Anthropic
+    auto_detect_hints:
+      - "running as claude-code CLI"
+      - "has bash tool access"
+      - "has file read/write tools"
+    interface: agentic-cli
+
+    context:
+      window_tokens: 200000
+      usable_estimate: 175000
+      budget_warning_threshold: 0.70
+      budget_hard_stop: 0.88
+
+    capabilities:
+      file_system_access: true
+      shell_execution: true
+      tool_use: true
+      extended_thinking: true         # Tab-key toggle since Claude Code v2.0.0 — updated July 2026
+      image_input: false
+      multi_turn_memory: false
+      artifact_rendering: false
+
+    known_failure_modes:
+      - id: phantom-edit
+        description: >
+          Agent writes a file edit via str_replace or write_file tool but
+          the operation silently fails (permissions, path mismatch, encoding).
+          Agent proceeds as if edit succeeded.
+        mitigation: >
+          After every file write: agent MUST read the file back, compute
+          line count or hash, and compare to expected. If mismatch: halt,
+          report, do not proceed.
+
+      - id: runaway-shell
+        description: >
+          Agent executes shell commands that have side effects beyond the
+          intended task scope (e.g., broad glob deletes, unintended installs).
+        mitigation: >
+          Agent states the exact command and its expected effect before
+          executing. Destructive commands require explicit user confirmation.
+
+      - id: loop-blindness
+        description: >
+          Agent retries a failing operation (e.g., pip install, test run)
+          without diagnosing root cause, consuming context rapidly.
+        mitigation: >
+          Maximum 2 retry attempts per operation. On second failure: halt,
+          diagnose, surface to user before any further attempt.
+
+      - id: constraint-amnesia
+        description: Same as claude-browser variant.
+        mitigation: >
+          Agent re-reads agent-implementer.yaml at session start and after
+          every major subtask boundary.
+
+    session_hygiene:
+      wrap_up_protocol: >
+        At budget_hard_stop: (1) git status to capture working state,
+        (2) write session ledger, (3) update SESSION_PLAN.md,
+        (4) append session history to agent-base.yaml via file write,
+        (5) git add + commit with session summary message,
+        (6) output continuation prompt.
+      loop_detection: semi-automatic  # agent can inspect its own tool call history
+      file_verification: required     # read-back + hash after every write
+
+  # ── GitHub Copilot (VS Code) ───────────────────────────────────────────────
+  - id: copilot-vscode
+    last_verified: null  # cost block removed 2026-07-11 (see header); capabilities/failure_modes NOT independently verified
+    display_name: "GitHub Copilot (VS Code — chat / agent mode)"
+    vendor: GitHub / Microsoft
+    auto_detect_hints:
+      - "running inside VS Code Copilot chat"
+      - "has workspace file access via @workspace"
+    interface: ide-chat
+
+    context:
+      window_tokens: 128000          # varies by backend model; GPT-4o / Sonnet
+      usable_estimate: 110000
+      budget_warning_threshold: 0.65
+      budget_hard_stop: 0.82
+
+    capabilities:
+      file_system_access: true       # via workspace tools in agent mode
+      shell_execution: true          # terminal tool in agent mode
+      tool_use: true
+      extended_thinking: false
+      image_input: true
+      multi_turn_memory: false
+      artifact_rendering: false
+
+    known_failure_modes:
+      - id: phantom-edit
+        description: >
+          In non-agent mode Copilot suggests edits inline but does not apply
+          them. In agent mode edits are applied but may silently miss targets
+          (wrong file, stale buffer).
+        mitigation: >
+          After each agent-mode edit: run git diff --stat to confirm
+          non-zero delta. If -0/+0: halt and diagnose before proceeding.
+
+      - id: model-rotation-drift
+        description: >
+          Backend model may switch mid-session (e.g., GPT-4o → Sonnet),
+          changing behavior, constraint adherence, and token limits.
+        mitigation: >
+          Log active model at session start in session ledger. If behavior
+          change is detected mid-session, re-confirm model and re-assert
+          constraints.
+
+      - id: workspace-scope-blur
+        description: >
+          @workspace context pulls broadly from the repo, diluting the
+          agent's focus with irrelevant files.
+        mitigation: >
+          Pin context to specific files/directories. Avoid open-ended
+          @workspace queries when task scope is narrow.
+
+      - id: constraint-amnesia
+        description: Same as other surfaces.
+        mitigation: Re-assert agent-implementer.yaml constraints at each subtask.
+
+    session_hygiene:
+      wrap_up_protocol: >
+        At budget_hard_stop: (1) git diff --stat for working state summary,
+        (2) session ledger update, (3) SESSION_PLAN.md update,
+        (4) agent-base.yaml history append, (5) git commit,
+        (6) continuation prompt output.
+      loop_detection: semi-automatic
+      file_verification: required    # git diff --stat after each edit
+
+  # ── ChatGPT (browser) ─────────────────────────────────────────────────────
+  - id: chatgpt-browser
+    last_verified: null  # cost block removed + stale model names in display_name fixed 2026-07-11; capabilities/failure_modes NOT independently verified
+    display_name: "ChatGPT (chat.openai.com)"
+    vendor: OpenAI
+    auto_detect_hints:
+      - "model name contains 'gpt'"
+      - "no file system access"
+    interface: browser-chat
+
+    context:
+      window_tokens: 128000          # GPT-4o; GPT-4.1 may vary
+      usable_estimate: 110000
+      budget_warning_threshold: 0.65
+      budget_hard_stop: 0.82
+
+    capabilities:
+      file_system_access: false
+      shell_execution: false
+      tool_use: true                 # code interpreter, web search (Plus/Pro)
+      extended_thinking: false
+      image_input: true
+      multi_turn_memory: true        # ChatGPT has persistent memory feature
+      artifact_rendering: false
+
+    known_failure_modes:
+      - id: phantom-edit
+        description: Same pattern as claude-browser.
+        mitigation: Same as claude-browser.
+
+      - id: memory-poisoning
+        description: >
+          ChatGPT persistent memory may carry incorrect assumptions from
+          prior sessions into a new session, conflicting with current
+          agent-implementer.yaml constraints.
+        mitigation: >
+          At session start: explicitly instruct ChatGPT to disregard
+          persistent memory for this session and treat agent-implementer.yaml
+          as the sole constraint source.
+
+      - id: constraint-amnesia
+        description: Same as other surfaces.
+        mitigation: Same re-assertion pattern.
+
+    session_hygiene:
+      wrap_up_protocol: Same as claude-browser (no file access).
+      loop_detection: manual
+      file_verification: not-applicable
+
+  # ── Gemini (browser / Google AI Studio) ───────────────────────────────────
+  - id: gemini-browser
+    last_verified: null  # cost block removed 2026-07-11 (see header); capabilities/failure_modes NOT independently verified
+    display_name: "Gemini (gemini.google.com or AI Studio)"
+    vendor: Google
+    auto_detect_hints:
+      - "model name contains 'gemini'"
+    interface: browser-chat
+
+    context:
+      window_tokens: 1000000         # Gemini 1.5 Pro / 2.0 Pro
+      usable_estimate: 900000        # practical ceiling before quality degrades
+      budget_warning_threshold: 0.60 # quality degrades before hard limit
+      budget_hard_stop: 0.75
+
+    capabilities:
+      file_system_access: false
+      shell_execution: false
+      tool_use: true
+      extended_thinking: false       # not in standard browser chat
+      image_input: true
+      multi_turn_memory: false
+      artifact_rendering: false
+
+    known_failure_modes:
+      - id: long-context-quality-degradation
+        description: >
+          Despite a 1M token window, response quality and constraint adherence
+          degrade significantly in the 600k–900k range. Budget warning is set
+          conservatively to account for this.
+        mitigation: >
+          Prefer shorter, more focused sessions. Break large tasks into
+          sub-sessions rather than relying on the full context window.
+
+      - id: phantom-edit
+        description: Same as claude-browser.
+        mitigation: Same as claude-browser.
+
+      - id: constraint-amnesia
+        description: Same as other surfaces.
+        mitigation: Same re-assertion pattern.
+
+    session_hygiene:
+      wrap_up_protocol: Same as claude-browser.
+      loop_detection: manual
+      file_verification: not-applicable

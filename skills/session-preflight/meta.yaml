@@ -1,0 +1,26 @@
+id: session-preflight
+name: Session Preflight
+description: >
+  Converts raw user notes or gripes into a surface-aware SESSION_PLAN.md
+  and paste-ready agent-base.yaml / agent-implementer.yaml pair before
+  any implementation session begins. Interrogates the target AI surface,
+  applies the surface registry, identifies skill gaps, and enforces that
+  no implementation work starts without a complete plan artifact.
+schema_version: "0.1.0"
+modes:
+  - collaborating
+  - generating-structured
+personas:
+  - engineer
+tags:
+  - planning
+  - session-management
+  - surface-awareness
+  - workslop-prevention
+  - anti-workslop
+pairs_with:
+  - session-hygiene
+  - vibe-coding-discipline
+  - requirements-gathering
+version: "0.1.0"
+author: constraint-kit

@@ -1,0 +1,28 @@
+id: token-budget
+name: Token Budget
+description: >
+  Manages context/token consumption within an agent session: prefers
+  targeted reads over full-file dumps, avoids redundant re-reads,
+  chunks large tasks explicitly, and flags early when a task is
+  likely to outgrow one session's practical context budget.
+schema_version: "0.1.0"
+modes:
+  - reasoning
+  - collaborating
+  - generating-code
+  - generating-doc
+  - generating-structured
+doc_type: technical
+tags:
+  - context
+  - efficiency
+  - session-management
+  - universal
+personas:
+  - any
+pairs_with:
+  - systematic-debugging
+  - requirements-gathering
+  - decision-records
+version: "0.1.0"
+author: constraint-kit
