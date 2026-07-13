@@ -140,7 +140,7 @@ Run in order, each producing the corresponding section of
 
 ### ARCHAEOLOGY_NOTES.md
 
-​```markdown
+```markdown
 
 # Archaeology Notes: <project-name>
 
@@ -194,7 +194,7 @@ calls needing a human decision)
 
 - <gap>
 
-​```
+```
 
 ## Anti-Patterns
 
