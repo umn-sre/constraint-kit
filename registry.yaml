@@ -666,6 +666,35 @@ skills:
 
     '
   version: 0.1.0
+- id: session-archaeology
+  name: Session Archaeology
+  file: skills/session-archaeology/SKILL.md
+  meta: skills/session-archaeology/meta.yaml
+  modes:
+  - collaborating
+  - generating-structured
+  personas:
+  - engineer
+  tags:
+  - planning
+  - spec-discovery
+  - session-management
+  - workslop-prevention
+  - anti-workslop
+  pairs_with:
+  - session-preflight
+  - vibe-coding-discipline
+  - systematic-debugging
+  provenance: null
+  description: 'Extracts a structured, confidence-tagged spec (ARCHAEOLOGY_NOTES.md)
+    from an existing repository with no reliable documented design — vibe-coded,
+    legacy, or unknown-provenance code. Runs discovery passes over the actual repo,
+    not intake alone, to produce a structural inventory, behavior contract, feature
+    inventory, and flaw taxonomy with root-cause tags, then hands off to session-preflight
+    to scope the greenfield replacement.
+
+    '
+  version: 0.1.0
 - id: session-preflight
   name: Session Preflight
   file: skills/session-preflight/SKILL.md
@@ -685,6 +714,7 @@ skills:
   - session-hygiene
   - vibe-coding-discipline
   - requirements-gathering
+  - session-archaeology
   provenance: null
   description: 'Converts raw user notes or gripes into a surface-aware SESSION_PLAN.md
     and paste-ready agent-base.yaml / agent-implementer.yaml pair before any implementation

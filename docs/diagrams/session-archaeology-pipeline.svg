@@ -1,0 +1,98 @@
+<svg viewBox="0 0 1650 460" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#666666"/>
+    </marker>
+    <marker id="arrowRed" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#b85450"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#82b366"/>
+    </marker>
+    <marker id="arrowYellow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#b38600"/>
+    </marker>
+  </defs>
+
+  <rect width="1650" height="460" fill="#ffffff"/>
+
+  <!-- Variant A inputs -->
+  <rect x="40" y="40" width="190" height="60" rx="8" fill="#f8cecc" stroke="#b85450" stroke-dasharray="4,3"/>
+  <text x="135" y="65" text-anchor="middle" font-size="12">Known provenance</text>
+  <text x="135" y="80" text-anchor="middle" font-size="12">(vibe-coded)</text>
+
+  <rect x="260" y="40" width="190" height="60" rx="8" fill="#f8cecc" stroke="#b85450" stroke-dasharray="4,3"/>
+  <text x="355" y="65" text-anchor="middle" font-size="12">Unknown provenance</text>
+  <text x="355" y="80" text-anchor="middle" font-size="12">(Variant A)</text>
+
+  <!-- Variant B input -->
+  <rect x="740" y="40" width="210" height="60" rx="8" fill="#f8cecc" stroke="#b85450" stroke-dasharray="4,3"/>
+  <text x="845" y="65" text-anchor="middle" font-size="12">Target language / paradigm</text>
+  <text x="845" y="80" text-anchor="middle" font-size="12">(Variant B input)</text>
+
+  <!-- SDD stage labels -->
+  <text x="355" y="170" text-anchor="middle" font-size="12" font-style="italic" fill="#666666">spec-discovery (pre-SDD)</text>
+  <text x="595" y="170" text-anchor="middle" font-size="12" font-style="italic" fill="#666666">Specify</text>
+  <text x="835" y="170" text-anchor="middle" font-size="12" font-style="italic" fill="#666666">Plan</text>
+  <text x="1085" y="170" text-anchor="middle" font-size="12" font-style="italic" fill="#666666">Tasks</text>
+  <text x="1325" y="170" text-anchor="middle" font-size="12" font-style="italic" fill="#666666">Implement</text>
+  <text x="1545" y="170" text-anchor="middle" font-size="12" font-style="italic" fill="#666666">Verify</text>
+
+  <!-- Main chain -->
+  <rect x="40" y="200" width="170" height="90" rx="8" fill="#f5f5f5" stroke="#666666"/>
+  <text x="125" y="240" text-anchor="middle" font-size="13">Messy Repo</text>
+  <text x="125" y="256" text-anchor="middle" font-size="13">(existing codebase)</text>
+
+  <rect x="260" y="200" width="190" height="90" rx="8" fill="#dae8fc" stroke="#6c8ebf"/>
+  <text x="355" y="250" text-anchor="middle" font-size="13">session-archaeology</text>
+
+  <rect x="500" y="200" width="190" height="90" rx="8" fill="#d5e8d4" stroke="#82b366"/>
+  <text x="595" y="250" text-anchor="middle" font-size="13">ARCHAEOLOGY_NOTES.md</text>
+
+  <rect x="740" y="200" width="190" height="90" rx="8" fill="#dae8fc" stroke="#6c8ebf"/>
+  <text x="835" y="250" text-anchor="middle" font-size="13">session-preflight</text>
+
+  <rect x="980" y="200" width="210" height="90" rx="8" fill="#d5e8d4" stroke="#82b366"/>
+  <text x="1085" y="242" text-anchor="middle" font-size="13">SESSION_PLAN.md +</text>
+  <text x="1085" y="258" text-anchor="middle" font-size="13">agent-implementer.yaml</text>
+
+  <rect x="1240" y="200" width="170" height="90" rx="8" fill="#dae8fc" stroke="#6c8ebf"/>
+  <text x="1325" y="250" text-anchor="middle" font-size="13">Coding Sessions</text>
+
+  <rect x="1460" y="200" width="170" height="90" rx="8" fill="#dae8fc" stroke="#6c8ebf"/>
+  <text x="1545" y="242" text-anchor="middle" font-size="13">Coverage / Hygiene</text>
+  <text x="1545" y="258" text-anchor="middle" font-size="13">checks</text>
+
+  <!-- Sub-layer boxes -->
+  <rect x="500" y="340" width="190" height="80" rx="8" fill="#d5e8d4" stroke="#82b366"/>
+  <text x="595" y="376" text-anchor="middle" font-size="12">Design Spec layer</text>
+  <text x="595" y="392" text-anchor="middle" font-size="12">(portable)</text>
+
+  <rect x="710" y="340" width="210" height="80" rx="8" fill="#ffd966" stroke="#b38600" stroke-width="1.5"/>
+  <text x="815" y="376" text-anchor="middle" font-size="12" fill="#000000">Source Implementation notes</text>
+  <text x="815" y="392" text-anchor="middle" font-size="12" fill="#000000">(paradigm-specific)</text>
+
+  <!-- Main chain arrows -->
+  <line x1="210" y1="245" x2="258" y2="245" stroke="#666666" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="450" y1="245" x2="498" y2="245" stroke="#666666" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="690" y1="245" x2="738" y2="245" stroke="#666666" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="930" y1="245" x2="978" y2="245" stroke="#666666" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="1190" y1="245" x2="1238" y2="245" stroke="#666666" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="1410" y1="245" x2="1458" y2="245" stroke="#666666" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Variant input arrows -->
+  <path d="M135,100 L135,130 L320,130 L320,198" fill="none" stroke="#b85450" stroke-width="2" stroke-dasharray="4,3" marker-end="url(#arrowRed)"/>
+  <path d="M355,100 L355,198" fill="none" stroke="#b85450" stroke-width="2" stroke-dasharray="4,3" marker-end="url(#arrowRed)"/>
+  <path d="M845,100 L845,198" fill="none" stroke="#b85450" stroke-width="2" stroke-dasharray="4,3" marker-end="url(#arrowRed)"/>
+
+  <!-- Sub-layer arrows -->
+  <path d="M560,290 L560,338" fill="none" stroke="#82b366" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <path d="M650,290 L650,320 L785,320 L785,338" fill="none" stroke="#b38600" stroke-width="2" marker-end="url(#arrowYellow)"/>
+
+  <path d="M595,340 L595,310 L794,310 L794,292" fill="none" stroke="#82b366" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <text x="640" y="303" font-size="11" fill="#4d7a3a">input</text>
+
+  <path d="M845,340 L845,322 L873,322 L873,292" fill="none" stroke="#b38600" stroke-width="2" stroke-dasharray="4,3" marker-end="url(#arrowYellow)"/>
+  <text x="878" y="335" font-size="11" fill="#8a6600">translated per target</text>
+
+</svg>

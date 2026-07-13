@@ -6,7 +6,7 @@ same prompt after `agent.yaml` constraints are in place. Three session
 types — greenfield, brownfield, debugging — each showing the contrast
 between unconstrained output (workslop) and constrained output.
 
-![Session contrast diagram](vibecoding-constraint-flow.svg)
+![Session contrast diagram](diagrams/vibecoding-constraint-flow.svg)
 
 The same prompt. The same AI. The difference is whether the project's
 standards, patterns, approved dependencies, and testing requirements

@@ -6,7 +6,7 @@ class: SSL certificate issuance blocked by a SERVFAIL response during
 CAA record lookup, triggered by Sectigo's DNSSEC enforcement change
 effective March 5–12, 2026.
 
-![Phase diagram](postmortem-caa-servfail-flow.svg)
+![Phase diagram](diagrams/postmortem-caa-servfail-flow.svg)
 
 ## Background: what changed and why this incident class emerged
 
