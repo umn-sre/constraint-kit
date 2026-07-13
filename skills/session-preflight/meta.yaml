@@ -22,5 +22,6 @@ pairs_with:
   - session-hygiene
   - vibe-coding-discipline
   - requirements-gathering
+  - session-archaeology
 version: "0.1.0"
 author: constraint-kit

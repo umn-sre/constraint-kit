@@ -1,0 +1,45 @@
+<mxfile host="app.diagrams.net" modified="2026-07-11T00:00:00.000Z" agent="Claude" version="24.0.0" type="device">
+  <diagram id="fanout" name="Variant B - One Spec, Many Targets">
+    <mxGraphModel dx="800" dy="600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1150" pageHeight="500" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="2" value="ARCHAEOLOGY_NOTES.md&#10;Design Spec Layer&#10;(portable, language-agnostic)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="440" y="140" width="260" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="3" value="same behavioral contracts, invariants, feature inventory — different implementation substrate" style="text;html=1;align=center;verticalAlign=middle;fontStyle=2;fontColor=#666666;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="380" y="250" width="380" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="4" value="PowerShell" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="40" y="380" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="5" value="Rust" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="220" y="380" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="6" value="Pascal" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="400" y="380" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="7" value="C" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="580" y="380" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="8" value="Lisp" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="760" y="380" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="9" value="Modern target&#10;(e.g. Go, Zig...)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="940" y="380" width="160" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="10" style="html=1;endArrow=block;rounded=0;strokeColor=#666666;" edge="1" parent="1" source="2" target="4"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="11" style="html=1;endArrow=block;rounded=0;strokeColor=#666666;" edge="1" parent="1" source="2" target="5"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="12" style="html=1;endArrow=block;rounded=0;strokeColor=#666666;" edge="1" parent="1" source="2" target="6"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="13" style="html=1;endArrow=block;rounded=0;strokeColor=#666666;" edge="1" parent="1" source="2" target="7"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="14" style="html=1;endArrow=block;rounded=0;strokeColor=#666666;" edge="1" parent="1" source="2" target="8"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="15" style="html=1;endArrow=block;rounded=0;strokeColor=#666666;" edge="1" parent="1" source="2" target="9"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

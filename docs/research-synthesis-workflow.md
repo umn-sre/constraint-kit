@@ -7,7 +7,7 @@ and asks before it writes.
 
 ## Phase diagram
 
-![Phase diagram](research-synthesis-flow.svg)
+![Phase diagram](diagrams/research-synthesis-flow.svg)
 
 ## What this workflow does
 
