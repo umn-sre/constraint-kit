@@ -1,49 +1,27 @@
 ---
-name: New Skill Proposal
-about: Propose a new skill for the constraint-kit library
+name: Skill proposal
+about: Propose a new skill or a change to an existing one
 title: "skill: "
-labels: ["skill", "proposal"]
-assignees: []
+labels: enhancement
 ---
 
-## Skill name
-<!-- kebab-case id, e.g. "citation-management" -->
+## Which plugin
 
-## One-line description
-<!-- What does this skill constrain? One sentence. -->
+`constraint-design` (planning) / `constraint-dev` (implementation) / a new plugin (justify)
 
-## Which modes does it apply to?
-<!-- reasoning | collaborating | generating-code | generating-doc | generating-structured -->
-<!-- Check all that apply -->
+## What the skill does
 
-- [ ] reasoning
-- [ ] collaborating
-- [ ] generating-code
-- [ ] generating-doc
-- [ ] generating-structured
+<!-- One paragraph. What behavior does it constrain or enable? -->
 
-## Which personas would use this?
-- [ ] engineer
-- [ ] researcher
-- [ ] writer
-- [ ] product-owner
-- [ ] any
+## When it triggers
 
-## What problem does this solve?
-<!-- What goes wrong without this skill? What context drift or failure
-     mode does it prevent? Be specific. -->
+<!-- The "Use when ..." description line you'd put in its frontmatter. -->
 
-## Draft anti-patterns
-<!-- List 2-4 specific things the agent should NOT do that this
-     skill would prevent. These are the most important part. -->
+## Where it fits in the flow
 
--
--
--
+<!-- Which skills hand off to it; which skill it hands off to. -->
 
-## Is this adapted from an existing source?
-<!-- If yes, link to the original. -->
+## Prior art
 
-## Are you willing to write the SKILL.md?
-- [ ] Yes, I will submit a PR
-- [ ] No, I am proposing it for someone else to implement
+<!-- Existing upstream skill (obra/superpowers, mattpocock/skills, other)
+     this adapts, if any. -->

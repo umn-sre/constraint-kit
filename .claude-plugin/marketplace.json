@@ -1,0 +1,45 @@
+{
+  "name": "constraint-kit",
+  "metadata": {
+    "description": "Constraint-driven planning and implementation plugins for GitHub Copilot and Claude Code",
+    "version": "2.0.0"
+  },
+  "owner": {
+    "name": "constraint-kit contributors"
+  },
+  "plugins": [
+    {
+      "name": "constraint-design",
+      "description": "Plan-before-code bundle: project intake that generates copilot-instructions, relentless brainstorming, spec writing, and deep-module implementation planning.",
+      "version": "2.0.0",
+      "author": {
+        "name": "constraint-kit contributors"
+      },
+      "license": "MIT",
+      "keywords": [
+        "planning",
+        "design",
+        "brainstorming",
+        "spec",
+        "copilot-instructions"
+      ],
+      "source": "./plugins/constraint-design"
+    },
+    {
+      "name": "constraint-dev",
+      "description": "Disciplined implementation bundle: strict TDD, subagent-driven plan execution with per-task reviews, and code review discipline.",
+      "version": "2.0.0",
+      "author": {
+        "name": "constraint-kit contributors"
+      },
+      "license": "MIT",
+      "keywords": [
+        "tdd",
+        "code-review",
+        "subagents",
+        "plan-execution"
+      ],
+      "source": "./plugins/constraint-dev"
+    }
+  ]
+}

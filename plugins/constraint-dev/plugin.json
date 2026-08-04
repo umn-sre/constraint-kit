@@ -1,0 +1,25 @@
+{
+  "name": "constraint-dev",
+  "description": "Disciplined implementation bundle: strict TDD, subagent-driven plan execution with per-task reviews, code review request/reception discipline, and clean branch finishing.",
+  "version": "2.0.0",
+  "author": {
+    "name": "constraint-kit contributors"
+  },
+  "homepage": "https://github.com/umn-sre/constraint-kit/tree/main/plugins/constraint-dev",
+  "repository": "https://github.com/umn-sre/constraint-kit",
+  "license": "MIT",
+  "keywords": [
+    "tdd",
+    "test-driven-development",
+    "code-review",
+    "subagents",
+    "plan-execution",
+    "constraint-kit"
+  ],
+  "skills": [
+    "skills/"
+  ],
+  "agents": [
+    "agents/"
+  ]
+}

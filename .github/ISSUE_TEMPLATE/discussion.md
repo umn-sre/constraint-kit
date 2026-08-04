@@ -1,17 +1,14 @@
 ---
-name: Discussion / Question
-about: Direction questions, design discussions, or general feedback
+name: Discussion
+about: Questions, ideas, or feedback that isn't a bug or a concrete proposal
 title: "discussion: "
-labels: ["discussion"]
-assignees: []
+labels: question
 ---
 
-## What would you like to discuss?
-<!-- Be as open-ended as you need. This is for anything that is not
-     a bug or a specific skill/role proposal. -->
+## Topic
+
+<!-- What would you like to discuss? -->
 
 ## Context
-<!-- What brought this up? What are you trying to accomplish? -->
 
-## Your current thinking
-<!-- Optional. If you have a leaning, share it — it helps the discussion. -->
+<!-- Relevant background: your workflow, surfaces you use, links. -->

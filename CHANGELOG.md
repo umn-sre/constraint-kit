@@ -4,36 +4,40 @@ All notable changes to constraint-kit are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 Versions follow [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [2.0.0] - 2026-08-04
 
-## [0.1.1] — 2026-03-31
-
-### Added
-
-- skills/incident-causal-synthesis
-- skills/source-constrained-synthesis
-- skills/vibe-coding-discipline
-
-## [0.1.0] — 2026-03-13
+Complete restructure: constraint-kit is now a GitHub Copilot / Claude
+Code **plugin marketplace**. See [docs/DESIGN.md](docs/DESIGN.md).
 
 ### Added
 
-- Schema definitions for skill, role, bundle, agent (repo path), and
-  active-task template (Drive path)
-- 9 seed skills: brainstorming, requirements-gathering, document-structure,
-  argument-construction, plain-language, decision-records, research-brief,
-  test-driven-development (adapted from obra/superpowers),
-  systematic-debugging (adapted from obra/superpowers)
-- 4 seed roles: engineer, researcher, writer, product-owner
-- 5 seed bundles: new-feature-design, document-drafting, research-inquiry,
-  engineering-decision, structured-output
-- Master registry (registry.yaml) — human and machine readable
-- Bootstrap renderer (render.py) with Jinja2 templates for:
-  session-prompt, copilot-instructions, active-task
-- Bootstrap templates for repo path (agent.yaml) and Drive path
-- Schema validator (validate.py) with CI integration
-- GitHub repo scaffolding: LICENSE, .gitignore, PR template,
-  issue templates, CI workflow
-- contrib/ extension listing structure
-- Documentation: README, HOW_TO_USE_GITHUB, HOW_TO_USE_DRIVE,
-  HOW_TO_CONTRIBUTE
+- `.claude-plugin/marketplace.json` marketplace manifest.
+- `constraint-design` plugin (planner agent + `project-intake`,
+  `brainstorming`, `writing-specs`, `writing-plans` skills).
+- `constraint-dev` plugin (conductor/implementer/reviewer agents +
+  `test-driven-development`, `subagent-driven-development`,
+  `executing-plans`, `requesting-code-review`, `receiving-code-review`,
+  `finishing-a-development-branch` skills).
+- Skills adapted and merged from
+  [obra/superpowers](https://github.com/obra/superpowers) and
+  [mattpocock/skills](https://github.com/mattpocock/skills).
+- `project-intake` skill generates `.github/copilot-instructions.md` in
+  the target repo — replaces the bootstrap renderer.
+- `.constraint-kit/` workspace convention: skills write PROJECT.md,
+  GLOSSARY.md, adr/, specs/, plans/, and sdd/ into the consuming repo.
+- `scripts/validate.py` structure validation (stdlib only) and matching
+  CI workflow.
+
+### Removed
+
+- `bootstrap/` rendering/validation/compliance pipeline.
+- Custom YAML schemas (`schema/`), roles, bundles, registries, and
+  `contrib/` extension registry.
+- The original skill library (`skills/`), Drive/multisurface docs,
+  scenario docs, and pipeline diagrams. All previous content remains
+  available in git history (tag/commit prior to 2.0.0).
+
+## [0.1.0] and earlier
+
+The pre-2.0 skills/roles/bundles framework with Python bootstrap
+rendering. See git history for details.

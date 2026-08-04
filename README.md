@@ -1,155 +1,138 @@
 # constraint-kit
 
-A model-agnostic, context-aware framework for keeping AI assistants
-focused, consistent, and constraint-driven across sessions.
+Constraint-driven planning and implementation plugins for **GitHub
+Copilot** (CLI, VS Code, coding agent) and **Claude Code**.
 
-Works with Gemini, Claude, GitHub Copilot, ChatGPT, or any
-browser-based AI assistant. No plugins, no API keys, no lock-in.
+AI assistants drift: rules given at the start of a session are forgotten
+by the middle. constraint-kit keeps the rules on disk instead — skills
+write every planning artifact into your repo's `.constraint-kit/` folder
+and generate `.github/copilot-instructions.md`, so every session starts
+from the same constraints without any bootstrap step.
 
-## The problem it solves
+This repo is a **plugin marketplace** with two plugins that mirror the
+two halves of disciplined development:
 
-AI assistants drift. Give them rules at the start of a session and
-by the middle of a long conversation they are ignoring them, inventing
-conventions, or producing output that conflicts with your standards.
+| Plugin | What it enforces |
+|---|---|
+| [`constraint-design`](plugins/constraint-design/) | Plan before code: project intake, relentless brainstorming, specs, deep-module implementation plans |
+| [`constraint-dev`](plugins/constraint-dev/) | Implement with discipline: strict TDD, subagent-driven execution with per-task reviews, code review rigor, clean branch finishing |
 
-constraint-kit fixes this by keeping rules on disk — not in memory —
-and re-injecting them at each task boundary. The AI looks things up
-rather than relying on recall. Drift becomes structurally impossible
-rather than a matter of luck.
+## Install
 
-## How it works
+### Copilot CLI
 
-Every project has a small config file (`agent.yaml` for repos,
-`active-task.md` for Drive users) that declares:
-
-- **Role** — who the agent is (`engineer`, `researcher`, `writer`, `product-owner`)
-- **Task** — what you are working on right now
-- **Mode** — how the agent is operating (`reasoning`, `collaborating`, `generating`)
-
-The bootstrap renderer reads this config, resolves the right skills
-from the library, and produces a pasteable session starter. Paste it
-at the start of every session. Done.
-
-When you switch modes mid-session, paste a mode switch snippet.
-When you start a new session, paste the starter again.
-The AI never relies on memory — it always has the constraints in context.
-
-## Who it is for
-
-**Engineers** — writing code, infrastructure, or automation with
-consistent conventions, TDD discipline, and documented decisions.
-
-**Researchers** — scoping inquiries, structuring arguments, and
-producing papers or briefs without unsupported claims or scope drift.
-
-**Writers** — producing documents of any kind with consistent
-structure, audience fit, and readability standards.
-
-**Product owners** — defining features, stories, and acceptance
-criteria with complete requirements and clear scope.
-
-Non-technical users (Drive path): no GitHub or coding knowledge needed.
-
-## Quick start
-
-### Technical path (repo)
-
-```bash
-
-# Copy the bootstrap template into your project
-
-mkdir -p .constraint-kit
-cp path/to/constraint-kit/bootstrap/templates/new-project-repo.yaml \
-   .constraint-kit/agent.yaml
-
-# Fill in project, role, task, mode, target
-
-# Then render
-
-python path/to/constraint-kit/bootstrap/render.py .constraint-kit/agent.yaml
-
-# Paste the output as your first message in Gemini, Claude, or Copilot
-
+```text
+/plugin marketplace add umn-sre/constraint-kit
+/plugin install constraint-design@constraint-kit
+/plugin install constraint-dev@constraint-kit
 ```
 
-## Non-technical path (Drive)
+Or declaratively, in `~/.copilot/settings.json` (personal) or your repo's
+`.github/copilot/settings.json` (shared, also used by the Copilot coding
+agent):
 
-1. Open the [constraint-kit shared Drive folder](#) ← link your shared folder here
-2. Copy the session starter template for your role
-3. Fill in your project, task, and context
-4. Attach it to a new Gemini or Claude session
+```json
+{
+  "extraKnownMarketplaces": {
+    "constraint-kit": {
+      "source": { "source": "github", "repo": "umn-sre/constraint-kit" }
+    }
+  },
+  "enabledPlugins": [
+    "constraint-design@constraint-kit",
+    "constraint-dev@constraint-kit"
+  ]
+}
+```
 
-## What is in the library
+### VS Code
 
-### Roles
+Copilot in VS Code discovers skills and custom agents from your
+repository rather than from plugins. Two options:
 
-| Role | For |
-|---|---|
-| `engineer` | Software, infrastructure, automation |
-| `researcher` | Inquiry, papers, literature reviews |
-| `writer` | Documents, guides, content |
-| `product-owner` | Features, stories, acceptance criteria |
+- Use the Copilot CLI install above — CLI-installed plugins are available
+  to VS Code's Copilot CLI integration.
+- Or vendor the pieces you want into the repo Copilot reads natively:
+  copy `plugins/*/skills/<name>/` into `.github/skills/<name>/` and
+  `plugins/*/agents/*.agent.md` into `.github/agents/`.
 
-### Skills
+### Claude Code
 
-| Skill | Modes | Personas |
+```text
+/plugin marketplace add umn-sre/constraint-kit
+/plugin install constraint-design@constraint-kit
+/plugin install constraint-dev@constraint-kit
+```
+
+## The workflow
+
+```text
+project-intake ──> brainstorming ──> writing-specs ──> writing-plans
+   (planner agent, constraint-design plugin)                │
+                                          ┌─────────────────┴───────────────┐
+                                          v                                 v
+                            subagent-driven-development             executing-plans
+                               (conductor agent)                     (inline mode)
+                                          │  uses: test-driven-development, │
+                                          │  requesting/receiving-code-review│
+                                          └─────────────────┬───────────────┘
+                                                            v
+                                            finishing-a-development-branch
+```
+
+1. **`project-intake`** (once per project) interviews you, explores the
+   repo, writes `.constraint-kit/PROJECT.md` + `GLOSSARY.md`, and
+   generates `.github/copilot-instructions.md`.
+2. **`brainstorming`** grills you one question at a time until a design
+   is approved, capturing glossary terms and decision records as they
+   crystallise.
+3. **`writing-specs`** synthesizes the conversation into a PRD-style
+   spec; **`writing-plans`** turns it into a bite-sized, test-first plan.
+4. Switch to the **conductor** agent (constraint-dev): it executes the
+   plan with a fresh **implementer** subagent per task, a **reviewer**
+   after each, and strict TDD throughout.
+
+Everything lands in `.constraint-kit/` in *your* repo:
+
+```text
+.constraint-kit/
+├── PROJECT.md        # goals, stack, conventions, working agreement
+├── GLOSSARY.md       # domain language, one precise term at a time
+├── adr/              # decision records (sparingly)
+├── specs/            # design docs and specs
+├── plans/            # implementation plans
+└── sdd/              # execution scratch (git-ignore this one)
+```
+
+## Agents
+
+| Agent | Plugin | Role |
 |---|---|---|
-| `brainstorming` | collaborating, reasoning | any |
-| `requirements-gathering` | collaborating, reasoning | any |
-| `document-structure` | generating-doc, collaborating | any |
-| `argument-construction` | generating-doc, reasoning | researcher, writer |
-| `plain-language` | generating-doc | any |
-| `decision-records` | generating-doc, generating-structured, reasoning | engineer, researcher, product-owner |
-| `research-brief` | collaborating, generating-doc | researcher, writer |
-| `test-driven-development` | generating-code | engineer |
-| `systematic-debugging` | reasoning, generating-code | engineer |
+| `planner` | constraint-design | Intake → design → spec → plan; never touches source code |
+| `conductor` | constraint-dev | Orchestrates plan execution via subagents; never edits code itself |
+| `implementer` | constraint-dev | One task at a time, strict TDD |
+| `reviewer` | constraint-dev | Spec compliance + quality findings; changes nothing |
 
-### Bundles
+## Credits
 
-| Bundle | Skills | For |
-|---|---|---|
-| `new-feature-design` | brainstorming, requirements-gathering, decision-records | engineer, product-owner |
-| `document-drafting` | document-structure, argument-construction, plain-language | researcher, writer |
-| `research-inquiry` | research-brief, brainstorming, argument-construction, document-structure | researcher |
-| `engineering-decision` | brainstorming, requirements-gathering, decision-records | engineer |
-| `structured-output` | requirements-gathering, document-structure, plain-language | product-owner, engineer |
+The skills are adapted — and where they overlapped, merged — from two
+excellent open-source skill collections:
 
-## Community extensions
+- [obra/superpowers](https://github.com/obra/superpowers): brainstorming,
+  writing-plans, test-driven-development, subagent-driven-development,
+  executing-plans, requesting/receiving-code-review,
+  finishing-a-development-branch
+- [mattpocock/skills](https://github.com/mattpocock/skills):
+  codebase-design, tdd, grilling / grill-with-docs, domain-modeling,
+  to-spec
 
-Domain-specific skills that are too narrow for the core library
-live in community extension repositories. See `contrib/extensions.yaml`
-and `contrib/README.md` for how to build and list an extension.
+See [docs/DESIGN.md](docs/DESIGN.md) for the merge map and architecture.
 
 ## Contributing
 
-Skills, roles, and extension listings are all welcome.
-See `docs/HOW_TO_CONTRIBUTE.md`.
-
-## Philosophy
-
-- **Rules on disk, not in memory** — re-injection beats retention
-- **Atomic skills** — single-concern constraint documents, not grab-bags
-- **Model-agnostic** — plain text works everywhere
-- **Self-service** — no curator bottleneck on adoption
-- **Honest provenance** — adapted external skills are tracked, not laundered
+See [CONTRIBUTING.md](CONTRIBUTING.md). Run `python3 scripts/validate.py`
+before opening a PR.
 
 ## License
 
-MIT
-
-## Acknowledgments
-
-constraint-kit was directly inspired by **[obra/superpowers](https://github.com/obra/superpowers)**,
-Jesse Tane's agentic skills framework for Claude Code. Superpowers demonstrated
-that skills-as-files with mandatory agent consultation is a viable and powerful
-pattern for keeping AI agents on-task across sessions.
-
-Two skills in this library — `test-driven-development` and `systematic-debugging`
-— are adapted from superpowers with full provenance tracked in their `meta.yaml`
-files. The core philosophy of constraint-kit (rules on disk, not in memory;
-re-injection beats retention) is a direct extension of what superpowers proved
-works in practice.
-
-If you are working with Claude Code specifically, superpowers is the better tool
-for that context. constraint-kit is designed for the broader case: any AI surface,
-any persona, any kind of knowledge work.
+[MIT](LICENSE)
