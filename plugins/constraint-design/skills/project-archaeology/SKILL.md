@@ -1,9 +1,9 @@
 ---
-name: session-archaeology
+name: project-archaeology
 description: Use when adopting constraint-kit in an existing codebase whose behavior and design cannot be trusted from docs or memory - runs confidence-tagged discovery passes over the code (CodeGraph-assisted), records the evidence in .constraint-kit/ARCHAEOLOGY.md, then produces the same PROJECT.md, GLOSSARY.md, and copilot-instructions files as project-intake, grounded in what the code actually does.
 ---
 
-# Session Archaeology
+# Project Archaeology
 
 Extract a usable picture of an existing repository that has no reliable
 documented design — a vibe-coded codebase, inherited legacy code, or
@@ -14,7 +14,7 @@ archaeology builds it from *evidence in the code* — then runs a much
 shorter interview for the decisions code cannot answer. Both skills end
 at the same place: a cohesive workspace every later skill builds on.
 
-**Announce at start:** "I'm using the session-archaeology skill to
+**Announce at start:** "I'm using the project-archaeology skill to
 onboard this existing codebase."
 
 ## When to use which intake
@@ -22,7 +22,7 @@ onboard this existing codebase."
 | Situation | Skill |
 |---|---|
 | New/empty repo, or code young enough that the user can describe it | `project-intake` |
-| Substantial existing code; docs missing, stale, or untrustworthy | `session-archaeology` |
+| Substantial existing code; docs missing, stale, or untrustworthy | `project-archaeology` |
 | Archaeology already ran; constraints merely changed | `project-intake` (update mode) |
 
 One archaeology pass per project (or per subsystem chunk). Re-run only

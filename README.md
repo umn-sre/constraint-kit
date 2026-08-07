@@ -14,7 +14,7 @@ two halves of disciplined development:
 
 | Plugin | What it enforces |
 |---|---|
-| [`constraint-design`](plugins/constraint-design/) | Plan before code: project intake (new projects) or session archaeology (existing codebases), relentless brainstorming, specs, deep-module implementation plans |
+| [`constraint-design`](plugins/constraint-design/) | Plan before code: project intake (new projects) or project archaeology (existing codebases), relentless brainstorming, specs, deep-module implementation plans |
 | [`constraint-dev`](plugins/constraint-dev/) | Implement with discipline: strict TDD, subagent-driven execution with per-task reviews, code review rigor, clean branch finishing |
 
 ## Install
@@ -69,7 +69,7 @@ repository rather than from plugins. Two options:
 ```text
 project-intake ────────┐
   (new project)        ├──> brainstorming ──> writing-specs ──> writing-plans
-session-archaeology ───┘   (planner agent, constraint-design plugin)
+project-archaeology ───┘   (planner agent, constraint-design plugin)
   (existing code, CodeGraph-assisted)                       │
                                           ┌─────────────────┴───────────────┐
                                           v                                 v
@@ -85,7 +85,7 @@ session-archaeology ───┘   (planner agent, constraint-design plugin)
 1. Intake, once per project. **`project-intake`** (new or early-stage
    repo) interviews you and writes `.constraint-kit/PROJECT.md` +
    `GLOSSARY.md`, generating `.github/copilot-instructions.md`.
-   **`session-archaeology`** (existing codebase without trustworthy
+   **`project-archaeology`** (existing codebase without trustworthy
    docs) instead reads the code first — confidence-tagged discovery
    passes recorded in `.constraint-kit/ARCHAEOLOGY.md` — and then
    produces the same three files, grounded in evidence.
@@ -117,7 +117,7 @@ All four agents use [CodeGraph](https://github.com/colbymchenry/codegraph)
 — a local, auto-syncing code knowledge graph — for structural code
 questions: one `codegraph_explore` call returns the relevant symbols'
 source, call paths, and blast radius, replacing grep/read loops.
-`session-archaeology` depends on it most heavily; the `implementer` and
+`project-archaeology` depends on it most heavily; the `implementer` and
 `reviewer` agents use it for change impact and affected-test discovery.
 
 The `codegraph-setup` skill (constraint-design plugin) handles
@@ -152,8 +152,8 @@ excellent open-source skill collections:
   codebase-design, tdd, grilling / grill-with-docs, domain-modeling,
   to-spec
 
-`session-archaeology` is modernized from constraint-kit's own pre-2.0
-skill of the same name; code discovery is powered by
+`project-archaeology` is modernized from constraint-kit's own pre-2.0
+`session-archaeology` skill; code discovery is powered by
 [colbymchenry/codegraph](https://github.com/colbymchenry/codegraph).
 
 See [docs/DESIGN.md](docs/DESIGN.md) for the merge map and architecture.

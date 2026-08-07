@@ -1,6 +1,6 @@
 ---
 name: project-intake
-description: Use at the start of a new or early-stage project, or to update existing constraints - interviews the user about goals, stack, and conventions, then writes the .constraint-kit/ workspace and generates .github/copilot-instructions.md so constraints persist across every session. For substantial existing codebases without trustworthy docs, use session-archaeology instead.
+description: Use at the start of a new or early-stage project, or to update existing constraints - interviews the user about goals, stack, and conventions, then writes the .constraint-kit/ workspace and generates .github/copilot-instructions.md so constraints persist across every session. For substantial existing codebases without trustworthy docs, use project-archaeology instead.
 ---
 
 # Project Intake
@@ -16,7 +16,7 @@ project's constraints."
 
 **Existing codebase?** If the repo already contains substantial code
 whose behavior and design are not reliably documented, use the
-`session-archaeology` skill instead — it produces these same files plus
+`project-archaeology` skill instead — it produces these same files plus
 `.constraint-kit/ARCHAEOLOGY.md`, grounded in evidence read from the
 code rather than an interview. This skill is for new or early-stage
 projects, and for updating an already-established workspace.

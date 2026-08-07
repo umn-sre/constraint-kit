@@ -1,6 +1,6 @@
 {
   "name": "constraint-design",
-  "description": "Plan-before-code bundle: project intake for new projects, CodeGraph-assisted session archaeology for existing codebases, relentless brainstorming, spec writing, and deep-module implementation planning. All artifacts land in the target repo's .constraint-kit/ folder.",
+  "description": "Plan-before-code bundle: project intake for new projects, CodeGraph-assisted project archaeology for existing codebases, relentless brainstorming, spec writing, and deep-module implementation planning. All artifacts land in the target repo's .constraint-kit/ folder.",
   "version": "2.0.0",
   "author": {
     "name": "constraint-kit contributors"

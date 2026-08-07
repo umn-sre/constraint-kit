@@ -30,7 +30,7 @@ Create a todo per item and complete them in order:
 1. **Explore project context** — read `.constraint-kit/PROJECT.md`,
    `.constraint-kit/GLOSSARY.md`, `.constraint-kit/ARCHAEOLOGY.md`, and
    `.constraint-kit/adr/` if they exist (run the `project-intake` skill —
-   or `session-archaeology` for an undocumented existing codebase — first
+   or `project-archaeology` for an undocumented existing codebase — first
    if the project has never been set up); check files, docs, recent
    commits, and answer structural code questions with CodeGraph
    (`codegraph_explore`) when it is available.

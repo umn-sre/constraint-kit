@@ -13,9 +13,10 @@ Code **plugin marketplace**. See [docs/DESIGN.md](docs/DESIGN.md).
 
 - `.claude-plugin/marketplace.json` marketplace manifest.
 - `constraint-design` plugin (planner agent + `project-intake`,
-  `session-archaeology`, `codegraph-setup`, `brainstorming`,
+  `project-archaeology`, `codegraph-setup`, `brainstorming`,
   `writing-specs`, `writing-plans` skills).
-- `session-archaeology` skill: the pre-2.0 skill modernized — same
+- `project-archaeology` skill: the pre-2.0 `session-archaeology`
+  skill modernized — same
   provenance modes, confidence tags, and discovery passes, now writing
   `.constraint-kit/ARCHAEOLOGY.md` and finishing with the same
   PROJECT.md / GLOSSARY.md / copilot-instructions outputs as
