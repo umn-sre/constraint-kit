@@ -13,7 +13,21 @@ Code **plugin marketplace**. See [docs/DESIGN.md](docs/DESIGN.md).
 
 - `.claude-plugin/marketplace.json` marketplace manifest.
 - `constraint-design` plugin (planner agent + `project-intake`,
-  `brainstorming`, `writing-specs`, `writing-plans` skills).
+  `session-archaeology`, `codegraph-setup`, `brainstorming`,
+  `writing-specs`, `writing-plans` skills).
+- `session-archaeology` skill: the pre-2.0 skill modernized — same
+  provenance modes, confidence tags, and discovery passes, now writing
+  `.constraint-kit/ARCHAEOLOGY.md` and finishing with the same
+  PROJECT.md / GLOSSARY.md / copilot-instructions outputs as
+  `project-intake`, so new and existing projects onboard to an
+  identical workspace.
+- CodeGraph integration: all agents use
+  [colbymchenry/codegraph](https://github.com/colbymchenry/codegraph)
+  for structural code discovery; the `codegraph-setup` skill covers
+  install, agent wiring, per-project indexing, and the manual GitHub
+  Copilot MCP configuration from
+  [codegraph#718](https://github.com/colbymchenry/codegraph/pull/718)
+  (CodeGraph lacks native Copilot support).
 - `constraint-dev` plugin (conductor/implementer/reviewer agents +
   `test-driven-development`, `subagent-driven-development`,
   `executing-plans`, `requesting-code-review`, `receiving-code-review`,

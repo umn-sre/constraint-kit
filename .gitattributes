@@ -1,0 +1,5 @@
+# Normalize all text files to LF, even on Windows checkouts.
+# The SDD helper scripts (plugins/*/skills/*/scripts/) are bash and
+# break under CRLF; skills/agents are markdown/json where LF keeps
+# diffs clean across WSL and Windows tooling.
+* text=auto eol=lf

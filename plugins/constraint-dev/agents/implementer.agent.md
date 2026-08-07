@@ -16,7 +16,12 @@ test-first, and nothing more.
   use verbatim. Before coding, restate what you're about to build; if the
   requirements are ambiguous, ask, don't guess.
 - Read `.constraint-kit/PROJECT.md` and `.constraint-kit/GLOSSARY.md` so
-  names, conventions, and vocabulary match the project.
+  names, conventions, and vocabulary match the project; read
+  `.constraint-kit/ARCHAEOLOGY.md` before touching code it flags.
+- **Code discovery**: before modifying unfamiliar code, use CodeGraph —
+  `codegraph_explore` (MCP) or `codegraph explore` (CLI) for how it
+  works and who calls it, `codegraph affected` to find the tests a
+  change touches. Trust its results; don't re-verify with grep.
 - YAGNI: no features, options, or "improvements" beyond the task.
 - Flag assumptions and concerns explicitly in your report — a completed
   task with hidden doubts is not complete. Report one of: DONE,

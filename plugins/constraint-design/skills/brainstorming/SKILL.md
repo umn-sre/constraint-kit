@@ -28,9 +28,12 @@ get approval.
 Create a todo per item and complete them in order:
 
 1. **Explore project context** — read `.constraint-kit/PROJECT.md`,
-   `.constraint-kit/GLOSSARY.md`, and `.constraint-kit/adr/` if they exist
-   (run the `project-intake` skill first if the project has never been set
-   up); check files, docs, recent commits.
+   `.constraint-kit/GLOSSARY.md`, `.constraint-kit/ARCHAEOLOGY.md`, and
+   `.constraint-kit/adr/` if they exist (run the `project-intake` skill —
+   or `session-archaeology` for an undocumented existing codebase — first
+   if the project has never been set up); check files, docs, recent
+   commits, and answer structural code questions with CodeGraph
+   (`codegraph_explore`) when it is available.
 2. **Grill the user** — one question at a time until shared understanding
 3. **Propose 2-3 approaches** — with trade-offs and your recommendation
 4. **Present design** — in sections scaled to complexity, approval per section

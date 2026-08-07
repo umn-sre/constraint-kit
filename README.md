@@ -14,7 +14,7 @@ two halves of disciplined development:
 
 | Plugin | What it enforces |
 |---|---|
-| [`constraint-design`](plugins/constraint-design/) | Plan before code: project intake, relentless brainstorming, specs, deep-module implementation plans |
+| [`constraint-design`](plugins/constraint-design/) | Plan before code: project intake (new projects) or session archaeology (existing codebases), relentless brainstorming, specs, deep-module implementation plans |
 | [`constraint-dev`](plugins/constraint-dev/) | Implement with discipline: strict TDD, subagent-driven execution with per-task reviews, code review rigor, clean branch finishing |
 
 ## Install
@@ -67,8 +67,10 @@ repository rather than from plugins. Two options:
 ## The workflow
 
 ```text
-project-intake ──> brainstorming ──> writing-specs ──> writing-plans
-   (planner agent, constraint-design plugin)                │
+project-intake ────────┐
+  (new project)        ├──> brainstorming ──> writing-specs ──> writing-plans
+session-archaeology ───┘   (planner agent, constraint-design plugin)
+  (existing code, CodeGraph-assisted)                       │
                                           ┌─────────────────┴───────────────┐
                                           v                                 v
                             subagent-driven-development             executing-plans
@@ -80,9 +82,13 @@ project-intake ──> brainstorming ──> writing-specs ──> writing-plans
                                             finishing-a-development-branch
 ```
 
-1. **`project-intake`** (once per project) interviews you, explores the
-   repo, writes `.constraint-kit/PROJECT.md` + `GLOSSARY.md`, and
-   generates `.github/copilot-instructions.md`.
+1. Intake, once per project. **`project-intake`** (new or early-stage
+   repo) interviews you and writes `.constraint-kit/PROJECT.md` +
+   `GLOSSARY.md`, generating `.github/copilot-instructions.md`.
+   **`session-archaeology`** (existing codebase without trustworthy
+   docs) instead reads the code first — confidence-tagged discovery
+   passes recorded in `.constraint-kit/ARCHAEOLOGY.md` — and then
+   produces the same three files, grounded in evidence.
 2. **`brainstorming`** grills you one question at a time until a design
    is approved, capturing glossary terms and decision records as they
    crystallise.
@@ -98,17 +104,37 @@ Everything lands in `.constraint-kit/` in *your* repo:
 .constraint-kit/
 ├── PROJECT.md        # goals, stack, conventions, working agreement
 ├── GLOSSARY.md       # domain language, one precise term at a time
+├── ARCHAEOLOGY.md    # evidence from onboarding an existing codebase
 ├── adr/              # decision records (sparingly)
 ├── specs/            # design docs and specs
 ├── plans/            # implementation plans
 └── sdd/              # execution scratch (git-ignore this one)
 ```
 
+## CodeGraph integration
+
+All four agents use [CodeGraph](https://github.com/colbymchenry/codegraph)
+— a local, auto-syncing code knowledge graph — for structural code
+questions: one `codegraph_explore` call returns the relevant symbols'
+source, call paths, and blast radius, replacing grep/read loops.
+`session-archaeology` depends on it most heavily; the `implementer` and
+`reviewer` agents use it for change impact and affected-test discovery.
+
+The `codegraph-setup` skill (constraint-design plugin) handles
+installation: CLI install, `codegraph install` for the agents it
+auto-configures, and — since CodeGraph has no native GitHub Copilot
+support yet — the manual Copilot MCP config from upstream
+[PR #718](https://github.com/colbymchenry/codegraph/pull/718)
+(`~/.copilot/mcp-config.json` with the required `tools` key for Copilot
+CLI, `.vscode/mcp.json` for VS Code), then `codegraph init` per project.
+Everything degrades gracefully: without CodeGraph the skills fall back
+to built-in search and say so.
+
 ## Agents
 
 | Agent | Plugin | Role |
 |---|---|---|
-| `planner` | constraint-design | Intake → design → spec → plan; never touches source code |
+| `planner` | constraint-design | Intake (new or existing codebase) → design → spec → plan; never touches source code |
 | `conductor` | constraint-dev | Orchestrates plan execution via subagents; never edits code itself |
 | `implementer` | constraint-dev | One task at a time, strict TDD |
 | `reviewer` | constraint-dev | Spec compliance + quality findings; changes nothing |
@@ -125,6 +151,10 @@ excellent open-source skill collections:
 - [mattpocock/skills](https://github.com/mattpocock/skills):
   codebase-design, tdd, grilling / grill-with-docs, domain-modeling,
   to-spec
+
+`session-archaeology` is modernized from constraint-kit's own pre-2.0
+skill of the same name; code discovery is powered by
+[colbymchenry/codegraph](https://github.com/colbymchenry/codegraph).
 
 See [docs/DESIGN.md](docs/DESIGN.md) for the merge map and architecture.
 

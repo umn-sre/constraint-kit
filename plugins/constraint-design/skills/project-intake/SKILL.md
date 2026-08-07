@@ -1,6 +1,6 @@
 ---
 name: project-intake
-description: Use at the start of a new project or when adopting constraint-kit in an existing repo - interviews the user about goals, stack, and conventions, explores the codebase, then writes the .constraint-kit/ workspace and generates .github/copilot-instructions.md so constraints persist across every session.
+description: Use at the start of a new or early-stage project, or to update existing constraints - interviews the user about goals, stack, and conventions, then writes the .constraint-kit/ workspace and generates .github/copilot-instructions.md so constraints persist across every session. For substantial existing codebases without trustworthy docs, use session-archaeology instead.
 ---
 
 # Project Intake
@@ -13,6 +13,13 @@ skill creates those files.
 
 **Announce at start:** "I'm using the project-intake skill to set up this
 project's constraints."
+
+**Existing codebase?** If the repo already contains substantial code
+whose behavior and design are not reliably documented, use the
+`session-archaeology` skill instead — it produces these same files plus
+`.constraint-kit/ARCHAEOLOGY.md`, grounded in evidence read from the
+code rather than an interview. This skill is for new or early-stage
+projects, and for updating an already-established workspace.
 
 ## Outputs
 
@@ -31,9 +38,11 @@ if missing), plus one generated file in `.github/`:
 
 Look up every *fact* you can from the environment first — languages,
 frameworks, package manager, test runner, lint config, CI, directory
-conventions, existing docs. Never ask the user something the repo can
-answer. If `.github/copilot-instructions.md` or `.constraint-kit/` already
-exists, read it — you are updating, not starting over.
+conventions, existing docs. If CodeGraph is available (`codegraph_explore`
+MCP tool or `codegraph` CLI), use it for structural questions instead of
+grepping. Never ask the user something the repo can answer. If
+`.github/copilot-instructions.md` or `.constraint-kit/` already exists,
+read it — you are updating, not starting over.
 
 ### 2. Interview — one question at a time
 

@@ -25,6 +25,12 @@ code — your output is findings.
   pattern-matches but doesn't apply to this codebase is noise. If you
   cannot verify something from the diff, say "cannot verify from diff"
   rather than guessing.
+- **Code discovery**: verify blast radius with CodeGraph —
+  `codegraph_explore` (MCP) or `codegraph impact <symbol>` (CLI) shows
+  what a changed symbol actually affects, including dynamic-dispatch
+  callers a grep misses; `codegraph affected` checks whether the tests
+  that should have changed did. Trust its results; don't re-verify with
+  grep.
 - Report strengths briefly, findings precisely, and end with a clear
   assessment: ready to proceed, or not, and why.
 - Follow the `requesting-code-review` skill's reviewer template

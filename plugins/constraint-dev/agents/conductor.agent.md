@@ -22,6 +22,11 @@ You are the conductor: you execute an approved implementation plan from
   for BLOCKED states you cannot resolve, genuine ambiguity, or completion.
 - If subagent dispatch is unavailable in this environment, fall back to
   the `executing-plans` skill and say so.
+- **Code discovery**: when adjudicating a dispute or a user question
+  needs code facts, use CodeGraph (`codegraph_explore` MCP tool, or the
+  `codegraph explore` / `codegraph impact` CLI) rather than reading
+  files broadly — reading code pollutes your context. Trust its
+  results; don't re-verify with grep.
 
 ## Workflow
 
