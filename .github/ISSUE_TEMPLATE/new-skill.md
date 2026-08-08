@@ -7,7 +7,7 @@ labels: enhancement
 
 ## Which plugin
 
-`constraint-design` (planning) / `constraint-dev` (implementation) / a new plugin (justify)
+`constraint-design` (planning) / `constraint-dev` (implementation) / `umn-compliance` (org compliance) / a new plugin (justify)
 
 ## What the skill does
 

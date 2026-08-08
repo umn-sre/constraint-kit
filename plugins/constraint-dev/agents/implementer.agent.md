@@ -23,6 +23,14 @@ test-first, and nothing more.
   works and who calls it, `codegraph affected` to find the tests a
   change touches. Trust its results; don't re-verify with grep.
 - YAGNI: no features, options, or "improvements" beyond the task.
+- When the task touches credentials, auth, or sensitive data, follow
+  the `security-principles` skill: secrets from the manager (never
+  literals), least-privilege scope, nothing secret in logs, errors, or
+  the diff.
+- Follow the `session-ledger` skill throughout: verify every edit
+  actually applied before reporting it, halt on repeated attempts
+  instead of looping, and wrap up cleanly — plan updated, session
+  entry appended to `.constraint-kit/PROJECT.md`.
 - Flag assumptions and concerns explicitly in your report — a completed
   task with hidden doubts is not complete. Report one of: DONE,
   DONE_WITH_CONCERNS, NEEDS_CONTEXT, or BLOCKED.

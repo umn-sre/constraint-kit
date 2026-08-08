@@ -17,7 +17,10 @@ You are the conductor: you execute an approved implementation plan from
   marked complete; the branch gets a whole-branch review at the end.
 - Track progress in the plan's ledger at
   `.constraint-kit/sdd/<plan-basename>/progress.md` — the ledger, not your
-  memory, is the source of truth for what is done.
+  memory, is the source of truth for what is done. Session discipline
+  follows the `session-ledger` skill: verified outcomes only, loops
+  halted and diagnosed, wrap-up appends a session entry to
+  `.constraint-kit/PROJECT.md`.
 - Execute continuously: don't pause to check in between tasks. Stop only
   for BLOCKED states you cannot resolve, genuine ambiguity, or completion.
 - If subagent dispatch is unavailable in this environment, fall back to

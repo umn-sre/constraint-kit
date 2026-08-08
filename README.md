@@ -9,13 +9,15 @@ write every planning artifact into your repo's `.constraint-kit/` folder
 and generate `.github/copilot-instructions.md`, so every session starts
 from the same constraints without any bootstrap step.
 
-This repo is a **plugin marketplace** with two plugins that mirror the
-two halves of disciplined development:
+This repo is a **plugin marketplace**: two plugins that mirror the two
+halves of disciplined development, plus an org-specific compliance
+plugin:
 
 | Plugin | What it enforces |
 |---|---|
 | [`constraint-design`](plugins/constraint-design/) | Plan before code: project intake (new projects) or project archaeology (existing codebases), relentless brainstorming, specs, deep-module implementation plans |
-| [`constraint-dev`](plugins/constraint-dev/) | Implement with discipline: strict TDD, subagent-driven execution with per-task reviews, code review rigor, clean branch finishing |
+| [`constraint-dev`](plugins/constraint-dev/) | Implement with discipline: strict TDD, subagent-driven execution with per-task reviews, session ledger (verified edits, loop halts, lessons logged), security principles, code review rigor, clean branch finishing |
+| [`umn-compliance`](plugins/umn-compliance/) | UMN-only: security compliance analysis and annual reviews against the 16 UMN Information Security Policy Standards. Install only for University of Minnesota projects |
 
 ## Install
 
@@ -25,6 +27,7 @@ two halves of disciplined development:
 /plugin marketplace add umn-sre/constraint-kit
 /plugin install constraint-design@constraint-kit
 /plugin install constraint-dev@constraint-kit
+/plugin install umn-compliance@constraint-kit   # UMN projects only
 ```
 
 Or declaratively, in `~/.copilot/settings.json` (personal) or your repo's
@@ -62,6 +65,7 @@ repository rather than from plugins. Two options:
 /plugin marketplace add umn-sre/constraint-kit
 /plugin install constraint-design@constraint-kit
 /plugin install constraint-dev@constraint-kit
+/plugin install umn-compliance@constraint-kit   # UMN projects only
 ```
 
 ## The workflow
@@ -102,7 +106,7 @@ Everything lands in `.constraint-kit/` in *your* repo:
 
 ```text
 .constraint-kit/
-├── PROJECT.md        # goals, stack, conventions, working agreement
+├── PROJECT.md        # goals, stack, conventions, working agreement, session log
 ├── GLOSSARY.md       # domain language, one precise term at a time
 ├── ARCHAEOLOGY.md    # evidence from onboarding an existing codebase
 ├── adr/              # decision records (sparingly)
@@ -138,6 +142,7 @@ to built-in search and say so.
 | `conductor` | constraint-dev | Orchestrates plan execution via subagents; never edits code itself |
 | `implementer` | constraint-dev | One task at a time, strict TDD |
 | `reviewer` | constraint-dev | Spec compliance + quality findings; changes nothing |
+| `compliance-analyst` | umn-compliance | UMN policy compliance analysis and annual reviews; writes only the compliance document |
 
 ## Credits
 
@@ -152,8 +157,12 @@ excellent open-source skill collections:
   codebase-design, tdd, grilling / grill-with-docs, domain-modeling,
   to-spec
 
-`project-archaeology` is modernized from constraint-kit's own pre-2.0
-`session-archaeology` skill; code discovery is powered by
+`project-archaeology`, `session-ledger`, and `security-principles`
+are modernized from constraint-kit's own pre-2.0 skills
+(`session-archaeology`, `session-hygiene`, and `security-compliance`;
+`security-principles` additionally merges the core principles of
+[davila7/claude-code-templates](https://github.com/davila7/claude-code-templates)'
+`security-compliance` skill); code discovery is powered by
 [colbymchenry/codegraph](https://github.com/colbymchenry/codegraph).
 
 See [docs/DESIGN.md](docs/DESIGN.md) for the merge map and architecture.

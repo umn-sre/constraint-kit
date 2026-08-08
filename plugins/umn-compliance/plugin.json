@@ -1,0 +1,25 @@
+{
+  "name": "umn-compliance",
+  "description": "University of Minnesota compliance bundle: security compliance analysis and annual reviews mapping a project against the 16 UMN Information Security Policy Standards. Org-specific - install only for UMN projects.",
+  "version": "2.0.0",
+  "author": {
+    "name": "constraint-kit contributors"
+  },
+  "homepage": "https://github.com/umn-sre/constraint-kit/tree/main/plugins/umn-compliance",
+  "repository": "https://github.com/umn-sre/constraint-kit",
+  "license": "MIT",
+  "keywords": [
+    "compliance",
+    "security",
+    "umn",
+    "policy",
+    "audit",
+    "constraint-kit"
+  ],
+  "skills": [
+    "skills/"
+  ],
+  "agents": [
+    "agents/"
+  ]
+}

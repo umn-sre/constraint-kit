@@ -29,7 +29,7 @@
     },
     {
       "name": "constraint-dev",
-      "description": "Disciplined implementation bundle: strict TDD, subagent-driven plan execution with per-task reviews, and code review discipline.",
+      "description": "Disciplined implementation bundle: strict TDD, subagent-driven plan execution with per-task reviews, session ledger, and code review discipline.",
       "version": "2.0.0",
       "author": {
         "name": "constraint-kit contributors"
@@ -39,9 +39,27 @@
         "tdd",
         "code-review",
         "subagents",
-        "plan-execution"
+        "plan-execution",
+        "security"
       ],
       "source": "./plugins/constraint-dev"
+    },
+    {
+      "name": "umn-compliance",
+      "description": "University of Minnesota compliance bundle: security compliance analysis and annual reviews against the 16 UMN Information Security Policy Standards. Org-specific.",
+      "version": "2.0.0",
+      "author": {
+        "name": "constraint-kit contributors"
+      },
+      "license": "MIT",
+      "keywords": [
+        "compliance",
+        "security",
+        "umn",
+        "policy",
+        "audit"
+      ],
+      "source": "./plugins/umn-compliance"
     }
   ]
 }

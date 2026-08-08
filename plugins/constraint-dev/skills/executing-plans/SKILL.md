@@ -13,6 +13,8 @@ Load plan, review critically, execute all tasks, report when complete.
 
 **Note:** This is the inline fallback. If your harness can dispatch subagents (Copilot CLI, the Copilot coding agent, Claude Code, and similar all qualify), use subagent-driven-development instead of this skill.
 
+Apply the session-ledger skill throughout: ledger first, verify every edit applied, halt loops, and wrap up with a session entry in `.constraint-kit/PROJECT.md`.
+
 ## The Process
 
 ### Step 1: Load and Review Plan

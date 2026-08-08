@@ -46,19 +46,27 @@ constraint-kit/
 │   │       ├── brainstorming/        # obra brainstorming + mattpocock grilling/grill-with-docs + domain-model capture
 │   │       ├── writing-specs/        # mattpocock to-spec, retargeted to .constraint-kit/specs/
 │   │       └── writing-plans/        # obra writing-plans + mattpocock codebase-design (merged)
-│   └── constraint-dev/           # disciplined implementation bundle
+│   ├── constraint-dev/           # disciplined implementation bundle
+│   │   ├── plugin.json
+│   │   ├── agents/
+│   │   │   ├── conductor.agent.md    # SDD orchestrator (old "supervisor" concept)
+│   │   │   ├── implementer.agent.md  # task executor (old "implementer" concept)
+│   │   │   └── reviewer.agent.md     # code review specialist
+│   │   └── skills/
+│   │       ├── test-driven-development/   # obra TDD + mattpocock tdd (merged)
+│   │       ├── subagent-driven-development/
+│   │       ├── executing-plans/
+│   │       ├── session-ledger/           # pre-2.0 skill re-homed; session log now in PROJECT.md
+│   │       ├── security-principles/       # pre-2.0 secrets skill + davila7 core principles (merged)
+│   │       ├── requesting-code-review/
+│   │       ├── receiving-code-review/
+│   │       └── finishing-a-development-branch/
+│   └── umn-compliance/            # org-specific compliance bundle (UMN only)
 │       ├── plugin.json
 │       ├── agents/
-│       │   ├── conductor.agent.md    # SDD orchestrator (old "supervisor" concept)
-│       │   ├── implementer.agent.md  # task executor (old "implementer" concept)
-│       │   └── reviewer.agent.md     # code review specialist
+│       │   └── compliance-analyst.agent.md
 │       └── skills/
-│           ├── test-driven-development/   # obra TDD + mattpocock tdd (merged)
-│           ├── subagent-driven-development/
-│           ├── executing-plans/
-│           ├── requesting-code-review/
-│           ├── receiving-code-review/
-│           └── finishing-a-development-branch/
+│           └── umn-security-compliance/   # 16-standard compliance analysis + annual review
 ├── docs/
 │   └── DESIGN.md
 ├── scripts/
@@ -79,6 +87,9 @@ constraint-kit/
 | `test-driven-development` | obra `test-driven-development` (+ `writing-good-tests.md`), mattpocock `tdd` (+ `tests.md`, `mocking.md`) | Same loop, complementary strengths: obra brings the iron law, verification gates, and anti-rationalization tables; mattpocock brings seams, tautological-test and horizontal-slicing anti-patterns. |
 | `subagent-driven-development` | obra (incl. prompts + scripts) | Workspace moved `.superpowers/sdd/` → `.constraint-kit/sdd/`. |
 | `executing-plans` | obra | Inline fallback when subagents are unavailable. |
+| `security-principles` | pre-2.0 constraint-kit `security-compliance`, [davila7/claude-code-templates](https://github.com/davila7/claude-code-templates) `security-compliance` (core principles) — renamed to distinguish from the `umn-compliance` plugin's compliance-analysis process | The old skill's atomic secrets discipline (vault-first retrieval, least-privilege scoping, no leaks through logs/errors/commits, pre-commit diff scan) stays the enforceable core. From davila7's 984-line security-consultant reference, only the parts a coding agent can act on are merged: the eight core principles (condensed to seven — defense in depth, zero trust, least privilege, security by design, secure defaults, risk-based, compliance-as-floor), a risk-scored finding-severity table replacing reflex classification, and dev-facing guardrails (input/data/dependency/auth defaults). The enterprise GRC material (SOC playbooks, vendor risk scoring, audit prep, tool catalogs) is deliberately excluded — no coding agent can act on it. Compliance obligations live in PROJECT.md Constraints. |
+| `session-ledger` | pre-2.0 constraint-kit `session-hygiene` (renamed: the ledger is the artifact everything else keeps honest) | Same function, new storage: session ledger, edit verification (PHANTOM detection), loop detection, budget thresholds, and the seven-step wrap-up survive; `agent-implementer.yaml`/surface profiles are replaced by PROJECT.md + the plan, `SESSION_PLAN.md` updates by plan-checkbox updates, and the `agent-base.yaml` session_history by a `## Session log` section appended to `.constraint-kit/PROJECT.md` (distill durable lessons into Constraints, then prune). Under SDD, the sdd workspace ledger doubles as the session ledger. |
+| `umn-security-compliance` | internal UMN SRE skill (`~/.claude/skills/`) | Moved into the marketplace as its own org-specific plugin (`umn-compliance`) rather than into constraint-dev: it encodes UMN policy that non-UMN consumers shouldn't install, and it is a periodic project-wide analysis process, not a stage in the design→dev pipeline. Adapted to read/record data classification and security level in PROJECT.md Constraints, start discovery from PROJECT.md/ARCHAEOLOGY.md + CodeGraph, and hand its "Design Changes Required" list to the design pipeline. Renamed the constraint-dev skill `security-compliance` → `security-principles` to keep the two unambiguous: principles = per-task decision defaults; compliance = the analysis process. |
 | `requesting-code-review` | obra (+ `code-reviewer.md`) | Unchanged in substance. |
 | `receiving-code-review` | obra | Unchanged in substance. |
 | `finishing-a-development-branch` | obra | Pulled in because both execution skills terminate in it. |
@@ -111,7 +122,7 @@ project's** `.constraint-kit/` folder:
 
 | Path | Written by |
 |---|---|
-| `.constraint-kit/PROJECT.md` | project-intake (goals, stack, conventions, constraints) |
+| `.constraint-kit/PROJECT.md` | project-intake (goals, stack, conventions, constraints); session-ledger appends the Session log |
 | `.constraint-kit/GLOSSARY.md` | brainstorming / project-intake / project-archaeology (domain language) |
 | `.constraint-kit/ARCHAEOLOGY.md` | project-archaeology (confidence-tagged evidence from an existing codebase) |
 | `.constraint-kit/adr/NNNN-*.md` | brainstorming (decision records) |
@@ -140,6 +151,10 @@ shipped inside plugins:
   strict TDD.
 - **reviewer** (constraint-dev) — runs the code-reviewer template against a
   diff range; reports findings, changes nothing.
+- **compliance-analyst** (umn-compliance) — runs UMN compliance
+  analyses/annual reviews; writes only the compliance document and the
+  classification lines in PROJECT.md Constraints; hands design gaps to
+  the planner.
 
 **One planner, not two.** New-vs-existing project intake stays one agent
 because agents are the user's switching surface and both paths converge

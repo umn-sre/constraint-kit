@@ -6,7 +6,7 @@
 
 ## Type
 
-- [ ] Skill (new or changed) — plugin: `constraint-design` / `constraint-dev`
+- [ ] Skill (new or changed) — plugin: `constraint-design` / `constraint-dev` / `umn-compliance`
 - [ ] Agent (new or changed)
 - [ ] Plugin / marketplace manifest
 - [ ] Docs / CI / repo maintenance

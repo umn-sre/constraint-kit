@@ -88,6 +88,12 @@ confirmation; TDD and review expectations>
 
 ## Out of scope
 <explicit exclusions>
+
+## Session log
+<appended by the session-ledger skill (constraint-dev plugin) at each
+implementation session's wrap-up: date, tasks done/carried, budget,
+lessons. Distill durable lessons up into Constraints/Conventions and
+prune — this section is a buffer, not an archive.>
 ```
 
 ### 4. Seed GLOSSARY.md

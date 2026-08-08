@@ -31,8 +31,32 @@ Code **plugin marketplace**. See [docs/DESIGN.md](docs/DESIGN.md).
   (CodeGraph lacks native Copilot support).
 - `constraint-dev` plugin (conductor/implementer/reviewer agents +
   `test-driven-development`, `subagent-driven-development`,
-  `executing-plans`, `requesting-code-review`, `receiving-code-review`,
+  `executing-plans`, `session-ledger`, `security-principles`,
+  `requesting-code-review`, `receiving-code-review`,
   `finishing-a-development-branch` skills).
+- `security-principles` skill: the pre-2.0 `security-compliance`
+  secrets-handling skill, renamed and merged with the core principles of
+  [davila7/claude-code-templates](https://github.com/davila7/claude-code-templates)'
+  security-compliance skill — secrets discipline stays the enforceable
+  core, joined by security-by-design principles, dev-facing
+  guardrails, and a risk-based finding-severity table. Enterprise GRC
+  content excluded as not agent-actionable.
+- `umn-compliance` plugin (compliance-analyst agent +
+  `umn-security-compliance` skill): org-specific UMN bundle — maps a
+  project against the 16 UMN Information Security Policy Standards and
+  generates an evidence-based compliance document with a design-gap
+  list and annual calendar. Kept as its own plugin so non-UMN
+  consumers never install UMN policy; data classification and security
+  level are stored in `.constraint-kit/PROJECT.md` Constraints. The
+  constraint-dev skill was renamed `security-compliance` →
+  `security-principles` to keep per-task security discipline distinct
+  from this compliance-analysis process.
+- `session-ledger` skill: the pre-2.0 `session-hygiene` skill,
+  renamed and re-homed — session
+  ledger, edit verification, loop detection, budget watch, and the
+  seven-step wrap-up unchanged in function; lessons-learned/budget
+  session entries now append to a `## Session log` section of
+  `.constraint-kit/PROJECT.md` instead of `agent-base.yaml`.
 - Skills adapted and merged from
   [obra/superpowers](https://github.com/obra/superpowers) and
   [mattpocock/skills](https://github.com/mattpocock/skills).

@@ -11,7 +11,7 @@ labels: bug
 
 ## Where
 
-- Plugin: `constraint-design` / `constraint-dev` / marketplace
+- Plugin: `constraint-design` / `constraint-dev` / `umn-compliance` / marketplace
 - Skill or agent:
 - Surface: Copilot CLI / Copilot VS Code / Copilot coding agent / Claude Code
 

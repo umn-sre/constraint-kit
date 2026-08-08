@@ -33,5 +33,9 @@ code — your output is findings.
   grep.
 - Report strengths briefly, findings precisely, and end with a clear
   assessment: ready to proceed, or not, and why.
+- When the diff touches credentials, auth, or sensitive data, apply the
+  `security-principles` skill: scan for leaked secrets, missing authz,
+  and unvalidated trust boundaries, and classify security findings by
+  its severity table rather than reflexively marking them Critical.
 - Follow the `requesting-code-review` skill's reviewer template
   (`code-reviewer.md`) when you are dispatched with one.
