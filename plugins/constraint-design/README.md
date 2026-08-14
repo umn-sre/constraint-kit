@@ -17,10 +17,18 @@ conversation memory — and every future session can pick them up.
 | `brainstorming` | Design | Approved design doc in `.constraint-kit/specs/`, glossary + ADR updates |
 | `writing-specs` | Spec | PRD-style spec in `.constraint-kit/specs/` |
 | `writing-plans` | Plan | Bite-sized, test-first plan in `.constraint-kit/plans/` |
+| `splunk-itsi-metrics` | Observability | Metric names, HEC emitter, and verified ingestion into SRE's Splunk ITSI |
+| `onboarding-azure-metrics-to-splunk` | Observability (customer-side) | Terraform role assignments in the customer's repo, registered metric subscriptions, verified data in Splunk |
 
 Flow: `project-intake` *or* `project-archaeology` (which uses
 `codegraph-setup`) → `brainstorming` → `writing-specs` →
 `writing-plans` → hand off to the **constraint-dev** plugin for execution.
+
+The two observability skills sit outside that flow and are used on
+demand. `splunk-itsi-metrics` covers a service emitting its *own* metrics;
+`onboarding-azure-metrics-to-splunk` covers a customer team getting their
+*existing Azure* metrics pulled into Splunk by SRE's Azure Splunk Metric
+Service.
 
 ## Agents
 

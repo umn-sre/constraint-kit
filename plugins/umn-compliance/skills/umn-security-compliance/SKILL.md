@@ -96,7 +96,11 @@ digraph compliance_flow {
 
 1. **Confirm inputs** — classification + security level + user-scope
    (single/multi-user). Check PROJECT.md Constraints, then ask for
-   anything missing.
+   anything missing. Also confirm CodeGraph is available for this
+   project (`codegraph_explore` tool or `codegraph status`) — if not,
+   offer the `codegraph-setup` skill (constraint-design plugin); the
+   mapping step leans on it heavily, and running without it costs far
+   more tool calls and tokens.
 2. **Discover project** — start from what constraint-kit already
    knows: `.constraint-kit/PROJECT.md` (stack, constraints),
    `.constraint-kit/ARCHAEOLOGY.md` (structural inventory, data flows,
@@ -115,6 +119,36 @@ digraph compliance_flow {
    - **Design Change Needed** — gap that requires a code/config/policy change
    - **Procedural** — recurring operational task (annual review, training, monitoring)
    - **Not Applicable** — does not apply, with justification (delegated to vendor, no such surface, etc.)
+
+   **Gather code evidence with CodeGraph, not grep loops.** One
+   `codegraph_explore` (or `codegraph explore`) call per topic area
+   returns the relevant symbols' verbatim source, call paths, and
+   blast radius — treat returned source as read, and cite the
+   `file:symbol` it names in the evidence column. Query once per
+   area, then map that evidence across every standard that needs it
+   (auth code feeds AAAM once, not sixteen re-reads):
+
+   | Standard | CodeGraph query pattern |
+   |---|---|
+   | AAAM | Explore auth/identity/token handling; `codegraph callers` of the auth middleware — an entry point that never reaches it is bypass evidence grep can't see |
+   | E | Explore encryption/TLS call sites — who calls encrypt/decrypt/sign, and with what key source |
+   | LM | Explore logger sinks and `callers` of logging functions — what is logged and where it goes |
+   | SD | Explore test/build/deploy entry points as SDLC-control evidence |
+   | SDM / SPM | Explore service boundaries and dependency surfaces; pair with the package manifests for versions |
+
+   Two boundaries on this:
+
+   - **CodeGraph covers source code, not infrastructure.** Terraform/
+     HCL, GitHub workflows, and YAML config — where most NF, NM, DSBR,
+     DCS, MS, and VPM evidence lives — are outside its index. Read
+     those files directly; do not mark an infra requirement a gap
+     because CodeGraph returned nothing.
+   - **Absence claims need the same discipline as
+     project-archaeology's dead-code calls**: "no callers found" is
+     gap evidence only when the index covers the language and the
+     entry point isn't dynamic (routes, reflection, external
+     triggers). Otherwise verify by reading before writing the gap
+     row.
 5. **Generate the document** — follow `template.md`. Default output
    path: `docs/security-compliance.md` (ask user if a different path
    is preferred). Replace placeholders, omit empty subsections, cite
@@ -199,6 +233,8 @@ project.
 | Missing the Annual Compliance Calendar | Always include the month-by-month schedule. |
 | Stale "Last Reviewed" date | Set to today's date in `YYYY-MM-DD` format. |
 | Skipping fetch of policy appendices | Don't rely on memory — fetch each appendix to capture current requirement IDs and wording. |
+| Grep/read loops for code evidence | Query CodeGraph once per topic area and reuse the results across standards — re-walking the codebase per standard burns tokens for no additional evidence. |
+| Marking infra requirements as gaps from CodeGraph silence | CodeGraph indexes source code, not terraform/workflows/YAML — read infrastructure files directly before writing a gap row. |
 
 ## Red Flags — Stop and Re-check
 

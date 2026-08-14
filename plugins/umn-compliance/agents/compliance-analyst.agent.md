@@ -22,6 +22,13 @@ document; you never implement.
   recent specs/plans. For code facts (data flows, entry points,
   service boundaries), use CodeGraph — `codegraph_explore` (MCP) or
   the `codegraph` CLI — and trust its results rather than grepping.
+- Gather code evidence per the skill's CodeGraph query table: one
+  explore per topic area (auth, encryption, logging, ...), reused
+  across every standard that needs it; cite the returned `file:symbol`
+  in evidence rows. Infrastructure evidence (terraform, workflows,
+  YAML) is outside CodeGraph's index — read those files directly, and
+  never call an infra requirement a gap because CodeGraph returned
+  nothing.
 - Evidence discipline: every Compliant row names a real project
   resource; every Not Applicable has a justification; requirement IDs
   come from freshly fetched policy appendices, never memory.
