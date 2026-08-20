@@ -127,7 +127,7 @@ When you find or suspect a security issue, classify it before reacting
 Judge likelihood × impact in the *project's* context — an internal
 tool and an internet-facing service with payment data are different
 worlds. The project's compliance obligations (GDPR, HIPAA, PCI-DSS,
-SOC2, …) belong in `.constraint-kit/PROJECT.md` Constraints — recorded
+SOC2, …) belong in `docs/PROJECT.md` Constraints — recorded
 at intake or the moment they're discovered — and raise the impact of
 anything touching regulated data.
 

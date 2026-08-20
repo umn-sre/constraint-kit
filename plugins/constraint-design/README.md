@@ -3,20 +3,20 @@
 Plan-before-code bundle for GitHub Copilot (CLI, VS Code, coding agent)
 and Claude Code.
 
-Everything this plugin produces lands in the target repo's
-`.constraint-kit/` folder, so constraints live on disk — not in
+Everything this plugin produces lands in the target repo's `docs/` and
+`docs/constraint-kit/` folders, so constraints live on disk — not in
 conversation memory — and every future session can pick them up.
 
 ## Skills
 
 | Skill | Stage | Output |
 |---|---|---|
-| `project-intake` | Pre-planning (new/early-stage project) | `.constraint-kit/PROJECT.md`, `GLOSSARY.md`, generated `.github/copilot-instructions.md` |
-| `project-archaeology` | Pre-planning (existing codebase) | `.constraint-kit/ARCHAEOLOGY.md` plus the same three files as `project-intake`, grounded in code evidence |
+| `project-intake` | Pre-planning (new/early-stage project) | `docs/PROJECT.md`, `docs/GLOSSARY.md`, generated `.github/copilot-instructions.md` |
+| `project-archaeology` | Pre-planning (existing codebase) | `docs/ARCHAEOLOGY.md` plus the same three files as `project-intake`, grounded in code evidence |
 | `codegraph-setup` | Tooling | CodeGraph installed, wired to the current agent surface (incl. manual Copilot MCP config), project indexed |
-| `brainstorming` | Design | Approved design doc in `.constraint-kit/specs/`, glossary + ADR updates |
-| `writing-specs` | Spec | PRD-style spec in `.constraint-kit/specs/` |
-| `writing-plans` | Plan | Bite-sized, test-first plan in `.constraint-kit/plans/` |
+| `brainstorming` | Design | Approved design doc in `docs/constraint-kit/specs/`, glossary + ADR updates |
+| `writing-specs` | Spec | PRD-style spec in `docs/constraint-kit/specs/` |
+| `writing-plans` | Plan | Bite-sized, test-first plan in `docs/constraint-kit/plans/` |
 | `splunk-itsi-metrics` | Observability | Metric names, HEC emitter, and verified ingestion into SRE's Splunk ITSI |
 | `onboarding-azure-metrics-to-splunk` | Observability (customer-side) | Terraform role assignments in the customer's repo, registered metric subscriptions, verified data in Splunk |
 
@@ -34,7 +34,7 @@ Service.
 
 - **planner** — routes intake (`project-intake` for new projects,
   `project-archaeology` for existing codebases) and drives the design
-  stages; writes only to `.constraint-kit/` and
+  stages; writes only to `docs/`, `docs/constraint-kit/`, and
   `.github/copilot-instructions.md`, never source code. Uses CodeGraph
   for structural code questions.
 

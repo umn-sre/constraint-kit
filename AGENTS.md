@@ -15,9 +15,10 @@ there is no application code and no build step.
   entries must match the directories under `plugins/`.
 - Cross-skill references use plain skill names; note the plugin when the
   reference crosses the plugin boundary.
-- Skills instruct assistants to write artifacts into the *consuming*
-  repo's `.constraint-kit/` folder. Never commit `.constraint-kit/`
-  content to this repo.
+- Skills instruct assistants to write project context into the
+  *consuming* repo's `docs/` folder, specs/plans/ADRs into
+  `docs/constraint-kit/`, and SDD scratch into `.constraint-kit/sdd/`.
+  Never commit generated consumer-project artifacts to this repo.
 - Upstream-adapted skills (obra/superpowers, mattpocock/skills) should
   stay close to their sources; keep local patches minimal and credit the
   source in the plugin README.

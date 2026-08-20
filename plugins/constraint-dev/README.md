@@ -2,7 +2,7 @@
 
 Disciplined implementation bundle for GitHub Copilot (CLI, VS Code,
 coding agent) and Claude Code. Executes plans written by the
-**constraint-design** plugin (`.constraint-kit/plans/`), but the skills
+**constraint-design** plugin (`docs/constraint-kit/plans/`), but the skills
 stand alone too.
 
 ## Skills
@@ -12,7 +12,7 @@ stand alone too.
 | `test-driven-development` | The red-green loop, tests at pre-agreed seams, anti-rationalization discipline |
 | `subagent-driven-development` | Fresh implementer subagent per task, per-task reviews, ledger-tracked progress |
 | `executing-plans` | Inline plan execution when subagents aren't available |
-| `session-ledger` | Runtime discipline: session ledger, edit verification, loop detection, budget watch, clean wrap-up with lessons appended to `.constraint-kit/PROJECT.md` |
+| `session-ledger` | Runtime discipline: session ledger, edit verification, loop detection, budget watch, clean wrap-up with lessons appended to `docs/PROJECT.md` |
 | `security-principles` | Secrets discipline (vault-first, least privilege, nothing leaks through logs/commits), security-by-design principles, risk-based finding classification |
 | `requesting-code-review` | Dispatch a reviewer with precisely crafted context |
 | `receiving-code-review` | Verify feedback before implementing; technical rigor over performative agreement |
@@ -46,7 +46,7 @@ Skills adapted from [obra/superpowers](https://github.com/obra/superpowers)
 [mattpocock/skills](https://github.com/mattpocock/skills) (`tdd` — seams,
 anti-patterns, mocking guidance). `session-ledger` is modernized from
 constraint-kit's own pre-2.0 `session-hygiene` skill, its session
-history re-homed from `agent-base.yaml` to `.constraint-kit/PROJECT.md`. `security-principles`
+history re-homed from `agent-base.yaml` to `docs/PROJECT.md`. `security-principles`
 merges constraint-kit's pre-2.0 `security-compliance` skill with the
 core principles of
 [davila7/claude-code-templates](https://github.com/davila7/claude-code-templates)'

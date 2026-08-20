@@ -22,8 +22,9 @@ scripts/validate.py                  # CI structure check
    linked relatively.
 2. Write the `description` for the *triggering model*: start with "Use
    when …" so the assistant knows when to load it.
-3. Skills that produce artifacts write them to the target repo's
-   `.constraint-kit/` folder — never to arbitrary locations.
+3. Skills that produce artifacts write them to the target repo's `docs/`,
+   `docs/constraint-kit/`, or `.constraint-kit/sdd/` locations — never to
+   arbitrary locations.
 4. Cross-skill references use plain skill names (no vendor prefixes). If
    the referenced skill lives in the other plugin, say so.
 5. If a skill is adapted from an upstream collection (obra/superpowers,

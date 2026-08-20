@@ -1,6 +1,6 @@
 ---
 name: project-archaeology
-description: Use when adopting constraint-kit in an existing codebase whose behavior and design cannot be trusted from docs or memory - runs confidence-tagged discovery passes over the code (CodeGraph-assisted), records the evidence in .constraint-kit/ARCHAEOLOGY.md, then produces the same PROJECT.md, GLOSSARY.md, and copilot-instructions files as project-intake, grounded in what the code actually does.
+description: Use when adopting constraint-kit in an existing codebase whose behavior and design cannot be trusted from docs or memory - first invokes codegraph-setup if CodeGraph is unavailable, then runs confidence-tagged discovery passes over the code, records the evidence in docs/ARCHAEOLOGY.md, and produces docs/PROJECT.md, docs/GLOSSARY.md, and .github/copilot-instructions.md, grounded in what the code actually does.
 ---
 
 # Project Archaeology
@@ -8,8 +8,8 @@ description: Use when adopting constraint-kit in an existing codebase whose beha
 Extract a usable picture of an existing repository that has no reliable
 documented design — a vibe-coded codebase, inherited legacy code, or
 anything where "what does this actually do and why" cannot be answered
-by asking a person. Where `project-intake` builds the `.constraint-kit/`
-workspace from an *interview* (right for new or early-stage projects),
+by asking a person. Where `project-intake` builds the `docs/` project
+context from an *interview* (right for new or early-stage projects),
 archaeology builds it from *evidence in the code* — then runs a much
 shorter interview for the decisions code cannot answer. Both skills end
 at the same place: a cohesive workspace every later skill builds on.
@@ -32,27 +32,34 @@ silently overwrite a prior pass's readings.
 
 ## Outputs
 
-All output goes to the target repo's `.constraint-kit/` folder (create
-it if missing), plus one generated file in `.github/`:
+Output goes to the target repo's `docs/` folder (create it if missing),
+plus one generated file in `.github/`:
 
 | File | Content |
 |---|---|
-| `.constraint-kit/ARCHAEOLOGY.md` | Confidence-tagged evidence: structure, behavior contract, feature inventory, flaw taxonomy, open gaps |
-| `.constraint-kit/PROJECT.md` | Same template as `project-intake` — grounded in the evidence |
-| `.constraint-kit/GLOSSARY.md` | Domain terms as the *code* uses them, flagged where usage conflicts |
+| `docs/ARCHAEOLOGY.md` | Confidence-tagged evidence: structure, behavior contract, feature inventory, flaw taxonomy, open gaps |
+| `docs/PROJECT.md` | Same template as `project-intake` — grounded in the evidence |
+| `docs/GLOSSARY.md` | Domain terms as the *code* uses them, flagged where usage conflicts |
 | `.github/copilot-instructions.md` | Same generation rules as `project-intake` |
 
 ## Process
 
 ### 1. Set up code intelligence
 
-Use the `codegraph-setup` skill to get CodeGraph installed, wired to
-this agent surface, and the project indexed. Discovery leans on it: one
-`codegraph_explore` call (or `codegraph explore` CLI) returns symbols'
-verbatim source, call paths, and blast radius — evidence grep loops
-miss, especially dynamic-dispatch hops. If the user declines CodeGraph,
-run the same passes with built-in tools and tag caller/impact claims no
-higher than `I` (inferred).
+CodeGraph is a required preflight for normal archaeology. Before any
+discovery pass, check whether a `codegraph_explore` MCP tool is
+available in this session or the `codegraph` CLI is installed. If neither
+is available, stop archaeology and invoke the `codegraph-setup` skill
+now. Return here only after that skill reports CodeGraph is installed,
+wired to this agent surface, indexed for the project, or after the user
+explicitly declines installation.
+
+Discovery leans on CodeGraph: one `codegraph_explore` call (or
+`codegraph explore` CLI) returns symbols' verbatim source, call paths,
+and blast radius — evidence grep loops miss, especially
+dynamic-dispatch hops. If the user declines CodeGraph, run the same
+passes with built-in tools and tag caller/impact claims no higher than
+`I` (inferred).
 
 ### 2. Intake — one question at a time
 
@@ -74,7 +81,7 @@ analysis. Each question singly, with your recommended answer. Cover:
    replace? (Determines how much the flaw taxonomy matters and whether
    findings become constraints or a rewrite spec.)
 4. **Authority** — when evidence is ambiguous about whether a behavior
-   is load-bearing or dead cruft, who makes the call? Default: flag as
+   is intentional design or obsolete baggage, who makes the call? Default: flag as
    an open gap; never decide unilaterally.
 
 Confirm the detected mode explicitly before proceeding.
@@ -159,7 +166,7 @@ rules for the archaeology-fed versions:
 - **copilot-instructions.md** — same generation rules as
   `project-intake` (short, imperative, merge-don't-clobber), plus one
   line: "Before modifying unfamiliar code here, read
-  `.constraint-kit/ARCHAEOLOGY.md` and query CodeGraph
+  `docs/ARCHAEOLOGY.md` and query CodeGraph
   (`codegraph_explore`) rather than grepping."
 
 ### 7. Confirm and hand off
@@ -182,5 +189,5 @@ Show the user all four files and ask for corrections. Then:
 - Overwriting a prior pass's readings instead of recording the revision
 - Treating ARCHAEOLOGY.md as the deliverable — it feeds PROJECT.md and
   the design skills; it is not a substitute for them
-- Writing any file outside `.constraint-kit/` and
+- Writing any file outside `docs/` and
   `.github/copilot-instructions.md`

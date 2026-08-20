@@ -441,8 +441,8 @@ Use the finishing-a-development-branch skill.
 You: I'm using Subagent-Driven Development to execute this plan.
 
 [Setup: worktree verified]
-[Read plan file once: .constraint-kit/plans/feature-plan.md]
-[Resolve workspace: scripts/sdd-workspace .constraint-kit/plans/feature-plan.md — no ledger inside, fresh start]
+[Read plan file once: docs/constraint-kit/plans/feature-plan.md]
+[Resolve workspace: scripts/sdd-workspace docs/constraint-kit/plans/feature-plan.md — no ledger inside, fresh start]
 [Create todos for all tasks]
 
 Task 1: Hook installation script
