@@ -1,0 +1,20 @@
+# Copy to terraform.tfvars and fill in.
+#   cp terraform.tfvars.example terraform.tfvars
+
+# Your subscription.
+subscription_id = "00000000-0000-0000-0000-000000000000"
+
+# SRE metric service managed identity — the OBJECT ID, not the client ID
+# shown on the portal home page. Convert with:
+#   az ad sp show --id <client-id-from-portal> --query id -o tsv
+metric_service_principal_id = "11111111-1111-1111-1111-111111111111"
+
+# What SRE may read metrics from. Narrowest scope that does the job.
+monitored_scopes = [
+  "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-my-app-prod",
+]
+
+# Only if you're registering KQL queries. Full resource ID, not the GUID.
+log_analytics_workspace_ids = [
+  # "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-my-app-prod/providers/Microsoft.OperationalInsights/workspaces/log-my-app-prod",
+]

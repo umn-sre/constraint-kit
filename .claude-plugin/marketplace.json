@@ -1,0 +1,65 @@
+{
+  "name": "constraint-kit",
+  "metadata": {
+    "description": "Constraint-driven planning and implementation plugins for GitHub Copilot and Claude Code",
+    "version": "2.0.0"
+  },
+  "owner": {
+    "name": "constraint-kit contributors"
+  },
+  "plugins": [
+    {
+      "name": "constraint-design",
+      "description": "Plan-before-code bundle: project intake for new projects, CodeGraph-assisted project archaeology for existing codebases, relentless brainstorming, spec writing, and deep-module implementation planning.",
+      "version": "2.0.0",
+      "author": {
+        "name": "constraint-kit contributors"
+      },
+      "license": "MIT",
+      "keywords": [
+        "planning",
+        "design",
+        "brainstorming",
+        "spec",
+        "copilot-instructions",
+        "codegraph",
+        "legacy-code"
+      ],
+      "source": "./plugins/constraint-design"
+    },
+    {
+      "name": "constraint-dev",
+      "description": "Disciplined implementation bundle: strict TDD, subagent-driven plan execution with per-task reviews, session ledger, and code review discipline.",
+      "version": "2.0.0",
+      "author": {
+        "name": "constraint-kit contributors"
+      },
+      "license": "MIT",
+      "keywords": [
+        "tdd",
+        "code-review",
+        "subagents",
+        "plan-execution",
+        "security"
+      ],
+      "source": "./plugins/constraint-dev"
+    },
+    {
+      "name": "umn-compliance",
+      "description": "University of Minnesota compliance bundle: security compliance analysis and annual reviews against the 16 UMN Information Security Policy Standards. Org-specific.",
+      "version": "2.0.0",
+      "author": {
+        "name": "constraint-kit contributors"
+      },
+      "license": "MIT",
+      "keywords": [
+        "compliance",
+        "security",
+        "umn",
+        "policy",
+        "audit"
+      ],
+      "source": "./plugins/umn-compliance"
+    }
+  ]
+}
