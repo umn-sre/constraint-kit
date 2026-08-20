@@ -20,10 +20,10 @@ well.
 **Announce at start:** "I'm using the writing-plans skill to create the
 implementation plan."
 
-**Save plans to:** `.constraint-kit/plans/YYYY-MM-DD-<feature-name>.md`
+**Save plans to:** `docs/constraint-kit/plans/YYYY-MM-DD-<feature-name>.md`
 
-Use the vocabulary from `.constraint-kit/GLOSSARY.md` and respect decision
-records in `.constraint-kit/adr/`.
+Use the vocabulary from `docs/GLOSSARY.md` and respect decision
+records in `docs/constraint-kit/adr/`.
 
 ## Scope Check
 
@@ -236,7 +236,7 @@ move on. If you find a spec requirement with no task, add the task.
 
 After saving the plan, offer execution choice:
 
-**"Plan complete and saved to `.constraint-kit/plans/<filename>.md`. Two
+**"Plan complete and saved to `docs/constraint-kit/plans/<filename>.md`. Two
 execution options:**
 
 **1. Subagent-Driven (recommended)** - I dispatch a fresh subagent per

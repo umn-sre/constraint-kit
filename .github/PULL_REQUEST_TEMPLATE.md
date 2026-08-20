@@ -18,4 +18,4 @@
 - [ ] Cross-skill references use plain skill names (plugin noted when
       crossing the plugin boundary)
 - [ ] Upstream-adapted content credits its source in the plugin README
-- [ ] No `.constraint-kit/` content committed to this repo
+- [ ] No generated consumer-project artifact content committed to this repo

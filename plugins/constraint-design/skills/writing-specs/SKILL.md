@@ -11,14 +11,14 @@ user — the interviewing happened during `brainstorming`. Just synthesize
 what you already know. If you find yourself with major open questions, you
 skipped brainstorming; go back to it.
 
-**Save specs to:** `.constraint-kit/specs/YYYY-MM-DD-<topic>-spec.md`
+**Save specs to:** `docs/constraint-kit/specs/YYYY-MM-DD-<topic>-spec.md`
 
 ## Process
 
 1. **Explore the repo** to understand the current state of the codebase,
    if you haven't already. Use the vocabulary from
-   `.constraint-kit/GLOSSARY.md` throughout the spec, and respect any
-   decision records in `.constraint-kit/adr/` for the area you're
+   `docs/GLOSSARY.md` throughout the spec, and respect any
+   decision records in `docs/constraint-kit/adr/` for the area you're
    touching.
 
 2. **Sketch the seams** at which the feature will be tested. Prefer
@@ -30,7 +30,7 @@ skipped brainstorming; go back to it.
    the one confirmation this skill asks for.
 
 3. **Write the spec** using the template below and save it to
-   `.constraint-kit/specs/`.
+   `docs/constraint-kit/specs/`.
 
 4. **Hand off:** "Spec saved to `<path>`. Next: the `writing-plans` skill
    turns this into a task-by-task implementation plan."

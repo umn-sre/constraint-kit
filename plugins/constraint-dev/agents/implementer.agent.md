@@ -11,13 +11,13 @@ test-first, and nothing more.
 - **TDD is not optional.** Follow the `test-driven-development` skill: no
   production code without a failing test first; watch it fail, make it
   pass minimally, keep the suite green.
-- Work from the written task (a plan task in `.constraint-kit/plans/` or a
+- Work from the written task (a plan task in `docs/constraint-kit/plans/` or a
   dispatched brief) — it is your requirements, with the exact values to
   use verbatim. Before coding, restate what you're about to build; if the
   requirements are ambiguous, ask, don't guess.
-- Read `.constraint-kit/PROJECT.md` and `.constraint-kit/GLOSSARY.md` so
+- Read `docs/PROJECT.md` and `docs/GLOSSARY.md` so
   names, conventions, and vocabulary match the project; read
-  `.constraint-kit/ARCHAEOLOGY.md` before touching code it flags.
+  `docs/ARCHAEOLOGY.md` before touching code it flags.
 - **Code discovery**: before modifying unfamiliar code, use CodeGraph —
   `codegraph_explore` (MCP) or `codegraph explore` (CLI) for how it
   works and who calls it, `codegraph affected` to find the tests a
@@ -30,7 +30,7 @@ test-first, and nothing more.
 - Follow the `session-ledger` skill throughout: verify every edit
   actually applied before reporting it, halt on repeated attempts
   instead of looping, and wrap up cleanly — plan updated, session
-  entry appended to `.constraint-kit/PROJECT.md`.
+  entry appended to `docs/PROJECT.md`.
 - Flag assumptions and concerns explicitly in your report — a completed
   task with hidden doubts is not complete. Report one of: DONE,
   DONE_WITH_CONCERNS, NEEDS_CONTEXT, or BLOCKED.

@@ -1,6 +1,6 @@
 ---
 name: project-intake
-description: Use at the start of a new or early-stage project, or to update existing constraints - interviews the user about goals, stack, and conventions, then writes the .constraint-kit/ workspace and generates .github/copilot-instructions.md so constraints persist across every session. For substantial existing codebases without trustworthy docs, use project-archaeology instead.
+description: Use at the start of a new or early-stage project, or to update existing constraints - interviews the user about goals, stack, and conventions, then writes docs/PROJECT.md and docs/GLOSSARY.md and generates .github/copilot-instructions.md so constraints persist across every session. For substantial existing codebases without trustworthy docs, use project-archaeology instead.
 ---
 
 # Project Intake
@@ -17,19 +17,19 @@ project's constraints."
 **Existing codebase?** If the repo already contains substantial code
 whose behavior and design are not reliably documented, use the
 `project-archaeology` skill instead — it produces these same files plus
-`.constraint-kit/ARCHAEOLOGY.md`, grounded in evidence read from the
+`docs/ARCHAEOLOGY.md`, grounded in evidence read from the
 code rather than an interview. This skill is for new or early-stage
 projects, and for updating an already-established workspace.
 
 ## Outputs
 
-All output goes to the target repo's `.constraint-kit/` folder (create it
-if missing), plus one generated file in `.github/`:
+Output goes to the target repo's `docs/` folder (create it if missing),
+plus one generated file in `.github/`:
 
 | File | Content |
 |---|---|
-| `.constraint-kit/PROJECT.md` | Goals, audience, stack, conventions, constraints, working agreement |
-| `.constraint-kit/GLOSSARY.md` | Seed domain glossary (grow it during brainstorming) |
+| `docs/PROJECT.md` | Goals, audience, stack, conventions, constraints, working agreement |
+| `docs/GLOSSARY.md` | Seed domain glossary (grow it during brainstorming) |
 | `.github/copilot-instructions.md` | Generated repo-wide Copilot instructions distilled from PROJECT.md |
 
 ## Process
@@ -41,8 +41,9 @@ frameworks, package manager, test runner, lint config, CI, directory
 conventions, existing docs. If CodeGraph is available (`codegraph_explore`
 MCP tool or `codegraph` CLI), use it for structural questions instead of
 grepping. Never ask the user something the repo can answer. If
-`.github/copilot-instructions.md` or `.constraint-kit/` already exists,
-read it — you are updating, not starting over.
+`.github/copilot-instructions.md`, `docs/PROJECT.md`, or
+`docs/GLOSSARY.md` already exists, read it — you are updating, not
+starting over.
 
 ### 2. Interview — one question at a time
 
@@ -117,11 +118,12 @@ generated file:
   complete"), not aspirations ("write good code").
 - Include: build/test/lint commands, the conventions and constraints with
   exact values, the working agreement, and a pointer to
-  `.constraint-kit/PROJECT.md` and `.constraint-kit/GLOSSARY.md` for the
+  `docs/PROJECT.md` and `docs/GLOSSARY.md` for the
   full context.
 - Include this line so future sessions maintain the loop: "Planning
-  artifacts (specs, plans, decision records) live in `.constraint-kit/`;
-  read the relevant ones before starting work there."
+  artifacts (specs, plans, decision records) live in
+  `docs/constraint-kit/`; read the relevant ones before starting work
+  there."
 - If the file already exists, merge — preserve user-authored sections and
   never silently delete rules you did not write.
 
@@ -138,4 +140,5 @@ point at the next step:
 - Asking the user facts the repo already answers
 - Multiple questions in one message
 - A copilot-instructions file full of generic advice no linter could check
-- Writing any file outside `.constraint-kit/` and `.github/copilot-instructions.md`
+- Writing any file outside `docs/`, `docs/constraint-kit/`, and
+  `.github/copilot-instructions.md`

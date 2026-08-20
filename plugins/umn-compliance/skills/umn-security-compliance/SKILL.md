@@ -52,7 +52,7 @@ missing, stop and ask the user before continuing.**
 
 Reference: https://policy.umn.edu/it/dataclassification
 
-**Check `.constraint-kit/PROJECT.md` Constraints first** — projects
+**Check `docs/PROJECT.md` Constraints first** — projects
 onboarded with `project-intake` or `project-archaeology` may already
 record both values there. If found, confirm once and reuse. Once the
 user confirms values that are *not* yet recorded there, add them to
@@ -102,8 +102,8 @@ digraph compliance_flow {
    mapping step leans on it heavily, and running without it costs far
    more tool calls and tokens.
 2. **Discover project** — start from what constraint-kit already
-   knows: `.constraint-kit/PROJECT.md` (stack, constraints),
-   `.constraint-kit/ARCHAEOLOGY.md` (structural inventory, data flows,
+   knows: `docs/PROJECT.md` (stack, constraints),
+   `docs/ARCHAEOLOGY.md` (structural inventory, data flows,
    flaw taxonomy — if the project was onboarded via
    project-archaeology), and recent specs/plans. Then read README,
    terraform/, deployment workflows, and use CodeGraph
@@ -216,7 +216,7 @@ project.
 | Policy hub | https://policy.umn.edu/it/securedata |
 | Data classification | https://policy.umn.edu/it/dataclassification |
 | Default output path | `docs/security-compliance.md` |
-| Classification/level storage | `.constraint-kit/PROJECT.md` Constraints |
+| Classification/level storage | `docs/PROJECT.md` Constraints |
 | Sample output | `docs/superpowers/security-compliance.md` (in sre-itsi-azure-metrics) |
 | Standards list with URLs | `policy-standards.md` (in this skill dir) |
 | Output template | `template.md` (in this skill dir) |
@@ -252,7 +252,7 @@ project.
   planner agent so fixes become specced, planned tasks rather than a
   to-do list in a document.
 - **Newly confirmed classification/security level →
-  `.constraint-kit/PROJECT.md` Constraints**, so every other skill and
+  `docs/PROJECT.md` Constraints**, so every other skill and
   the next annual review inherit them.
 - **Annual calendar** — remind the user to wire the calendar into
   whatever scheduler the team uses; this skill produces the schedule,

@@ -1,6 +1,6 @@
 ---
 name: session-ledger
-description: Use during any implementation session - tracks progress in a session ledger, verifies every file edit actually applied, halts loops before they burn context, watches the token budget, and wraps up by updating the plan and appending a lessons-learned/budget entry to .constraint-kit/PROJECT.md so the next session starts in a known state.
+description: Use during any implementation session - tracks progress in a session ledger, verifies every file edit actually applied, halts loops before they burn context, watches the token budget, and wraps up by updating the plan and appending a lessons-learned/budget entry to docs/PROJECT.md so the next session starts in a known state.
 ---
 
 # Session Ledger
@@ -20,9 +20,9 @@ apply to every dispatched subagent and to the conductor.
 
 ## 1. Session open
 
-On the first turn, read `.constraint-kit/PROJECT.md` (Constraints and
+On the first turn, read `docs/PROJECT.md` (Constraints and
 Working agreement, plus the Session log's recent entries) and the
-active plan in `.constraint-kit/plans/`. State the task list and done
+active plan in `docs/constraint-kit/plans/`. State the task list and done
 condition, then initialize the ledger — in the SDD workspace when one
 exists, otherwise as a running block in the conversation:
 
@@ -106,10 +106,10 @@ no skipping or reordering:
 1. **Finish the current atomic task only** — never start the next.
 2. **Finalize the ledger** — tasks complete/incomplete/blocked, final
    budget estimate, reasons for anything blocked.
-3. **Update the plan** in `.constraint-kit/plans/` — check off what is
+3. **Update the plan** in `docs/constraint-kit/plans/` — check off what is
    actually done; move unfinished tasks to an explicit carry-forward
    note.
-4. **Append a session entry to `.constraint-kit/PROJECT.md`** under a
+4. **Append a session entry to `docs/PROJECT.md`** under a
    `## Session log` section (create it at the end of the file if
    missing):
 

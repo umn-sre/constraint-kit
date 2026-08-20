@@ -5,9 +5,10 @@ Copilot** (CLI, VS Code, coding agent) and **Claude Code**.
 
 AI assistants drift: rules given at the start of a session are forgotten
 by the middle. constraint-kit keeps the rules on disk instead — skills
-write every planning artifact into your repo's `.constraint-kit/` folder
-and generate `.github/copilot-instructions.md`, so every session starts
-from the same constraints without any bootstrap step.
+write project context into `docs/`, planning artifacts into
+`docs/constraint-kit/`, SDD scratch into `.constraint-kit/sdd/`, and
+generate `.github/copilot-instructions.md`, so every session starts from
+the same constraints without any bootstrap step.
 
 This repo is a **plugin marketplace**: two plugins that mirror the two
 halves of disciplined development, plus an org-specific compliance
@@ -87,11 +88,11 @@ project-archaeology ───┘   (planner agent, constraint-design plugin)
 ```
 
 1. Intake, once per project. **`project-intake`** (new or early-stage
-   repo) interviews you and writes `.constraint-kit/PROJECT.md` +
+   repo) interviews you and writes `docs/PROJECT.md` +
    `GLOSSARY.md`, generating `.github/copilot-instructions.md`.
    **`project-archaeology`** (existing codebase without trustworthy
    docs) instead reads the code first — confidence-tagged discovery
-   passes recorded in `.constraint-kit/ARCHAEOLOGY.md` — and then
+   passes recorded in `docs/ARCHAEOLOGY.md` — and then
    produces the same three files, grounded in evidence.
 2. **`brainstorming`** grills you one question at a time until a design
    is approved, capturing glossary terms and decision records as they
@@ -102,17 +103,19 @@ project-archaeology ───┘   (planner agent, constraint-design plugin)
    plan with a fresh **implementer** subagent per task, a **reviewer**
    after each, and strict TDD throughout.
 
-Everything lands in `.constraint-kit/` in *your* repo:
+Everything lands in these locations in *your* repo:
 
 ```text
-.constraint-kit/
-├── PROJECT.md        # goals, stack, conventions, working agreement, session log
-├── GLOSSARY.md       # domain language, one precise term at a time
-├── ARCHAEOLOGY.md    # evidence from onboarding an existing codebase
-├── adr/              # decision records (sparingly)
-├── specs/            # design docs and specs
-├── plans/            # implementation plans
-└── sdd/              # execution scratch (git-ignore this one)
+docs/
+├── PROJECT.md              # goals, stack, conventions, working agreement, session log
+├── GLOSSARY.md             # domain language, one precise term at a time
+├── ARCHAEOLOGY.md          # evidence from onboarding an existing codebase
+└── constraint-kit/
+  ├── adr/                # decision records (sparingly)
+  ├── specs/              # design docs and specs
+  └── plans/              # implementation plans
+
+.constraint-kit/sdd/        # execution scratch (git-ignore this one)
 ```
 
 ## CodeGraph integration

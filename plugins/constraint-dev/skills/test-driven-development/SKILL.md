@@ -14,9 +14,9 @@ it tests the right thing.
 
 **Violating the letter of the rules is violating the spirit of the rules.**
 
-When exploring the codebase, read `.constraint-kit/GLOSSARY.md` (if it
+When exploring the codebase, read `docs/GLOSSARY.md` (if it
 exists) so test names and interface vocabulary match the project's domain
-language, and respect decision records in `.constraint-kit/adr/` for the
+language, and respect decision records in `docs/constraint-kit/adr/` for the
 area you're touching.
 
 ## When to Use

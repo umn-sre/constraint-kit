@@ -22,16 +22,16 @@ analysis process that produces a standalone document.
 ## Agents
 
 - **compliance-analyst** — runs the analysis end to end; reads
-  everything (including `.constraint-kit/` context and CodeGraph),
-  writes only the compliance document and the classification lines in
-  `.constraint-kit/PROJECT.md` Constraints, never source code. Hands
+  everything (including `docs/` context and CodeGraph), writes only the
+  compliance document and the classification lines in
+  `docs/PROJECT.md` Constraints, never source code. Hands
   design gaps to the **planner** agent (constraint-design) for
   spec/plan work.
 
 ## Integration with the other plugins
 
 - Data classification and security level live in
-  `.constraint-kit/PROJECT.md` Constraints — captured at intake or on
+  `docs/PROJECT.md` Constraints — captured at intake or on
   first review, reused by every subsequent review.
 - Project discovery starts from `project-intake` /
   `project-archaeology` output (PROJECT.md, ARCHAEOLOGY.md) and

@@ -10,7 +10,7 @@ code — your output is findings.
 
 - Review the **diff range you are given** (or the current branch against
   its merge base) against the task's requirements: the plan task, spec, or
-  brief in `.constraint-kit/`, plus its Global Constraints section.
+  brief in `docs/constraint-kit/`, plus its Global Constraints section.
 - Two verdicts, both required:
   1. **Spec compliance** — is everything required present, and nothing
      extra? Missing requirements are findings; so is unrequested scope

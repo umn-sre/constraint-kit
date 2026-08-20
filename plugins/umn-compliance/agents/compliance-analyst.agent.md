@@ -12,13 +12,13 @@ document; you never implement.
 - **Never write or modify source code, tests, or configuration.** Your
   writable surfaces are the compliance document (default
   `docs/security-compliance.md`) and the classification/security-level
-  lines in `.constraint-kit/PROJECT.md` Constraints.
+  lines in `docs/PROJECT.md` Constraints.
 - Follow the `umn-security-compliance` skill exactly — it defines the
   required inputs, the 16 standards, the disposition categories, and
   the output template. Never start analysis without confirmed data
   classification and security level.
 - Ground discovery in what's already on disk before reading code:
-  `.constraint-kit/PROJECT.md`, `.constraint-kit/ARCHAEOLOGY.md`, and
+  `docs/PROJECT.md`, `docs/ARCHAEOLOGY.md`, and
   recent specs/plans. For code facts (data flows, entry points,
   service boundaries), use CodeGraph — `codegraph_explore` (MCP) or
   the `codegraph` CLI — and trust its results rather than grepping.

@@ -27,9 +27,9 @@ get approval.
 
 Create a todo per item and complete them in order:
 
-1. **Explore project context** — read `.constraint-kit/PROJECT.md`,
-   `.constraint-kit/GLOSSARY.md`, `.constraint-kit/ARCHAEOLOGY.md`, and
-   `.constraint-kit/adr/` if they exist (run the `project-intake` skill —
+1. **Explore project context** — read `docs/PROJECT.md`,
+   `docs/GLOSSARY.md`, `docs/ARCHAEOLOGY.md`, and
+   `docs/constraint-kit/adr/` if they exist (run the `project-intake` skill —
    or `project-archaeology` for an undocumented existing codebase — first
    if the project has never been set up); check files, docs, recent
    commits, and answer structural code questions with CodeGraph
@@ -37,11 +37,10 @@ Create a todo per item and complete them in order:
 2. **Grill the user** — one question at a time until shared understanding
 3. **Propose 2-3 approaches** — with trade-offs and your recommendation
 4. **Present design** — in sections scaled to complexity, approval per section
-5. **Write design doc** — save to `.constraint-kit/specs/YYYY-MM-DD-<topic>-design.md`
+5. **Write design doc** — save to `docs/constraint-kit/specs/YYYY-MM-DD-<topic>-design.md`
 6. **Spec self-review** — placeholder/consistency/scope/ambiguity check
 7. **User reviews written design** — ask before proceeding
-8. **Transition** — invoke `writing-specs` (larger features) or
-   `writing-plans` (small, well-understood changes) next
+8. **Transition** — invoke `writing-specs` next
 
 ## Grilling the user
 
@@ -65,7 +64,7 @@ dependencies between decisions one by one.
 ## Capture the domain model as you go
 
 While grilling, actively maintain the project's language (in
-`.constraint-kit/GLOSSARY.md`, creating it lazily on first term):
+`docs/GLOSSARY.md`, creating it lazily on first term):
 
 - **Challenge against the glossary.** "Your glossary defines
   'cancellation' as X, but you seem to mean Y — which is it?"
@@ -77,10 +76,9 @@ While grilling, actively maintain the project's language (in
   and the code disagrees, surface the contradiction.
 - **Update the glossary inline** the moment a term is resolved — don't
   batch. The glossary holds language only, never implementation details.
-- **Offer decision records sparingly.** Write
-  `.constraint-kit/adr/NNNN-<slug>.md` only when a decision is all three:
-  hard to reverse, surprising without context, and the result of a real
-  trade-off. Record context, decision, and consequences in a page or less.
+- **Offer decision records.** Write
+  `docs/constraint-kit/adr/NNNN-<slug>.md` Record context, decision, 
+  and consequences in a page or less.
 
 ## Exploring approaches
 
@@ -108,7 +106,7 @@ where existing problems affect this work. No unrelated refactoring.
 ## After the design
 
 Write the validated design to
-`.constraint-kit/specs/YYYY-MM-DD-<topic>-design.md`, then self-review
+`docs/constraint-kit/specs/YYYY-MM-DD-<topic>-design.md`, then self-review
 with fresh eyes:
 
 1. **Placeholder scan:** any "TBD", "TODO", vague requirements? Fix them.
@@ -124,8 +122,7 @@ Fix issues inline, then ask the user to review the file:
 
 **Transition when approved:**
 
-- Substantial feature, or others will implement it → invoke
+- Fully-understood change → invoke
   `writing-specs` to synthesize a full spec, then `writing-plans`.
-- Small, fully-understood change → invoke `writing-plans` directly.
 
 Do NOT invoke any other skill. Those are the only two next steps.

@@ -9,7 +9,8 @@ Convert constraint-kit from a bespoke skills/roles/bundles framework with a
 Python bootstrap pipeline into a standard **GitHub Copilot plugin
 marketplace**. Users install plugins (the successor to bundles) and switch
 between agents; skills write per-project state into the target repo's
-`.constraint-kit/` folder instead of a renderer generating session prompts.
+`docs/` and `docs/constraint-kit/` folders instead of a renderer
+generating session prompts.
 
 ## What is removed
 
@@ -22,9 +23,8 @@ between agents; skills write per-project state into the target repo's
   `plugins/` and the marketplace manifest.
 - `skills/*` (old constraint-kit skills) — superseded by curated, merged
   skills from mattpocock/skills and obra/superpowers.
-- `.constraint-kit/*` tracked files — `.constraint-kit/` is now a
-  *generated per-project workspace convention*, never content shipped by
-  this repo.
+- `.constraint-kit/*` tracked files — `.constraint-kit/sdd/` is now only
+  generated per-project SDD scratch, never content shipped by this repo.
 - Drive/multisurface docs, scenario docs, and pipeline diagrams that
   documented the old engine.
 
@@ -40,11 +40,11 @@ constraint-kit/
 │   │   ├── agents/
 │   │   │   └── planner.agent.md
 │   │   └── skills/
-│   │       ├── project-intake/       # NEW: pre-planning for new projects; writes .constraint-kit/ + copilot-instructions
+│   │       ├── project-intake/       # NEW: pre-planning for new projects; writes docs/ + copilot-instructions
 │   │       ├── project-archaeology/  # pre-planning for existing codebases; old skill modernized, CodeGraph-assisted
 │   │       ├── codegraph-setup/      # NEW: installs/wires CodeGraph (incl. manual Copilot MCP setup)
 │   │       ├── brainstorming/        # obra brainstorming + mattpocock grilling/grill-with-docs + domain-model capture
-│   │       ├── writing-specs/        # mattpocock to-spec, retargeted to .constraint-kit/specs/
+│   │       ├── writing-specs/        # mattpocock to-spec, retargeted to docs/constraint-kit/specs/
 │   │       └── writing-plans/        # obra writing-plans + mattpocock codebase-design (merged)
 │   ├── constraint-dev/           # disciplined implementation bundle
 │   │   ├── plugin.json
@@ -78,17 +78,17 @@ constraint-kit/
 
 | New skill | Sources | Merge rationale |
 |---|---|---|
-| `project-intake` | new; concepts from old bootstrap templates + roles | Replaces the bootstrap renderer: interviews the user (grilling style), explores the repo, then writes `.constraint-kit/PROJECT.md` and generates `.github/copilot-instructions.md`. For new/early-stage projects and constraint updates. |
-| `project-archaeology` | pre-2.0 constraint-kit `session-archaeology`, `project-intake` output conventions | Existing-codebase counterpart to intake. Keeps the old skill's gems — provenance modes (KNOWN/UNKNOWN), V/I/U confidence tags, five discovery passes, flaw taxonomy, open gaps — drops the dead session-preflight/SESSION_PLAN architecture, retargets output to `.constraint-kit/ARCHAEOLOGY.md`, and ends by producing the same PROJECT.md/GLOSSARY.md/copilot-instructions as `project-intake` (steps 3–5, facts pre-filled). Discovery passes are CodeGraph-assisted. |
+| `project-intake` | new; concepts from old bootstrap templates + roles | Replaces the bootstrap renderer: interviews the user (grilling style), explores the repo, then writes `docs/PROJECT.md` and generates `.github/copilot-instructions.md`. For new/early-stage projects and constraint updates. |
+| `project-archaeology` | pre-2.0 constraint-kit `session-archaeology`, `project-intake` output conventions | Existing-codebase counterpart to intake. Keeps the old skill's gems — provenance modes (KNOWN/UNKNOWN), V/I/U confidence tags, five discovery passes, flaw taxonomy, open gaps — drops the dead session-preflight/SESSION_PLAN architecture, retargets output to `docs/ARCHAEOLOGY.md`, and ends by producing the same PROJECT.md/GLOSSARY.md/copilot-instructions as `project-intake` (steps 3–5, facts pre-filled). Discovery passes are CodeGraph-assisted. |
 | `codegraph-setup` | new; [colbymchenry/codegraph](https://github.com/colbymchenry/codegraph) docs + [PR #718](https://github.com/colbymchenry/codegraph/pull/718) | CodeGraph has no native Copilot support; this skill wraps CLI install, `codegraph install` for auto-configured agents, the manual Copilot MCP config (Copilot CLI `~/.copilot/mcp-config.json` with required `tools` key; VS Code `.vscode/mcp.json`), and per-project `codegraph init`. |
 | `brainstorming` | obra `brainstorming`, mattpocock `grilling` + `grill-with-docs` + `domain-modeling` capture rules | All three are "interview the user until the design is solid." Merged: one-question-at-a-time grilling discipline + design presentation/approval + glossary/ADR capture as terms crystallise. |
-| `writing-specs` | mattpocock `to-spec` | Kept solo; issue-tracker publishing replaced by `.constraint-kit/specs/`. |
+| `writing-specs` | mattpocock `to-spec` | Kept solo; issue-tracker publishing replaced by `docs/constraint-kit/specs/`. |
 | `writing-plans` | obra `writing-plans`, mattpocock `codebase-design` (+ `DEEPENING.md`, `DESIGN-IT-TWICE.md`) | Both govern "decide the shape of the code before writing it." The deep-module vocabulary becomes the File Structure / interface-design step of plan writing. |
 | `test-driven-development` | obra `test-driven-development` (+ `writing-good-tests.md`), mattpocock `tdd` (+ `tests.md`, `mocking.md`) | Same loop, complementary strengths: obra brings the iron law, verification gates, and anti-rationalization tables; mattpocock brings seams, tautological-test and horizontal-slicing anti-patterns. |
 | `subagent-driven-development` | obra (incl. prompts + scripts) | Workspace moved `.superpowers/sdd/` → `.constraint-kit/sdd/`. |
 | `executing-plans` | obra | Inline fallback when subagents are unavailable. |
 | `security-principles` | pre-2.0 constraint-kit `security-compliance`, [davila7/claude-code-templates](https://github.com/davila7/claude-code-templates) `security-compliance` (core principles) — renamed to distinguish from the `umn-compliance` plugin's compliance-analysis process | The old skill's atomic secrets discipline (vault-first retrieval, least-privilege scoping, no leaks through logs/errors/commits, pre-commit diff scan) stays the enforceable core. From davila7's 984-line security-consultant reference, only the parts a coding agent can act on are merged: the eight core principles (condensed to seven — defense in depth, zero trust, least privilege, security by design, secure defaults, risk-based, compliance-as-floor), a risk-scored finding-severity table replacing reflex classification, and dev-facing guardrails (input/data/dependency/auth defaults). The enterprise GRC material (SOC playbooks, vendor risk scoring, audit prep, tool catalogs) is deliberately excluded — no coding agent can act on it. Compliance obligations live in PROJECT.md Constraints. |
-| `session-ledger` | pre-2.0 constraint-kit `session-hygiene` (renamed: the ledger is the artifact everything else keeps honest) | Same function, new storage: session ledger, edit verification (PHANTOM detection), loop detection, budget thresholds, and the seven-step wrap-up survive; `agent-implementer.yaml`/surface profiles are replaced by PROJECT.md + the plan, `SESSION_PLAN.md` updates by plan-checkbox updates, and the `agent-base.yaml` session_history by a `## Session log` section appended to `.constraint-kit/PROJECT.md` (distill durable lessons into Constraints, then prune). Under SDD, the sdd workspace ledger doubles as the session ledger. |
+| `session-ledger` | pre-2.0 constraint-kit `session-hygiene` (renamed: the ledger is the artifact everything else keeps honest) | Same function, new storage: session ledger, edit verification (PHANTOM detection), loop detection, budget thresholds, and the seven-step wrap-up survive; `agent-implementer.yaml`/surface profiles are replaced by PROJECT.md + the plan, `SESSION_PLAN.md` updates by plan-checkbox updates, and the `agent-base.yaml` session_history by a `## Session log` section appended to `docs/PROJECT.md` (distill durable lessons into Constraints, then prune). Under SDD, the sdd workspace ledger doubles as the session ledger. |
 | `umn-security-compliance` | internal UMN SRE skill (`~/.claude/skills/`) | Moved into the marketplace as its own org-specific plugin (`umn-compliance`) rather than into constraint-dev: it encodes UMN policy that non-UMN consumers shouldn't install, and it is a periodic project-wide analysis process, not a stage in the design→dev pipeline. Adapted to read/record data classification and security level in PROJECT.md Constraints, start discovery from PROJECT.md/ARCHAEOLOGY.md + CodeGraph, and hand its "Design Changes Required" list to the design pipeline. Renamed the constraint-dev skill `security-compliance` → `security-principles` to keep the two unambiguous: principles = per-task decision defaults; compliance = the analysis process. |
 | `requesting-code-review` | obra (+ `code-reviewer.md`) | Unchanged in substance. |
 | `receiving-code-review` | obra | Unchanged in substance. |
@@ -115,19 +115,20 @@ Cross-skill references use plain skill names (no `superpowers:` prefix);
 flows that cross the plugin boundary (writing-plans → SDD) note that the
 `constraint-dev` plugin provides the target skill.
 
-## The `.constraint-kit/` workspace convention
+## Project artifact locations
 
-Skills write all planning and process artifacts into the **target
-project's** `.constraint-kit/` folder:
+Skills write planning and process artifacts into the **target project's**
+`docs/` and `docs/constraint-kit/` folders. SDD scratch remains under
+`.constraint-kit/sdd/`:
 
 | Path | Written by |
 |---|---|
-| `.constraint-kit/PROJECT.md` | project-intake (goals, stack, conventions, constraints); session-ledger appends the Session log |
-| `.constraint-kit/GLOSSARY.md` | brainstorming / project-intake / project-archaeology (domain language) |
-| `.constraint-kit/ARCHAEOLOGY.md` | project-archaeology (confidence-tagged evidence from an existing codebase) |
-| `.constraint-kit/adr/NNNN-*.md` | brainstorming (decision records) |
-| `.constraint-kit/specs/YYYY-MM-DD-<topic>-spec.md` | writing-specs (and design docs from brainstorming) |
-| `.constraint-kit/plans/YYYY-MM-DD-<feature>.md` | writing-plans |
+| `docs/PROJECT.md` | project-intake (goals, stack, conventions, constraints); session-ledger appends the Session log |
+| `docs/GLOSSARY.md` | brainstorming / project-intake / project-archaeology (domain language) |
+| `docs/ARCHAEOLOGY.md` | project-archaeology (confidence-tagged evidence from an existing codebase) |
+| `docs/constraint-kit/adr/NNNN-*.md` | brainstorming (decision records) |
+| `docs/constraint-kit/specs/YYYY-MM-DD-<topic>-spec.md` | writing-specs (and design docs from brainstorming) |
+| `docs/constraint-kit/plans/YYYY-MM-DD-<feature>.md` | writing-plans |
 | `.constraint-kit/sdd/<plan>/` | subagent-driven-development (git-ignored scratch) |
 
 `project-intake` additionally generates `.github/copilot-instructions.md`
@@ -142,9 +143,10 @@ shipped inside plugins:
 
 - **planner** (constraint-design) — read-mostly; routes intake
   (`project-intake` for new projects, `project-archaeology` for existing
-  codebases — one agent, two skills, same workspace output) then drives
-  brainstorm → spec → plan; writes only `.constraint-kit/` and
-  `.github/copilot-instructions.md` (plus running `codegraph init`).
+  codebases — one agent, two skills, same project context output) then
+  drives brainstorm → spec → plan; writes only `docs/`,
+  `docs/constraint-kit/`, and `.github/copilot-instructions.md` (plus
+  running `codegraph init`).
 - **conductor** (constraint-dev) — orchestrates subagent-driven
   development; never edits code itself.
 - **implementer** (constraint-dev) — executes one plan task at a time with

@@ -18,7 +18,7 @@ Code **plugin marketplace**. See [docs/DESIGN.md](docs/DESIGN.md).
 - `project-archaeology` skill: the pre-2.0 `session-archaeology`
   skill modernized — same
   provenance modes, confidence tags, and discovery passes, now writing
-  `.constraint-kit/ARCHAEOLOGY.md` and finishing with the same
+  `docs/ARCHAEOLOGY.md` and finishing with the same
   PROJECT.md / GLOSSARY.md / copilot-instructions outputs as
   `project-intake`, so new and existing projects onboard to an
   identical workspace.
@@ -47,7 +47,7 @@ Code **plugin marketplace**. See [docs/DESIGN.md](docs/DESIGN.md).
   generates an evidence-based compliance document with a design-gap
   list and annual calendar. Kept as its own plugin so non-UMN
   consumers never install UMN policy; data classification and security
-  level are stored in `.constraint-kit/PROJECT.md` Constraints. The
+  level are stored in `docs/PROJECT.md` Constraints. The
   constraint-dev skill was renamed `security-compliance` →
   `security-principles` to keep per-task security discipline distinct
   from this compliance-analysis process.
@@ -56,14 +56,15 @@ Code **plugin marketplace**. See [docs/DESIGN.md](docs/DESIGN.md).
   ledger, edit verification, loop detection, budget watch, and the
   seven-step wrap-up unchanged in function; lessons-learned/budget
   session entries now append to a `## Session log` section of
-  `.constraint-kit/PROJECT.md` instead of `agent-base.yaml`.
+  `docs/PROJECT.md` instead of `agent-base.yaml`.
 - Skills adapted and merged from
   [obra/superpowers](https://github.com/obra/superpowers) and
   [mattpocock/skills](https://github.com/mattpocock/skills).
 - `project-intake` skill generates `.github/copilot-instructions.md` in
   the target repo — replaces the bootstrap renderer.
-- `.constraint-kit/` workspace convention: skills write PROJECT.md,
-  GLOSSARY.md, adr/, specs/, plans/, and sdd/ into the consuming repo.
+- Project artifact convention: skills write PROJECT.md, GLOSSARY.md, and
+  ARCHAEOLOGY.md into `docs/`; adr/, specs/, and plans/ into
+  `docs/constraint-kit/`; and SDD scratch into `.constraint-kit/sdd/`.
 - `scripts/validate.py` structure validation (stdlib only) and matching
   CI workflow.
 
