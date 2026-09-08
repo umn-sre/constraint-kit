@@ -20,6 +20,10 @@ plugin:
 | [`constraint-dev`](plugins/constraint-dev/) | Implement with discipline: strict TDD, subagent-driven execution with per-task reviews, session ledger (verified edits, loop halts, lessons logged), security principles, code review rigor, clean branch finishing |
 | [`umn-compliance`](plugins/umn-compliance/) | UMN-only: security compliance analysis and annual reviews against the 16 UMN Information Security Policy Standards. Install only for University of Minnesota projects |
 
+**New to constraint-kit?** [docs/GETTING-STARTED.md](docs/GETTING-STARTED.md)
+walks a first-time user or teammate from install through one complete
+design-to-merge pass.
+
 ## Install
 
 ### Copilot CLI

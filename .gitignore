@@ -5,6 +5,9 @@ __pycache__/
 *.py[cod]
 .ruff_cache/
 .pytest_cache/
+.mypy_cache/
+.venv/
+.venv-ci/
 
 # OS
 .DS_Store
@@ -17,6 +20,9 @@ Thumbs.db
 
 # Local logs
 debug.log
+
+# Local worktrees
+.worktrees/
 
 # .constraint-kit/ is a per-project workspace generated in *consuming*
 # repos by the skills; it must never exist in this repo.
