@@ -1,6 +1,7 @@
 ---
 name: project-archaeology
 description: Use when adopting constraint-kit in an existing codebase whose behavior and design cannot be trusted from docs or memory - first invokes codegraph-setup if CodeGraph is unavailable, then runs confidence-tagged discovery passes over the code, records the evidence in docs/ARCHAEOLOGY.md, and produces docs/PROJECT.md, docs/GLOSSARY.md, and .github/copilot-instructions.md, grounded in what the code actually does.
+argument-hint: 'Optional: the area of the codebase to start from'
 ---
 
 # Project Archaeology

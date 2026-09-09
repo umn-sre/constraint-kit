@@ -1,6 +1,7 @@
 ---
 name: writing-specs
 description: Turn the current conversation into a spec (PRD) - no interview, just synthesis of what has already been discussed. Use after brainstorming, or whenever a discussion needs to crystallise into a document before planning.
+argument-hint: 'Optional: the spec name or scope to synthesize'
 ---
 
 # Writing Specs

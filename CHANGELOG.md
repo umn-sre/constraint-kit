@@ -4,6 +4,38 @@ All notable changes to constraint-kit are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 Versions follow [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Changed
+
+- `subagent-driven-development` (constraint-dev): rewritten for current
+  VS Code / Copilot subagent semantics — dispatch through `runSubagent`
+  with `agentName`, stateless subagents (fix rounds are fresh dispatches
+  carrying brief, report, and findings; no mid-run questions, return
+  `NEEDS_CONTEXT` instead), and the session-model cost-tier cap on
+  subagent models. Model Selection now names preferred models per role
+  (Claude Sonnet 5 for code; GPT-5.6 Luna or MAI-Code-1-Flash for
+  reviews) instead of abstract tiers. SKILL.md and the three prompt
+  templates trimmed from ~46 KB to ~22 KB; the dot graphs and long
+  example are gone, the ledger, fix-loop, breaker, and final-review
+  rules are unchanged.
+- `requesting-code-review` (constraint-dev): same modernization —
+  `runSubagent` dispatch of the `reviewer` agent, diff handed over as a
+  review-package file instead of pasted git output, `HEAD~1` replaced
+  by a recorded base or merge-base, per-scope preferred models, and
+  stateless-subagent guidance. Trimmed from ~8 KB to ~5 KB; the example
+  output and duplicated do/don't lists are gone.
+- Every SKILL.md gains an `argument-hint` so each skill shows a usage
+  hint when invoked as a Copilot slash command (the plan path for the
+  execution skills, the idea for brainstorming, and so on). Other
+  Copilot skill properties (`user-invocable`, `disable-model-invocation`,
+  `context`) are left at their defaults deliberately.
+- constraint-dev agents (`conductor`, `implementer`, `reviewer`) gain
+  `tools`, `agents`, and `model` frontmatter so they work as
+  `runSubagent` targets with scoped tools and preferred-model fallback
+  lists. The conductor leads with a top-tier model (Claude Opus 5, then
+  GPT-5.6 Sol) because subagents cannot exceed its cost tier.
+
 ## [2.0.0] - 2026-08-04
 
 Complete restructure: constraint-kit is now a GitHub Copilot / Claude

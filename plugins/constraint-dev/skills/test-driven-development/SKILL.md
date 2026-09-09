@@ -1,6 +1,7 @@
 ---
 name: test-driven-development
 description: Use when implementing any feature or bugfix, before writing implementation code - the red-green loop, tests at pre-agreed seams, and the discipline that keeps both honest.
+argument-hint: 'Optional: the behavior or seam to test first'
 ---
 
 # Test-Driven Development (TDD)

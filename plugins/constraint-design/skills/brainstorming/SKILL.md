@@ -1,6 +1,7 @@
 ---
 name: brainstorming
 description: Use before any creative work - creating features, building components, adding functionality, or modifying behavior. Grills the user one question at a time to turn an idea into an approved design, capturing glossary terms and decision records as they crystallise.
+argument-hint: 'The idea or feature to design'
 ---
 
 # Brainstorming Ideas Into Designs
@@ -106,7 +107,7 @@ where existing problems affect this work. No unrelated refactoring.
 ## After the design
 
 Write the validated design to
-`docs/constraint-kit/specs/YYYY-MM-DD-<topic>-design.md`, then self-review
+`docs/constraint-kit/spec/YYYY-MM-DD-<topic>-design.md`, then self-review
 with fresh eyes:
 
 1. **Placeholder scan:** any "TBD", "TODO", vague requirements? Fix them.

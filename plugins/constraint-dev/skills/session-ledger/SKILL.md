@@ -1,6 +1,7 @@
 ---
 name: session-ledger
 description: Use during any implementation session - tracks progress in a session ledger, verifies every file edit actually applied, halts loops before they burn context, watches the token budget, and wraps up by updating the plan and appending a lessons-learned/budget entry to docs/PROJECT.md so the next session starts in a known state.
+argument-hint: "Optional: the plan being executed, or 'wrap up'"
 ---
 
 # Session Ledger

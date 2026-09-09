@@ -1,6 +1,7 @@
 ---
 name: umn-security-compliance
 description: Use when conducting a UMN security compliance analysis or annual compliance review for a project — generates a compliance document mapping the project's design and technology against the 16 University of Minnesota Information Security Policy Standards, prompting for data classification and security level if not provided.
+argument-hint: 'Optional: data classification and security level, if already known'
 ---
 
 # UMN Security Compliance Analysis

@@ -1,6 +1,7 @@
 ---
 name: project-intake
 description: Use at the start of a new or early-stage project, or to update existing constraints - interviews the user about goals, stack, and conventions, then writes docs/PROJECT.md and docs/GLOSSARY.md and generates .github/copilot-instructions.md so constraints persist across every session. For substantial existing codebases without trustworthy docs, use project-archaeology instead.
+argument-hint: 'Optional: the project goal, or what changed since last intake'
 ---
 
 # Project Intake

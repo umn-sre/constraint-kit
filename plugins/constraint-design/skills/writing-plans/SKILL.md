@@ -1,6 +1,7 @@
 ---
 name: writing-plans
 description: Use when you have a spec or requirements for a multi-step task, before touching code - designs the modules (deep interfaces at clean seams), then writes a bite-sized, test-first implementation plan.
+argument-hint: 'Path to the spec, or the feature to plan'
 ---
 
 # Writing Plans

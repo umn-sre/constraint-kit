@@ -1,6 +1,7 @@
 ---
 name: security-principles
 description: Use when code touches credentials, tokens, auth, or sensitive data, when a design needs security judgment, or when a review flags a possible security issue - enforces secrets-handling discipline (vault-first, least privilege, nothing leaks through logs or commits), applies core security principles from design through review, and classifies findings by real risk instead of reflex.
+argument-hint: 'Optional: the file, diff, or design to assess'
 ---
 
 # Security Principles

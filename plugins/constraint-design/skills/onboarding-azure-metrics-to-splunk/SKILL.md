@@ -1,6 +1,7 @@
 ---
 name: onboarding-azure-metrics-to-splunk
 description: Use when a team wants their Azure metrics or Log Analytics data flowing into SRE's Splunk/ITSI via the Azure Splunk Metric Service — granting Monitoring Reader or Log Analytics Reader to the service's managed identity, standing up the customer-side Terraform repo of role assignments, registering metric subscriptions or KQL queries in the portal, or debugging why Azure metrics never showed up in Splunk. Also use when someone asks "how do we get our Azure metrics into ITSI", mentions the metrics portal, HEC targets, metric subscriptions, or the metric service's managed identity.
+argument-hint: 'The Azure subscription or resource group and the metrics to onboard'
 ---
 
 # Onboarding a Team's Azure Metrics into Splunk

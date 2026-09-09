@@ -1,6 +1,7 @@
 ---
 name: codegraph-setup
 description: Use when CodeGraph code intelligence is needed but not installed or not wired to the current agent - installs the CLI, connects the MCP server (including the manual GitHub Copilot setup it lacks natively), indexes the project, and verifies the tools answer.
+argument-hint: 'Optional: the agent or surface to wire (Copilot CLI, VS Code, Claude Code)'
 ---
 
 # CodeGraph Setup

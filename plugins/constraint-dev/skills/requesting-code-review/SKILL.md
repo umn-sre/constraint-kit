@@ -1,95 +1,56 @@
 ---
 name: requesting-code-review
-description: Use when completing tasks, implementing major features, or before merging to verify work meets requirements
+description: Use when completing a task, finishing a major feature, or before merging - dispatches a reviewer subagent via runSubagent with a precisely scoped diff and requirements, and returns prioritized findings without polluting the coordinator's context.
+argument-hint: 'Optional: BASE..HEAD range and the plan task or spec to review against'
 ---
 
 # Requesting Code Review
 
-Dispatch a code reviewer subagent to catch issues before they cascade. The reviewer gets precisely crafted context for evaluation — never your session's history.
+Dispatch a reviewer subagent to catch issues before they cascade. It gets
+precisely crafted context — the diff, the requirements, nothing from your
+session history — and only findings come back.
 
-**Core principle:** Review early, review often.
+**Core principle:** review early, review often.
 
-## When to Request Review
+## When
 
-**Mandatory:**
-- After each task in subagent-driven development
-- After completing major feature
-- Before merge to main
+**Mandatory:** after each task in subagent-driven development; after a
+major feature; before merging to main.
 
-**Optional but valuable:**
-- When stuck (fresh perspective)
-- Before refactoring (baseline check)
-- After fixing complex bug
+**Valuable:** when stuck (fresh eyes); before a refactor (baseline); after
+a complex bug fix.
 
-## How to Request
+## How
 
-**1. Get git SHAs:**
-```bash
-BASE_SHA=$(git rev-parse HEAD~1)  # or origin/main
-HEAD_SHA=$(git rev-parse HEAD)
-```
+1. **Fix the range.** BASE is the commit the work started from — a
+   recorded per-task base, or `git merge-base main HEAD` for a branch.
+   Never `HEAD~1`: it silently drops all but the last commit.
+2. **Package the diff as a file.** Run the subagent-driven-development
+   skill's `scripts/review-package PLAN_FILE BASE HEAD` (or redirect
+   `git log --oneline`, `git diff --stat`, and `git diff -U10` for the
+   range into one file). The diff never enters your context; the reviewer
+   reads it in one call.
+3. **Dispatch** the `reviewer` agent through `runSubagent` with
+   [code-reviewer.md](code-reviewer.md). Fill the placeholders: what was
+   built, the requirements (plan task path, brief, or spec text), BASE and
+   HEAD, and the diff file path. State a preferred model: GPT-5.6 Luna or
+   MAI-Code-1-Flash for a task-sized diff; the most capable model within
+   the session's cost tier for a whole-branch or pre-merge review.
+4. **Act on findings.** Critical: fix now. Important: fix before
+   proceeding. Minor: note for later. Reviewer wrong: push back with
+   technical reasoning and the code or test that proves it.
 
-**2. Dispatch code reviewer subagent:**
+The subagent is stateless: it cannot ask you for more context, and you
+cannot send it a follow-up. Put everything it needs in the dispatch; for a
+second look after fixes, dispatch again with the fix range.
 
-Dispatch a `general-purpose` subagent, filling the template at [code-reviewer.md](code-reviewer.md)
-
-**Placeholders:**
-- `{DESCRIPTION}` - Brief summary of what you built
-- `{PLAN_OR_REQUIREMENTS}` - What it should do
-- `{BASE_SHA}` - Starting commit
-- `{HEAD_SHA}` - Ending commit
-
-**3. Act on feedback:**
-- Fix Critical issues immediately
-- Fix Important issues before proceeding
-- Note Minor issues for later
-- Push back if reviewer is wrong (with reasoning)
-
-## Example
-
-```
-[Just completed Task 2: Add verification function]
-
-You: Let me request code review before proceeding.
-
-BASE_SHA=$(git log --oneline | grep "Task 1" | head -1 | awk '{print $1}')
-HEAD_SHA=$(git rev-parse HEAD)
-
-[Dispatch code reviewer subagent]
-  DESCRIPTION: Added verifyIndex() and repairIndex() with 4 issue types
-  PLAN_OR_REQUIREMENTS: Task 2 from docs/constraint-kit/plans/deployment-plan.md
-  BASE_SHA: a7981ec
-  HEAD_SHA: 3df7661
-
-[Subagent returns]:
-  Strengths: Clean architecture, real tests
-  Issues:
-    Important: Missing progress indicators
-    Minor: Magic number (100) for reporting interval
-  Assessment: Ready to proceed
-
-You: [Fix progress indicators]
-[Continue to Task 3]
-```
-
-## Common Rationalizations
+## Rationalizations
 
 | Excuse | Reality |
-|--------|---------|
-| "I'll just review the diff myself instead of dispatching a reviewer" | You're the coordinator — reviewing the diff inline burns the context window you need to keep driving the work. Dispatch a reviewer subagent: the diff and the evaluation live in its context, and only the findings come back to you. |
-| "The reviewer needs my whole session history to understand the change" | Hand it precisely crafted context, never your session's history. That keeps the reviewer on the work product, not your thought process. |
+|---|---|
+| "I'll review the diff myself" | Inline review burns the context you need to keep driving. The diff and the evaluation belong in the reviewer's context. |
+| "It needs my whole session history" | Hand it the diff and the requirements. Session history steers it toward your reasoning instead of the work product. |
+| "It's simple, skip review" | Simple diffs are where unreviewed regressions land. |
 
-## Red Flags
-
-**Never:**
-- Skip review because "it's simple"
-- Ignore Critical issues
-- Proceed with unfixed Important issues
-- Argue with valid technical feedback
-
-**If reviewer wrong:**
-- Push back with technical reasoning
-- Show code/tests that prove it works
-- Request clarification
-
-See template at: [code-reviewer.md](code-reviewer.md)
+**Never** ignore a Critical finding, proceed with an unfixed Important
+finding, or argue with valid technical feedback.

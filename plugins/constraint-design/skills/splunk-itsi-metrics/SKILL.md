@@ -1,6 +1,7 @@
 ---
 name: splunk-itsi-metrics
 description: Instrument a UMN service so its metrics land in SRE's Splunk Cloud / ITSI instance — pick what to measure, name metrics and dimensions to SRE's standards, write the HEC emitter code, and verify ingestion. Use this skill whenever work touches Splunk, ITSI, HEC, metric naming, service KPIs, or "how do we monitor this" for a UMN/SRE project, even when the user doesn't say "ITSI" — including reviewing existing metric names for standards compliance, adding telemetry to a new service, wiring metrics out of Azure/OCI/Databricks jobs, or onboarding a service team into ITSI. Also use it when someone asks to add monitoring, observability, or dashboards to a project that SRE supports.
+argument-hint: 'The service and what it should measure'
 ---
 
 # Sending Service Metrics to SRE's Splunk ITSI
