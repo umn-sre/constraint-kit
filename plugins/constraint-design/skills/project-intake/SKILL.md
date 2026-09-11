@@ -34,6 +34,15 @@ plus one generated file in `.github/`:
 
 ## Process
 
+### 0. Check for a legacy constraint-kit layout
+
+Before exploring, check whether this repo still has legacy-layout
+markers: `.constraint-kit/PROJECT.md`, `.constraint-kit/GLOSSARY.md`,
+or any `.constraint-kit/agent*.yaml`. If any are present, offer to run
+the `upgrading-constraint-kit-layout` skill first. If the user accepts,
+run it to completion, then continue below. If they decline, continue
+below as normal — this is an offer, not a gate.
+
 ### 1. Explore before asking
 
 Look up every *fact* you can from the environment first — languages,
