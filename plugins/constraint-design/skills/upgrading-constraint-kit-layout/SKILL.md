@@ -107,12 +107,20 @@ only in the final summary.
 
 Once every ambiguous item has a resolution:
 
-- If the target repo is a git repository, move every file with `git mv`
-  (source, then destination), creating any needed `docs/` or
-  `docs/constraint-kit/` subdirectories first.
-- If it is not a git repository, use a plain filesystem move instead.
+- Check each file's tracked status individually
+  (`git ls-files --error-unmatch <path>`), not just whether the repo
+  overall is a git repository — a git repo can still have untracked
+  legacy-layout files (e.g. `.constraint-kit/` is gitignored, or the
+  files were simply never committed). Use `git mv`/`git rm` only for
+  paths git already tracks; fall back to a plain filesystem move/delete
+  for everything else, even inside an otherwise-git repo.
+- Create any needed `docs/` or `docs/constraint-kit/` subdirectories
+  first.
 - Execute unambiguous moves from step 2 and the now-resolved items from
   step 3 together, in one batch.
+- After a plain filesystem move or delete that touches a git-tracked
+  destination path, stage the result (`git add`) so the change is
+  reflected in the repo's index like everything else in the batch.
 
 ### 5. Report the final summary
 
@@ -122,7 +130,7 @@ One report, covering four buckets:
    (unambiguous and resolved-ambiguous together).
 2. **Left in place** — e.g. an `agent*.yaml` the user chose to keep, or
    a stray item the user chose to leave.
-2. **Deleted** — `agent*.yaml` or stray items the user chose to delete,
+3. **Deleted** — `agent*.yaml` or stray items the user chose to delete,
    plus the losing side of any resolved destination conflict.
 4. **Needs manual attention** — e.g. a destination conflict the user
    deferred to merge manually later.
@@ -139,3 +147,5 @@ One report, covering four buckets:
 - Moving or deleting `.constraint-kit/sdd/` or
   `.github/copilot-instructions.md`
 - Special-casing a specific stray filename instead of asking generically
+- Assuming `git mv`/`git rm` will work on every path just because the
+  repo is a git repository — check each file's tracked status
