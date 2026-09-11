@@ -37,7 +37,8 @@ Never touched: `.constraint-kit/sdd/`, `.github/copilot-instructions.md`.
 | `.constraint-kit/specs/` | `docs/constraint-kit/specs/` | Unambiguous, unless a destination conflict exists |
 | `.constraint-kit/adr/` | `docs/constraint-kit/adr/` | Unambiguous, unless a destination conflict exists |
 | `.constraint-kit/agent.yaml`, `agent-base.yaml`, `agent-supervisor.yaml`, `agent-implementer.yaml` | none | Always ask (delete or leave) |
-| root `SESSION_PLAN.md`, `ARCHAEOLOGY_NOTES.md` (or similarly named variants) | `docs/PROJECT.md` / `docs/ARCHAEOLOGY.md` | Always a destination conflict |
+| root `SESSION_PLAN.md` (or similarly named variant) | `docs/PROJECT.md` | Always a destination conflict |
+| root `ARCHAEOLOGY_NOTES.md` (or similarly named variant) | `docs/ARCHAEOLOGY.md` | Always a destination conflict |
 
 Never in scope for movement: `.constraint-kit/sdd/` (leave exactly where
 it is), `.github/copilot-instructions.md` (untouched).
@@ -51,10 +52,13 @@ that looks migration-adjacent, and does not match a row above, is a
 ### 1. Check for a clean working tree
 
 Before anything else, check whether the target repo has uncommitted
-changes (`git status --porcelain`, or the non-git equivalent judgment
-if there's no `.git`). If the tree is dirty, stop immediately — no
-scanning, no moves — and tell the user to commit or stash first. Do not
-proceed until it reports clean.
+changes. If `.git` is present, use `git status --porcelain`. If there is
+no `.git` directory, there is no reliable programmatic dirty-check
+available — ask the user directly whether the repo has uncommitted or
+in-progress changes, and treat a "yes" the same as a dirty git tree. If
+the tree is dirty, stop immediately — no scanning, no moves — and tell
+the user to commit or stash first (or, for non-git, to save/back up
+in-progress work first). Do not proceed until it reports clean.
 
 ### 2. Scan and classify
 
@@ -87,7 +91,12 @@ only in the final summary.
   summary) and ask which one wins, or whether they'd rather merge
   manually outside this skill (in which case: leave both files in place
   and record it under "needs manual attention" in the final summary).
-  Never auto-merge content.
+  Never auto-merge content. Once a winner is chosen: move the winning
+  file into place (creating the destination if needed), then delete the
+  losing side — the losing legacy/root file if the conflict was two
+  sources targeting the same destination, or the pre-existing
+  destination content if the conflict was destination-already-has-content
+  — and record the deletion in the final summary's "Deleted" bucket.
 - **`agent*.yaml`:** ask, per file, whether to delete or leave in place.
   Never infer or default this, even if every other item in the repo was
   an unambiguous move.
@@ -113,7 +122,8 @@ One report, covering four buckets:
    (unambiguous and resolved-ambiguous together).
 2. **Left in place** — e.g. an `agent*.yaml` the user chose to keep, or
    a stray item the user chose to leave.
-3. **Deleted** — `agent*.yaml` or stray items the user chose to delete.
+2. **Deleted** — `agent*.yaml` or stray items the user chose to delete,
+   plus the losing side of any resolved destination conflict.
 4. **Needs manual attention** — e.g. a destination conflict the user
    deferred to merge manually later.
 
