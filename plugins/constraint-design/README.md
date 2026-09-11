@@ -39,8 +39,9 @@ Service.
 - **planner** — routes intake (`project-intake` for new projects,
   `project-archaeology` for existing codebases) and drives the design
   stages; writes only to `docs/`, `docs/constraint-kit/`, and
-  `.github/copilot-instructions.md`, never source code. Uses CodeGraph
-  for structural code questions.
+    `.github/copilot-instructions.md`, plus the git-ignored active discipline
+    ledger and its exact `.gitignore` rule; never source code. Uses CodeGraph
+    for structural code questions.
 
 ## Credits
 

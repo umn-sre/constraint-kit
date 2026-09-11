@@ -19,6 +19,12 @@ next permitted action, next human gate, parked detours, named exceptions,
 and recovery rulings. Authority stays in `docs/PROJECT.md` and approved
 design, specification, and plan artifacts.
 
+Before creating the ledger, run
+`git check-ignore -q .constraint-kit/discipline.md`. If it is not ignored,
+append the exact root rule `/.constraint-kit/discipline.md` to `.gitignore`
+without changing existing entries, then rerun the check. If the ignore rule
+cannot be established, fail closed and do not create the ledger.
+
 Create or update the file with this shape:
 
 ```markdown
@@ -131,3 +137,4 @@ artifacts.
 - Continuing edits while drift is under investigation
 - Treating existing code as evidence that it was approved
 - Silently replacing or deleting active state
+- Creating active state before confirming its ignore rule
