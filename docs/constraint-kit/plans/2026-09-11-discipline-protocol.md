@@ -116,7 +116,7 @@ full prose.
 - Produces: one action classification, gate decision, resulting state, and
   the canonical active-ledger schema used by every later adapter.
 
-- [ ] **Step 1: Add the failing canonical-contract check**
+- [x] **Step 1: Add the failing canonical-contract check**
 
 Add these constants and helper near the top of `scripts/validate.py`:
 
@@ -175,13 +175,13 @@ def check_discipline_protocol() -> None:
 Call `check_discipline_protocol()` in `main()` after
 `check_marketplace()`.
 
-- [ ] **Step 2: Run the validator to verify RED**
+- [x] **Step 2: Run the validator to verify RED**
 
 Run: `python3 scripts/validate.py`
 
 Expected: FAIL reports both missing discipline contract files.
 
-- [ ] **Step 3: Create the canonical skill**
+- [x] **Step 3: Create the canonical skill**
 
 Create `SKILL.md` with frontmatter that triggers whenever a
 constraint-kit workflow starts, resumes, crosses a phase, encounters a
@@ -245,7 +245,7 @@ above, a fail-closed rule for missing/malformed/contradictory state, a rule
 that a missing ledger does not prove inactivity when authoritative artifacts
 show unresolved work, and a relative link to `[Scenario matrix](SCENARIOS.md)`.
 
-- [ ] **Step 4: Create the scenario matrix**
+- [x] **Step 4: Create the scenario matrix**
 
 Create `SCENARIOS.md` with this exact table interface and one row for every
 required scenario identifier:
@@ -267,13 +267,13 @@ required scenario identifier:
 | explicit-close-reset | ACTIVE completed or abandoned work | Replace active state | Terminal transition | Record terminal state | Silent replacement | Close/reset approval | CLOSED or ABANDONED |
 ```
 
-- [ ] **Step 5: Run validation to verify GREEN**
+- [x] **Step 5: Run validation to verify GREEN**
 
 Run: `python3 scripts/validate.py`
 
 Expected: `OK — marketplace and plugin structure valid`
 
-- [ ] **Step 6: Commit the canonical contract**
+- [x] **Step 6: Commit the canonical contract**
 
 ```bash
 git add scripts/validate.py plugins/constraint-design/skills/discipline-protocol
@@ -294,7 +294,7 @@ git commit -m "feat: define persistent discipline protocol"
 - Produces: initialized or advanced active state with no duplicated
   transition logic.
 
-- [ ] **Step 1: Add failing design-adapter checks**
+- [x] **Step 1: Add failing design-adapter checks**
 
 Add this map and checker to `scripts/validate.py`, then call
 `check_discipline_adapters()` from `main()`:
@@ -315,14 +315,14 @@ def check_discipline_adapters() -> None:
         require_text(path, (required,))
 ```
 
-- [ ] **Step 2: Run the validator to verify RED**
+- [x] **Step 2: Run the validator to verify RED**
 
 Run: `python3 scripts/validate.py`
 
 Expected: FAIL names all three design-phase skills as missing the required
 protocol invocation.
 
-- [ ] **Step 3: Add the brainstorming adapter**
+- [x] **Step 3: Add the brainstorming adapter**
 
 Add a `## Discipline Protocol` section before the checklist:
 
@@ -337,7 +337,7 @@ validation expansion, or phase transition may bypass the protocol guard.
 Update the transition step so written-design approval advances the active
 state to the specification gate before invoking `writing-specs`.
 
-- [ ] **Step 4: Add the specification adapter**
+- [x] **Step 4: Add the specification adapter**
 
 Add after the writing-spec overview:
 
@@ -349,7 +349,7 @@ specification checkpoint and its plan-handoff gate. Never use the spec to
 retroactively approve a missing design gate.
 ```
 
-- [ ] **Step 5: Add the planning adapter**
+- [x] **Step 5: Add the planning adapter**
 
 Add after the writing-plan overview:
 
@@ -361,13 +361,13 @@ record the approved plan checkpoint, execution mode, first task, required
 validation, and next gate.
 ```
 
-- [ ] **Step 6: Run validation to verify GREEN**
+- [x] **Step 6: Run validation to verify GREEN**
 
 Run: `python3 scripts/validate.py`
 
 Expected: `OK — marketplace and plugin structure valid`
 
-- [ ] **Step 7: Commit design adapters**
+- [x] **Step 7: Commit design adapters**
 
 ```bash
 git add scripts/validate.py plugins/constraint-design/skills/brainstorming/SKILL.md plugins/constraint-design/skills/writing-specs/SKILL.md plugins/constraint-design/skills/writing-plans/SKILL.md
@@ -389,7 +389,7 @@ git commit -m "feat: preserve discipline across design phases"
 - Produces: guarded execution, deterministic testing-detour routing, and a
   session ledger tied to the active lifecycle checkpoint.
 
-- [ ] **Step 1: Extend the adapter check to development skills**
+- [x] **Step 1: Extend the adapter check to development skills**
 
 Add these entries to `DISCIPLINE_ADAPTERS`:
 
@@ -404,14 +404,14 @@ Add these entries to `DISCIPLINE_ADAPTERS`:
         "REQUIRED SUB-SKILL: Use `discipline-protocol` from the constraint-design plugin",
 ```
 
-- [ ] **Step 2: Run the validator to verify RED**
+- [x] **Step 2: Run the validator to verify RED**
 
 Run: `python3 scripts/validate.py`
 
 Expected: FAIL names all four development skills as missing the required
 cross-plugin invocation.
 
-- [ ] **Step 3: Guard inline plan execution**
+- [x] **Step 3: Guard inline plan execution**
 
 Add beside the existing session-ledger requirement:
 
@@ -423,7 +423,7 @@ task. Apply its pre-action guard before each task and its detour classifier
 to every finding that is not already represented by the task.
 ```
 
-- [ ] **Step 4: Guard subagent-driven execution**
+- [x] **Step 4: Guard subagent-driven execution**
 
 Add at the start of workspace setup:
 
@@ -439,7 +439,7 @@ Also require each task completion ledger entry to update the active task and
 next gate without copying attempts or review rounds into the discipline
 ledger.
 
-- [ ] **Step 5: Add the TDD detour classifier**
+- [x] **Step 5: Add the TDD detour classifier**
 
 Add before the RED-GREEN-REFACTOR procedure:
 
@@ -452,7 +452,7 @@ parked; and a behavior, architecture, constraint, or scope change returns
 to its human gate. “Small,” “nearby,” and “obvious” do not authorize work.
 ```
 
-- [ ] **Step 6: Bind the operational ledger to lifecycle state**
+- [x] **Step 6: Bind the operational ledger to lifecycle state**
 
 Add to session open and replace the current major-boundary-only drift check:
 
@@ -471,13 +471,13 @@ detected. During wrap-up, retain `ACTIVE` state with final closure as the
 next gate; record `CLOSED` or `ABANDONED` only after explicit human approval.
 ```
 
-- [ ] **Step 7: Run validation to verify GREEN**
+- [x] **Step 7: Run validation to verify GREEN**
 
 Run: `python3 scripts/validate.py`
 
 Expected: `OK — marketplace and plugin structure valid`
 
-- [ ] **Step 8: Commit development adapters**
+- [x] **Step 8: Commit development adapters**
 
 ```bash
 git add scripts/validate.py plugins/constraint-dev/skills/executing-plans/SKILL.md plugins/constraint-dev/skills/subagent-driven-development/SKILL.md plugins/constraint-dev/skills/test-driven-development/SKILL.md plugins/constraint-dev/skills/session-ledger/SKILL.md
@@ -503,7 +503,7 @@ git commit -m "feat: guard implementation against discipline drift"
 - Produces: an imperative generated instruction that persists enforcement
   across sessions, plus discoverable plugin metadata and workflow docs.
 
-- [ ] **Step 1: Add the failing persistence-hook check**
+- [x] **Step 1: Add the failing persistence-hook check**
 
 Add this entry to `DISCIPLINE_ADAPTERS`:
 
@@ -512,14 +512,14 @@ Add this entry to `DISCIPLINE_ADAPTERS`:
         "When `.constraint-kit/discipline.md` is ACTIVE or RECOVERY",
 ```
 
-- [ ] **Step 2: Run the validator to verify RED**
+- [x] **Step 2: Run the validator to verify RED**
 
 Run: `python3 scripts/validate.py`
 
 Expected: FAIL names `project-intake` as missing the persistent instruction
 hook.
 
-- [ ] **Step 3: Add the generated project instruction**
+- [x] **Step 3: Add the generated project instruction**
 
 Add this required line to the project-intake instruction-generation rules:
 
@@ -533,7 +533,7 @@ Add this required line to the project-intake instruction-generation rules:
 Because project archaeology explicitly follows project-intake's generation
 rules, do not duplicate the sentence there.
 
-- [ ] **Step 4: Document discovery and ownership**
+- [x] **Step 4: Document discovery and ownership**
 
 Update the design-plugin README skill table with a `discipline-protocol` row
 whose stage is `Cross-lifecycle` and whose output is
@@ -554,13 +554,13 @@ architecture design's skill map and artifact table. Add an `Unreleased`
 changelog entry describing the canonical protocol, phase adapters, scenario
 contract, and persistent instruction hook.
 
-- [ ] **Step 5: Run complete protocol and structure validation**
+- [x] **Step 5: Run complete protocol and structure validation**
 
 Run: `python3 scripts/validate.py`
 
 Expected: `OK — marketplace and plugin structure valid`
 
-- [ ] **Step 6: Review the complete diff against the specification**
+- [x] **Step 6: Review the complete diff against the specification**
 
 Run:
 
@@ -573,7 +573,7 @@ Expected: `git diff --check` prints nothing; the stat contains only the
 files named by this plan plus the approved design, specification, glossary,
 and plan artifacts.
 
-- [ ] **Step 7: Commit persistence and documentation**
+- [x] **Step 7: Commit persistence and documentation**
 
 ```bash
 git add scripts/validate.py plugins/constraint-design plugins/constraint-dev .claude-plugin/marketplace.json README.md docs/DESIGN.md CHANGELOG.md docs/GLOSSARY.md docs/constraint-kit
@@ -582,11 +582,21 @@ git commit -m "docs: integrate discipline protocol workflow"
 
 ## Final Verification
 
-- [ ] Run `python3 scripts/validate.py` and require exit code 0.
-- [ ] Run `git diff --check` and require no output.
-- [ ] Confirm `git status --short --branch` shows
+- [x] Run `python3 scripts/validate.py` and require exit code 0.
+- [x] Run `git diff --check` and require no output.
+- [x] Confirm `git status --short --branch` shows
   `feature/discipline-protocol` and no uncommitted files.
-- [ ] Review all twelve scenario rows against each relevant adapter and
+- [x] Review all twelve scenario rows against each relevant adapter and
   confirm no adapter authorizes a forbidden action.
 - [ ] Use the `finishing-a-development-branch` skill from the constraint-dev
   plugin to choose merge, pull request, retention, or discard.
+
+## Execution Record
+
+- Implemented in commits `a9baa76`, `1bee1f6`, `b991d43`, and `2fff137`.
+- Independent review found planner authorization, ignore initialization,
+  scenario recovery outcomes, and structural scenario validation gaps.
+- Corrected and re-reviewed in `5681262`; no Critical or Important findings
+  remain.
+- Parked Minor: validate the Markdown delimiter row in addition to the table
+  header and data rows if future table parsing becomes more general.
