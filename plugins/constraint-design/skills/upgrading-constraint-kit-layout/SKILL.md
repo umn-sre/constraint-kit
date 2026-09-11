@@ -104,3 +104,28 @@ Once every ambiguous item has a resolution:
 - If it is not a git repository, use a plain filesystem move instead.
 - Execute unambiguous moves from step 2 and the now-resolved items from
   step 3 together, in one batch.
+
+### 5. Report the final summary
+
+One report, covering four buckets:
+
+1. **Moved** — source → destination, for every file actually moved
+   (unambiguous and resolved-ambiguous together).
+2. **Left in place** — e.g. an `agent*.yaml` the user chose to keep, or
+   a stray item the user chose to leave.
+3. **Deleted** — `agent*.yaml` or stray items the user chose to delete.
+4. **Needs manual attention** — e.g. a destination conflict the user
+   deferred to merge manually later.
+
+## Red flags
+
+- Moving or deleting anything before confirming the working tree is
+  clean
+- Batching ambiguous items into an upfront plan the user approves once,
+  instead of resolving each as it's found
+- Narrating or asking about an unambiguous move
+- Inferring or defaulting an `agent*.yaml` disposition instead of asking
+- Auto-merging two sides of a destination conflict
+- Moving or deleting `.constraint-kit/sdd/` or
+  `.github/copilot-instructions.md`
+- Special-casing a specific stray filename instead of asking generically
