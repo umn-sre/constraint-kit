@@ -9,14 +9,15 @@
 
 ## Problem Statement
 
-Several repos (`runbooks2`, `runbooks`, `itsi-service-observability`,
-`zabbix-scanner`, and others outside this workspace) adopted
-constraint-kit under an older on-disk convention:
-`.constraint-kit/PROJECT.md`, `.constraint-kit/GLOSSARY.md`,
+Repos that adopted constraint-kit early on used an older on-disk
+convention: `.constraint-kit/PROJECT.md`, `.constraint-kit/GLOSSARY.md`,
 `.constraint-kit/ARCHAEOLOGY.md`, `.constraint-kit/plans/`,
 `.constraint-kit/specs/`, `.constraint-kit/adr/`,
 `.constraint-kit/agent*.yaml`, and root-level files like
-`SESSION_PLAN.md` / `ARCHAEOLOGY_NOTES.md`.
+`SESSION_PLAN.md` / `ARCHAEOLOGY_NOTES.md`. This isn't specific to any
+one maintainer's repos — anyone who adopted constraint-kit before the
+layout changed, across any team or workspace, is on this legacy layout
+until they migrate.
 
 The current convention has moved these files to `docs/PROJECT.md`,
 `docs/GLOSSARY.md`, `docs/ARCHAEOLOGY.md`, and
@@ -246,14 +247,15 @@ this repo:
   `.claude-plugin/marketplace.json` for whether skills are
   individually listed or auto-discovered).
 - Dry-run review: read through the new skill's process section against
-  each of the four legacy repos named in the Problem Statement
+  a handful of real legacy repos available to the author for validation
   (`runbooks2`, `runbooks`, `itsi-service-observability`,
-  `zabbix-scanner`) and confirm the described classification (unambiguous
-  / agent*.yaml / stray) would produce a sensible outcome for each one's
-  actual current contents, without executing any moves — this is a
-  documentation/design skill, so "testing" here means confirming the
-  written procedure holds up against real target repos, not running
-  automated assertions.
+  `zabbix-scanner` — used here only as validation fixtures, not as the
+  feature's intended scope) and confirm the described classification
+  (unambiguous / agent*.yaml / stray) would produce a sensible outcome
+  for each one's actual current contents, without executing any moves —
+  this is a documentation/design skill, so "testing" here means
+  confirming the written procedure holds up against real target repos,
+  not running automated assertions.
 
 ## Out of Scope
 
