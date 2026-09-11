@@ -588,7 +588,7 @@ git commit -m "docs: integrate discipline protocol workflow"
   `feature/discipline-protocol` and no uncommitted files.
 - [x] Review all twelve scenario rows against each relevant adapter and
   confirm no adapter authorizes a forbidden action.
-- [ ] Use the `finishing-a-development-branch` skill from the constraint-dev
+- [x] Use the `finishing-a-development-branch` skill from the constraint-dev
   plugin to choose merge, pull request, retention, or discard.
 
 ## Execution Record
@@ -600,3 +600,4 @@ git commit -m "docs: integrate discipline protocol workflow"
   remain.
 - Parked Minor: validate the Markdown delimiter row in addition to the table
   header and data rows if future table parsing becomes more general.
+- Opened pull request: https://github.com/umn-sre/constraint-kit/pull/10
