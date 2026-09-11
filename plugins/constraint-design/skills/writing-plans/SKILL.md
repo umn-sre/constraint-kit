@@ -17,6 +17,12 @@ Assume they are a skilled developer, but know almost nothing about our
 toolset or problem domain. Assume they don't know good test design very
 well.
 
+**REQUIRED SUB-SKILL: Use `discipline-protocol`.** Resume the active state
+and verify that it references an approved specification before writing the
+plan. After the plan is saved and the user chooses an execution mode, record
+the approved plan checkpoint, execution mode, first task, required
+validation, and next gate.
+
 **Announce at start:** "I'm using the writing-plans skill to create the
 implementation plan."
 

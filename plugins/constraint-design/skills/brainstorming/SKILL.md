@@ -15,6 +15,15 @@ design and the user has approved it. This applies to EVERY project
 regardless of perceived simplicity.
 </HARD-GATE>
 
+## Discipline Protocol
+
+**REQUIRED SUB-SKILL: Use `discipline-protocol`.** At workflow start,
+create or resume its active state before producing an actionable artifact.
+Record the topic as allowed exploratory scope and the approved design as the
+first approved checkpoint. Exploration may remain conversational, but no
+edit, validation expansion, or phase transition may bypass the protocol
+guard.
+
 ## Anti-Pattern: "This Is Too Simple To Need A Design"
 
 Every project goes through this process. A todo list, a single-function
@@ -77,7 +86,7 @@ While grilling, actively maintain the project's language (in
 - **Update the glossary inline** the moment a term is resolved — don't
   batch. The glossary holds language only, never implementation details.
 - **Offer decision records.** Write
-  `docs/constraint-kit/adr/NNNN-<slug>.md` Record context, decision, 
+  `docs/constraint-kit/adr/NNNN-<slug>.md` Record context, decision,
   and consequences in a page or less.
 
 ## Exploring approaches
@@ -122,6 +131,8 @@ Fix issues inline, then ask the user to review the file:
 
 **Transition when approved:**
 
+- Advance the discipline protocol to the specification gate and record the
+  approved design as its checkpoint.
 - Fully-understood change → invoke
   `writing-specs` to synthesize a full spec, then `writing-plans`.
 

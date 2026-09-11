@@ -11,6 +11,12 @@ user — the interviewing happened during `brainstorming`. Just synthesize
 what you already know. If you find yourself with major open questions, you
 skipped brainstorming; go back to it.
 
+**REQUIRED SUB-SKILL: Use `discipline-protocol`.** Resume the active state
+and verify that it references an approved design before writing the spec.
+After the user confirms the testing seams and the spec is saved, record the
+specification checkpoint and its plan-handoff gate. Never use the spec to
+retroactively approve a missing design gate.
+
 **Save specs to:** `docs/constraint-kit/specs/YYYY-MM-DD-<topic>-spec.md`
 
 ## Process

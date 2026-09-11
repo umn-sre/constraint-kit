@@ -49,6 +49,15 @@ REQUIRED_SCENARIOS = (
     "explicit-close-reset",
 )
 
+DISCIPLINE_ADAPTERS = {
+    ROOT / "plugins/constraint-design/skills/brainstorming/SKILL.md":
+        "REQUIRED SUB-SKILL: Use `discipline-protocol`",
+    ROOT / "plugins/constraint-design/skills/writing-specs/SKILL.md":
+        "REQUIRED SUB-SKILL: Use `discipline-protocol`",
+    ROOT / "plugins/constraint-design/skills/writing-plans/SKILL.md":
+        "REQUIRED SUB-SKILL: Use `discipline-protocol`",
+}
+
 
 def err(msg: str) -> None:
     ERRORS.append(msg)
@@ -67,6 +76,11 @@ def require_text(path: Path, required: tuple[str, ...]) -> None:
 def check_discipline_protocol() -> None:
     require_text(DISCIPLINE_SKILL, REQUIRED_DISCIPLINE_HEADINGS)
     require_text(DISCIPLINE_SCENARIOS, REQUIRED_SCENARIOS)
+
+
+def check_discipline_adapters() -> None:
+    for path, required in DISCIPLINE_ADAPTERS.items():
+        require_text(path, (required,))
 
 
 def parse_frontmatter(path: Path) -> dict[str, str]:
@@ -183,6 +197,7 @@ def check_marketplace() -> None:
 def main() -> int:
     check_marketplace()
     check_discipline_protocol()
+    check_discipline_adapters()
     for plugin_dir in sorted(p for p in (ROOT / "plugins").iterdir() if p.is_dir()):
         check_plugin(plugin_dir)
     if ERRORS:
