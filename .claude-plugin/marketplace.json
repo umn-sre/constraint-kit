@@ -10,7 +10,7 @@
   "plugins": [
     {
       "name": "constraint-design",
-      "description": "Plan-before-code bundle: project intake for new projects, CodeGraph-assisted project archaeology for existing codebases, relentless brainstorming, spec writing, and deep-module implementation planning.",
+      "description": "Plan-before-code bundle with a persistent cross-lifecycle discipline protocol, project intake, CodeGraph-assisted archaeology, brainstorming, spec writing, and deep-module implementation planning.",
       "version": "2.0.0",
       "author": {
         "name": "constraint-kit contributors"
@@ -23,13 +23,14 @@
         "spec",
         "copilot-instructions",
         "codegraph",
-        "legacy-code"
+        "legacy-code",
+        "discipline"
       ],
       "source": "./plugins/constraint-design"
     },
     {
       "name": "constraint-dev",
-      "description": "Disciplined implementation bundle: strict TDD, subagent-driven plan execution with per-task reviews, session ledger, and code review discipline.",
+      "description": "Disciplined implementation bundle with persistent protocol enforcement, strict TDD, reviewed plan execution, session tracking, and code review discipline.",
       "version": "2.0.0",
       "author": {
         "name": "constraint-kit contributors"
@@ -40,7 +41,8 @@
         "code-review",
         "subagents",
         "plan-execution",
-        "security"
+        "security",
+        "discipline"
       ],
       "source": "./plugins/constraint-dev"
     },

@@ -14,6 +14,13 @@ it tests the right thing.
 
 **Violating the letter of the rules is violating the spirit of the rules.**
 
+**REQUIRED SUB-SKILL: Use `discipline-protocol` from the constraint-design plugin.**
+Classify every test result before editing: expected RED continues the cycle;
+a current-work regression is repaired in-task; a necessary same-outcome
+blocker becomes a bounded micro-task; an unrelated finding is parked; and a
+behavior, architecture, constraint, or scope change returns to its human
+gate. “Small,” “nearby,” and “obvious” do not authorize work.
+
 When exploring the codebase, read `docs/GLOSSARY.md` (if it
 exists) so test names and interface vocabulary match the project's domain
 language, and respect decision records in `docs/constraint-kit/adr/` for the

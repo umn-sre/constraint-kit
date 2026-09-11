@@ -6,9 +6,10 @@ Copilot** (CLI, VS Code, coding agent) and **Claude Code**.
 AI assistants drift: rules given at the start of a session are forgotten
 by the middle. constraint-kit keeps the rules on disk instead — skills
 write project context into `docs/`, planning artifacts into
-`docs/constraint-kit/`, SDD scratch into `.constraint-kit/sdd/`, and
-generate `.github/copilot-instructions.md`, so every session starts from
-the same constraints without any bootstrap step.
+`docs/constraint-kit/`, active workflow state into
+`.constraint-kit/discipline.md`, SDD scratch into `.constraint-kit/sdd/`,
+and generate `.github/copilot-instructions.md`, so every session starts
+from the same constraints without any bootstrap step.
 
 This repo is a **plugin marketplace**: two plugins that mirror the two
 halves of disciplined development, plus an org-specific compliance
@@ -16,8 +17,8 @@ plugin:
 
 | Plugin | What it enforces |
 |---|---|
-| [`constraint-design`](plugins/constraint-design/) | Plan before code: project intake (new projects) or project archaeology (existing codebases), relentless brainstorming, specs, deep-module implementation plans |
-| [`constraint-dev`](plugins/constraint-dev/) | Implement with discipline: strict TDD, subagent-driven execution with per-task reviews, session ledger (verified edits, loop halts, lessons logged), security principles, code review rigor, clean branch finishing |
+| [`constraint-design`](plugins/constraint-design/) | Plan before code: intake or archaeology, persistent discipline protocol, brainstorming, specs, and deep-module plans |
+| [`constraint-dev`](plugins/constraint-dev/) | Implement under the active protocol: strict TDD, reviewed execution, session ledger, security principles, and branch finishing |
 | [`umn-compliance`](plugins/umn-compliance/) | UMN-only: security compliance analysis and annual reviews against the 16 UMN Information Security Policy Standards. Install only for University of Minnesota projects |
 
 **New to constraint-kit?** [docs/GETTING-STARTED.md](docs/GETTING-STARTED.md)
@@ -80,6 +81,7 @@ project-intake ────────┐
   (new project)        ├──> brainstorming ──> writing-specs ──> writing-plans
 project-archaeology ───┘   (planner agent, constraint-design plugin)
   (existing code, CodeGraph-assisted)                       │
+                  discipline-protocol spans every phase     │
                                           ┌─────────────────┴───────────────┐
                                           v                                 v
                             subagent-driven-development             executing-plans
@@ -120,6 +122,7 @@ docs/
   └── plans/              # implementation plans
 
 .constraint-kit/sdd/        # execution scratch (git-ignore this one)
+.constraint-kit/discipline.md # active checkpoint and next permitted action (git-ignore)
 ```
 
 ## CodeGraph integration

@@ -11,6 +11,14 @@ Execute plan by dispatching a fresh implementer subagent per task, a task review
 
 **Core principle:** Fresh subagent per task + task review (spec + quality) + broad final review = high quality, fast iteration
 
+**REQUIRED SUB-SKILL: Use `discipline-protocol` from the constraint-design plugin.**
+Verify the approved plan checkpoint before the first dispatch. Every task
+brief carries the checkpoint, allowed scope, required validation, and named
+exceptions. Classify findings before dispatching fixes; park unrelated
+findings and return scope-changing findings to the human gate. When a task
+completes, update the active task and next gate without copying attempts or
+review rounds into the discipline ledger.
+
 **Narration:** between tool calls, narrate at most one short line — the
 ledger and the tool results carry the record.
 

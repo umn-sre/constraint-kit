@@ -15,6 +15,12 @@ Load plan, review critically, execute all tasks, report when complete.
 
 Apply the session-ledger skill throughout: ledger first, verify every edit applied, halt loops, and wrap up with a session entry in `docs/PROJECT.md`.
 
+**REQUIRED SUB-SKILL: Use `discipline-protocol` from the constraint-design plugin.**
+Before task execution, verify that active state references this approved
+plan, selected inline execution, and names the first permitted task. Apply
+its pre-action guard before each task and its detour classifier to every
+finding that is not already represented by the task.
+
 ## The Process
 
 ### Step 1: Load and Review Plan

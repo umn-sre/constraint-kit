@@ -43,6 +43,7 @@ constraint-kit/
 │   │       ├── project-intake/       # NEW: pre-planning for new projects; writes docs/ + copilot-instructions
 │   │       ├── project-archaeology/  # pre-planning for existing codebases; old skill modernized, CodeGraph-assisted
 │   │       ├── codegraph-setup/      # NEW: installs/wires CodeGraph (incl. manual Copilot MCP setup)
+│   │       ├── discipline-protocol/  # persistent lifecycle state, action guard, detour routing, recovery
 │   │       ├── brainstorming/        # obra brainstorming + mattpocock grilling/grill-with-docs + domain-model capture
 │   │       ├── writing-specs/        # mattpocock to-spec, retargeted to docs/constraint-kit/specs/
 │   │       └── writing-plans/        # obra writing-plans + mattpocock codebase-design (merged)
@@ -81,6 +82,7 @@ constraint-kit/
 | `project-intake` | new; concepts from old bootstrap templates + roles | Replaces the bootstrap renderer: interviews the user (grilling style), explores the repo, then writes `docs/PROJECT.md` and generates `.github/copilot-instructions.md`. For new/early-stage projects and constraint updates. |
 | `project-archaeology` | pre-2.0 constraint-kit `session-archaeology`, `project-intake` output conventions | Existing-codebase counterpart to intake. Keeps the old skill's gems — provenance modes (KNOWN/UNKNOWN), V/I/U confidence tags, five discovery passes, flaw taxonomy, open gaps — drops the dead session-preflight/SESSION_PLAN architecture, retargets output to `docs/ARCHAEOLOGY.md`, and ends by producing the same PROJECT.md/GLOSSARY.md/copilot-instructions as `project-intake` (steps 3–5, facts pre-filled). Discovery passes are CodeGraph-assisted. |
 | `codegraph-setup` | new; [colbymchenry/codegraph](https://github.com/colbymchenry/codegraph) docs + [PR #718](https://github.com/colbymchenry/codegraph/pull/718) | CodeGraph has no native Copilot support; this skill wraps CLI install, `codegraph install` for auto-configured agents, the manual Copilot MCP config (Copilot CLI `~/.copilot/mcp-config.json` with required `tools` key; VS Code `.vscode/mcp.json`), and per-project `codegraph init`. |
+| `discipline-protocol` | new; constraint-kit lifecycle contract | Persists the approved checkpoint and next permitted action across design, implementation, testing, recovery, and resumed sessions. Phase skills remain focused adapters; the protocol owns classification, hard gates, named exceptions, and selective drift recovery. |
 | `brainstorming` | obra `brainstorming`, mattpocock `grilling` + `grill-with-docs` + `domain-modeling` capture rules | All three are "interview the user until the design is solid." Merged: one-question-at-a-time grilling discipline + design presentation/approval + glossary/ADR capture as terms crystallise. |
 | `writing-specs` | mattpocock `to-spec` | Kept solo; issue-tracker publishing replaced by `docs/constraint-kit/specs/`. |
 | `writing-plans` | obra `writing-plans`, mattpocock `codebase-design` (+ `DEEPENING.md`, `DESIGN-IT-TWICE.md`) | Both govern "decide the shape of the code before writing it." The deep-module vocabulary becomes the File Structure / interface-design step of plan writing. |
@@ -101,6 +103,7 @@ project-intake ────────┐
   (new project)        ├──> brainstorming ──> writing-specs ──> writing-plans
 project-archaeology ───┘
   (existing code; uses codegraph-setup)                     │
+                      discipline-protocol spans this flow   │
                                           ┌─────────────────┴───────────────┐
                                           v                                 v
                             subagent-driven-development             executing-plans
@@ -129,6 +132,7 @@ Skills write planning and process artifacts into the **target project's**
 | `docs/constraint-kit/adr/NNNN-*.md` | brainstorming (decision records) |
 | `docs/constraint-kit/specs/YYYY-MM-DD-<topic>-spec.md` | writing-specs (and design docs from brainstorming) |
 | `docs/constraint-kit/plans/YYYY-MM-DD-<feature>.md` | writing-plans |
+| `.constraint-kit/discipline.md` | discipline-protocol (active lifecycle state; git-ignored) |
 | `.constraint-kit/sdd/<plan>/` | subagent-driven-development (git-ignored scratch) |
 
 `project-intake` additionally generates `.github/copilot-instructions.md`

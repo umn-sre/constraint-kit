@@ -14,9 +14,157 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 ERRORS: list[str] = []
 
+DISCIPLINE_SKILL = (
+    ROOT
+    / "plugins"
+    / "constraint-design"
+    / "skills"
+    / "discipline-protocol"
+    / "SKILL.md"
+)
+DISCIPLINE_SCENARIOS = DISCIPLINE_SKILL.with_name("SCENARIOS.md")
+PLANNER_AGENT = ROOT / "plugins" / "constraint-design" / "agents" / "planner.agent.md"
+
+SCENARIO_COLUMNS = (
+    "ID",
+    "Starting state",
+    "Proposed action",
+    "Classification",
+    "Allowed",
+    "Forbidden",
+    "Human gate",
+    "Resulting state",
+    "Recovery outcome",
+)
+
+VALID_CLASSIFICATIONS = {
+    "Approved in-scope work",
+    "Expected TDD RED",
+    "Current-work regression",
+    "Necessary same-outcome blocker",
+    "Unrelated finding",
+    "Behavior, architecture, constraint, or scope change",
+    "Constraint conflict",
+    "Unclassifiable action",
+}
+
+REQUIRED_DISCIPLINE_HEADINGS = (
+    "## Active State",
+    "## Pre-action Guard",
+    "## Action Classifications",
+    "## Human Gates",
+    "## Named Exceptions",
+    "## Drift Recovery",
+    "## Close, Abandon, or Reset",
+)
+
+REQUIRED_SCENARIOS = (
+    "design-to-spec",
+    "resumed-session",
+    "expected-red",
+    "current-work-regression",
+    "dry-run-blocker",
+    "unrelated-finding",
+    "scope-changing-finding",
+    "implicit-override",
+    "named-exception",
+    "post-edit-drift",
+    "invalid-ledger",
+    "explicit-close-reset",
+)
+
+DISCIPLINE_ADAPTERS = {
+    ROOT / "plugins/constraint-design/skills/brainstorming/SKILL.md":
+        "REQUIRED SUB-SKILL: Use `discipline-protocol`",
+    ROOT / "plugins/constraint-design/skills/writing-specs/SKILL.md":
+        "REQUIRED SUB-SKILL: Use `discipline-protocol`",
+    ROOT / "plugins/constraint-design/skills/writing-plans/SKILL.md":
+        "REQUIRED SUB-SKILL: Use `discipline-protocol`",
+    ROOT / "plugins/constraint-design/skills/project-intake/SKILL.md":
+        "When `.constraint-kit/discipline.md` is ACTIVE or RECOVERY",
+    ROOT / "plugins/constraint-dev/skills/executing-plans/SKILL.md":
+        "REQUIRED SUB-SKILL: Use `discipline-protocol` from the constraint-design plugin",
+    ROOT / "plugins/constraint-dev/skills/subagent-driven-development/SKILL.md":
+        "REQUIRED SUB-SKILL: Use `discipline-protocol` from the constraint-design plugin",
+    ROOT / "plugins/constraint-dev/skills/test-driven-development/SKILL.md":
+        "REQUIRED SUB-SKILL: Use `discipline-protocol` from the constraint-design plugin",
+    ROOT / "plugins/constraint-dev/skills/session-ledger/SKILL.md":
+        "REQUIRED SUB-SKILL: Use `discipline-protocol` from the constraint-design plugin",
+}
+
 
 def err(msg: str) -> None:
     ERRORS.append(msg)
+
+
+def require_text(path: Path, required: tuple[str, ...]) -> None:
+    if not path.is_file():
+        err(f"{path}: missing required discipline contract file")
+        return
+    text = path.read_text(encoding="utf-8")
+    for value in required:
+        if value not in text:
+            err(f"{path}: missing required discipline contract text: {value}")
+
+
+def markdown_table(path: Path) -> tuple[tuple[str, ...], list[tuple[str, ...]]]:
+    lines = path.read_text(encoding="utf-8").splitlines()
+    for index, line in enumerate(lines):
+        if not line.startswith("| ID |"):
+            continue
+        header = tuple(cell.strip() for cell in line.strip("|").split("|"))
+        rows: list[tuple[str, ...]] = []
+        for row_line in lines[index + 2:]:
+            if not row_line.startswith("|"):
+                break
+            rows.append(tuple(cell.strip() for cell in row_line.strip("|").split("|")))
+        return header, rows
+    return (), []
+
+
+def check_discipline_scenarios() -> None:
+    if not DISCIPLINE_SCENARIOS.is_file():
+        return
+    header, rows = markdown_table(DISCIPLINE_SCENARIOS)
+    if header != SCENARIO_COLUMNS:
+        err(f"{DISCIPLINE_SCENARIOS}: scenario columns must be {SCENARIO_COLUMNS}")
+        return
+
+    ids: list[str] = []
+    for row in rows:
+        if len(row) != len(SCENARIO_COLUMNS):
+            err(f"{DISCIPLINE_SCENARIOS}: malformed scenario row: {row}")
+            continue
+        if not all(row):
+            err(f"{DISCIPLINE_SCENARIOS}: scenario row has an empty field: {row[0]}")
+        ids.append(row[0])
+        if row[3] not in VALID_CLASSIFICATIONS:
+            err(f"{DISCIPLINE_SCENARIOS}: invalid classification for {row[0]}: {row[3]}")
+
+    if len(ids) != len(set(ids)):
+        err(f"{DISCIPLINE_SCENARIOS}: scenario IDs must be unique")
+    if set(ids) != set(REQUIRED_SCENARIOS):
+        err(f"{DISCIPLINE_SCENARIOS}: scenario rows must match required IDs")
+
+
+def check_discipline_protocol() -> None:
+    require_text(DISCIPLINE_SKILL, REQUIRED_DISCIPLINE_HEADINGS)
+    if not DISCIPLINE_SCENARIOS.is_file():
+        err(f"{DISCIPLINE_SCENARIOS}: missing required discipline contract file")
+    check_discipline_scenarios()
+    require_text(DISCIPLINE_SKILL, ("git check-ignore", "/.constraint-kit/discipline.md"))
+    require_text(PLANNER_AGENT, (".constraint-kit/discipline.md", ".gitignore"))
+
+
+def check_discipline_adapters() -> None:
+    for path, required in DISCIPLINE_ADAPTERS.items():
+        if not path.is_file():
+            err(f"{path}: missing required discipline adapter")
+            continue
+        text = path.read_text(encoding="utf-8")
+        body = re.sub(r"\A---\r?\n.*?\r?\n---\r?\n", "", text, count=1, flags=re.DOTALL)
+        if required not in body:
+            err(f"{path}: missing required discipline adapter text: {required}")
 
 
 def parse_frontmatter(path: Path) -> dict[str, str]:
@@ -132,6 +280,8 @@ def check_marketplace() -> None:
 
 def main() -> int:
     check_marketplace()
+    check_discipline_protocol()
+    check_discipline_adapters()
     for plugin_dir in sorted(p for p in (ROOT / "plugins").iterdir() if p.is_dir()):
         check_plugin(plugin_dir)
     if ERRORS:
