@@ -45,3 +45,32 @@ it is), `.github/copilot-instructions.md` (untouched).
 Anything else found in or near `.constraint-kit/`, or a root-level file
 that looks migration-adjacent, and does not match a row above, is a
 **stray item** — always ask (see Process step 3).
+
+## Process
+
+### 1. Check for a clean working tree
+
+Before anything else, check whether the target repo has uncommitted
+changes (`git status --porcelain`, or the non-git equivalent judgment
+if there's no `.git`). If the tree is dirty, stop immediately — no
+scanning, no moves — and tell the user to commit or stash first. Do not
+proceed until it reports clean.
+
+### 2. Scan and classify
+
+Walk `.constraint-kit/` (if present) and the repo root for anything
+matching the legacy-layout inventory above. Classify every item found
+into exactly one of:
+
+- **(a) Unambiguous move** — matches a legacy-layout row, and the
+  `docs/` destination does not already have conflicting content, and no
+  root-level variant also targets the same destination.
+- **(b) `agent*.yaml`** — any `.constraint-kit/agent*.yaml` file.
+- **(c) Stray item** — doesn't match any legacy-layout row.
+
+A destination conflict (which promotes an otherwise-(a) item into an
+interactive resolution) exists when either:
+- both a legacy source and a root-level variant point at the same
+  `docs/` destination (e.g. `.constraint-kit/ARCHAEOLOGY.md` and root
+  `ARCHAEOLOGY_NOTES.md` both target `docs/ARCHAEOLOGY.md`), or
+- the `docs/` destination already has content.
