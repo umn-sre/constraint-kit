@@ -4,6 +4,18 @@ All notable changes to constraint-kit are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 Versions follow [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+
+- Persistent `discipline-protocol` skill with an active checkpoint, pre-action
+  guard, testing-detour routing, named exceptions, selective drift recovery,
+  and explicit terminal states.
+- Consumer-observable scenario contract covering design handoff, resumed
+  sessions, TDD outcomes, dry-run findings, overrides, recovery, and reset.
+- Design and development phase adapters plus a generated project instruction
+  that keeps active discipline in force across session boundaries.
+
 ## [2.0.0] - 2026-08-04
 
 Complete restructure: constraint-kit is now a GitHub Copilot / Claude

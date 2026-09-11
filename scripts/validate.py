@@ -56,6 +56,8 @@ DISCIPLINE_ADAPTERS = {
         "REQUIRED SUB-SKILL: Use `discipline-protocol`",
     ROOT / "plugins/constraint-design/skills/writing-plans/SKILL.md":
         "REQUIRED SUB-SKILL: Use `discipline-protocol`",
+    ROOT / "plugins/constraint-design/skills/project-intake/SKILL.md":
+        "When `.constraint-kit/discipline.md` is ACTIVE or RECOVERY",
     ROOT / "plugins/constraint-dev/skills/executing-plans/SKILL.md":
         "REQUIRED SUB-SKILL: Use `discipline-protocol` from the constraint-design plugin",
     ROOT / "plugins/constraint-dev/skills/subagent-driven-development/SKILL.md":

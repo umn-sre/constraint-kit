@@ -124,6 +124,10 @@ generated file:
   artifacts (specs, plans, decision records) live in
   `docs/constraint-kit/`; read the relevant ones before starting work
   there."
+- Include this line so active discipline survives session boundaries:
+  "When `.constraint-kit/discipline.md` is ACTIVE or RECOVERY, read it and
+  every authoritative artifact it references before mutating files or
+  external state, broadening validation, or advancing workflow."
 - If the file already exists, merge — preserve user-authored sections and
   never silently delete rules you did not write.
 

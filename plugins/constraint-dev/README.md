@@ -3,7 +3,9 @@
 Disciplined implementation bundle for GitHub Copilot (CLI, VS Code,
 coding agent) and Claude Code. Executes plans written by the
 **constraint-design** plugin (`docs/constraint-kit/plans/`), but the skills
-stand alone too.
+stand alone too. During a constrained workflow, execution skills consume
+the `discipline-protocol` skill from constraint-design before actionable
+work.
 
 ## Skills
 
@@ -23,7 +25,9 @@ Flow: plan → `subagent-driven-development` (or `executing-plans`) → uses
 `receiving-code-review` per task → `finishing-a-development-branch`.
 `session-ledger` runs throughout every implementation session;
 `security-principles` activates whenever work touches credentials,
-auth, or sensitive data.
+auth, or sensitive data. The discipline ledger owns lifecycle state;
+`session-ledger` owns attempts, edit verification, review rounds, progress,
+and budget.
 
 Process artifacts (ledgers, briefs, review packages) live in the target
 repo's `.constraint-kit/sdd/<plan>/` — git-ignored scratch, recoverable

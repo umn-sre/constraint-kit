@@ -3,9 +3,10 @@
 Plan-before-code bundle for GitHub Copilot (CLI, VS Code, coding agent)
 and Claude Code.
 
-Everything this plugin produces lands in the target repo's `docs/` and
-`docs/constraint-kit/` folders, so constraints live on disk — not in
-conversation memory — and every future session can pick them up.
+Approved artifacts land in the target repo's `docs/` and
+`docs/constraint-kit/` folders. Active workflow state lives in the
+git-ignored `.constraint-kit/discipline.md`, so constraints survive phase
+and session boundaries instead of depending on conversation memory.
 
 ## Skills
 
@@ -14,6 +15,7 @@ conversation memory — and every future session can pick them up.
 | `project-intake` | Pre-planning (new/early-stage project) | `docs/PROJECT.md`, `docs/GLOSSARY.md`, generated `.github/copilot-instructions.md` |
 | `project-archaeology` | Pre-planning (existing codebase) | `docs/ARCHAEOLOGY.md` plus the same three files as `project-intake`, grounded in code evidence |
 | `codegraph-setup` | Tooling | CodeGraph installed, wired to the current agent surface (incl. manual Copilot MCP config), project indexed |
+| `discipline-protocol` | Cross-lifecycle | Active checkpoint, action guard, detour routing, exceptions, and recovery in `.constraint-kit/discipline.md` |
 | `brainstorming` | Design | Approved design doc in `docs/constraint-kit/specs/`, glossary + ADR updates |
 | `writing-specs` | Spec | PRD-style spec in `docs/constraint-kit/specs/` |
 | `writing-plans` | Plan | Bite-sized, test-first plan in `docs/constraint-kit/plans/` |
@@ -23,6 +25,8 @@ conversation memory — and every future session can pick them up.
 Flow: `project-intake` *or* `project-archaeology` (which uses
 `codegraph-setup`) → `brainstorming` → `writing-specs` →
 `writing-plans` → hand off to the **constraint-dev** plugin for execution.
+`discipline-protocol` spans that flow and remains active until explicit
+completion, abandonment, or reset.
 
 The two observability skills sit outside that flow and are used on
 demand. `splunk-itsi-metrics` covers a service emitting its *own* metrics;

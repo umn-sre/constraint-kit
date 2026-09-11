@@ -1,6 +1,6 @@
 {
   "name": "constraint-dev",
-  "description": "Disciplined implementation bundle: strict TDD, subagent-driven plan execution with per-task reviews, session ledger (verified edits, loop detection, lessons logged to PROJECT.md), code review request/reception discipline, and clean branch finishing.",
+  "description": "Disciplined implementation bundle: persistent protocol enforcement, strict TDD, reviewed plan execution, operational session ledger, code review discipline, and clean branch finishing.",
   "version": "2.0.0",
   "author": {
     "name": "constraint-kit contributors"
@@ -15,6 +15,7 @@
     "subagents",
     "plan-execution",
     "constraint-kit",
+    "discipline",
     "security"
   ],
   "skills": [
