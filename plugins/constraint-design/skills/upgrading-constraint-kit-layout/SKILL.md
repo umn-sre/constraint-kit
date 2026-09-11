@@ -74,3 +74,33 @@ interactive resolution) exists when either:
   `docs/` destination (e.g. `.constraint-kit/ARCHAEOLOGY.md` and root
   `ARCHAEOLOGY_NOTES.md` both target `docs/ARCHAEOLOGY.md`), or
 - the `docs/` destination already has content.
+
+### 3. Resolve ambiguity as encountered
+
+Resolve every (b), (c), and destination-conflict item one at a time, as
+it's found during the scan — not batched into an upfront plan the user
+approves once. Do not narrate or ask about class (a) items; they appear
+only in the final summary.
+
+- **Destination conflict:** show the user both sides (paths and a short
+  description of each, e.g. size/last-modified or a one-line content
+  summary) and ask which one wins, or whether they'd rather merge
+  manually outside this skill (in which case: leave both files in place
+  and record it under "needs manual attention" in the final summary).
+  Never auto-merge content.
+- **`agent*.yaml`:** ask, per file, whether to delete or leave in place.
+  Never infer or default this, even if every other item in the repo was
+  an unambiguous move.
+- **Stray item:** ask with a generic leave / move / delete choice. If
+  the user chooses move, ask where.
+
+### 4. Execute the batch
+
+Once every ambiguous item has a resolution:
+
+- If the target repo is a git repository, move every file with `git mv`
+  (source, then destination), creating any needed `docs/` or
+  `docs/constraint-kit/` subdirectories first.
+- If it is not a git repository, use a plain filesystem move instead.
+- Execute unambiguous moves from step 2 and the now-resolved items from
+  step 3 together, in one batch.
