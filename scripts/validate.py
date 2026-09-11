@@ -14,9 +14,59 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 ERRORS: list[str] = []
 
+DISCIPLINE_SKILL = (
+    ROOT
+    / "plugins"
+    / "constraint-design"
+    / "skills"
+    / "discipline-protocol"
+    / "SKILL.md"
+)
+DISCIPLINE_SCENARIOS = DISCIPLINE_SKILL.with_name("SCENARIOS.md")
+
+REQUIRED_DISCIPLINE_HEADINGS = (
+    "## Active State",
+    "## Pre-action Guard",
+    "## Action Classifications",
+    "## Human Gates",
+    "## Named Exceptions",
+    "## Drift Recovery",
+    "## Close, Abandon, or Reset",
+)
+
+REQUIRED_SCENARIOS = (
+    "design-to-spec",
+    "resumed-session",
+    "expected-red",
+    "current-work-regression",
+    "dry-run-blocker",
+    "unrelated-finding",
+    "scope-changing-finding",
+    "implicit-override",
+    "named-exception",
+    "post-edit-drift",
+    "invalid-ledger",
+    "explicit-close-reset",
+)
+
 
 def err(msg: str) -> None:
     ERRORS.append(msg)
+
+
+def require_text(path: Path, required: tuple[str, ...]) -> None:
+    if not path.is_file():
+        err(f"{path}: missing required discipline contract file")
+        return
+    text = path.read_text(encoding="utf-8")
+    for value in required:
+        if value not in text:
+            err(f"{path}: missing required discipline contract text: {value}")
+
+
+def check_discipline_protocol() -> None:
+    require_text(DISCIPLINE_SKILL, REQUIRED_DISCIPLINE_HEADINGS)
+    require_text(DISCIPLINE_SCENARIOS, REQUIRED_SCENARIOS)
 
 
 def parse_frontmatter(path: Path) -> dict[str, str]:
@@ -132,6 +182,7 @@ def check_marketplace() -> None:
 
 def main() -> int:
     check_marketplace()
+    check_discipline_protocol()
     for plugin_dir in sorted(p for p in (ROOT / "plugins").iterdir() if p.is_dir()):
         check_plugin(plugin_dir)
     if ERRORS:
