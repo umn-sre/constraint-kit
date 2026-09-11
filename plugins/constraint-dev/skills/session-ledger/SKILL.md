@@ -18,6 +18,12 @@ the `executing-plans` skill follow it directly. Under
 ledger; the verification, loop, budget, and wrap-up rules here still
 apply to every dispatched subagent and to the conductor.
 
+**REQUIRED SUB-SKILL: Use `discipline-protocol` from the constraint-design plugin.**
+Read `.constraint-kit/discipline.md` and its authority before initializing
+operational tracking. Record the approved checkpoint in the session ledger.
+The discipline ledger owns lifecycle state; this ledger continues to own
+attempts, edit verification, review rounds, progress, and budget.
+
 ## 1. Session open
 
 On the first turn, read `docs/PROJECT.md` (Constraints and
@@ -85,10 +91,12 @@ either way.
 
 ## 5. Constraint drift check
 
-At every major subtask boundary (checklist item done, or switching
-files/modules), re-read PROJECT.md's Constraints and the plan's Global
-Constraints. If the next action would violate one, name the conflict
-before proceeding — never drift past it silently.
+Before any mutation, validation-scope expansion, or workflow advancement,
+apply the discipline protocol's pre-action guard. At every major subtask
+boundary (checklist item done, or switching files/modules), also re-read
+PROJECT.md's Constraints and the plan's Global Constraints. If the next
+action would violate one, name the conflict before proceeding — never drift
+past it silently.
 
 ## 6. Progress surfacing
 
@@ -126,7 +134,10 @@ no skipping or reordering:
    one-line summary; state the hash.
 6. **Produce the continuation prompt** — a ready-to-paste block naming
    the plan file, the next task, and any carry-forwards.
-7. **State wrap-up complete** and stop.
+7. **Carry lifecycle state forward** — retain `ACTIVE` with final closure as
+  the next gate; record `CLOSED` or `ABANDONED` only after explicit human
+  approval.
+8. **State wrap-up complete** and stop.
 
 ## Red flags
 
